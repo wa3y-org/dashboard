@@ -37,7 +37,7 @@ export class AuthService {
     }
   }
 
-  public isAuthenticated(): boolean {
+  public get isAuthenticated(): boolean {
     return this.AuthenticatedUser instanceof User;
   }
 }
