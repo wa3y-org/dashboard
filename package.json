@@ -13,6 +13,7 @@
     "@mdi/font": "^7.4.47",
     "dayjs": "^1.11.12",
     "nuxt": "^3.12.4",
+    "pocketbase": "^0.21.4",
     "vue": "latest",
     "vue-animated-counter": "^0.3.0"
   },
