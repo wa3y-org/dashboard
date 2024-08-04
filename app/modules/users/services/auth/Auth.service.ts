@@ -7,8 +7,14 @@ import config from "../config";
 import { LoginFailedError } from "./Auth.exceptions";
 
 export const AuthenticatedUserStorageKey = "authenticated-user-data";
+/**
+ * AuthService class responsible of authenticating user
+ */
 export class AuthService {
+  // the repository used for authentication
   private readonly repository: UserRepository;
+
+  // single instance to implement singleton Design pattern
   static #instance: AuthService;
 
   public static get instance(): AuthService {
@@ -19,6 +25,7 @@ export class AuthService {
     return AuthService.#instance;
   }
 
+  // the current authenticated user
   public AuthenticatedUser: User | null = null;
 
   constructor() {
@@ -26,7 +33,12 @@ export class AuthService {
     this.init();
   }
 
+  /**
+   * initialize the authentication service
+   * do stuff like loading the authenticated user from the storage
+   */
   private init() {
+    // try to load the authenticated user form session storage
     const authData = this.retrieveAuthFromSessionStorage();
     if (!authData) return;
 
@@ -44,6 +56,12 @@ export class AuthService {
     this.AuthenticatedUser.roles = storedUser.roles;
   }
 
+  /**
+   * Attempt to authenticate user by regular credentials
+   * @param identity : string user name or email or id
+   * @param password : string password
+   * @returns the authenticated user or LoginFailedError
+   */
   public async login(
     identity: string,
     password: string
@@ -61,6 +79,9 @@ export class AuthService {
     }
   }
 
+  /**
+   * Check whether or not there is an authenticated user
+   */
   public get isAuthenticated(): boolean {
     return this.AuthenticatedUser instanceof User;
   }

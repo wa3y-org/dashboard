@@ -5,9 +5,11 @@ export type AuthResponse = {
   token: string;
 };
 export interface UserRepository {
-  /* 
-  @param identity (user name or password or phone number)
-  */
+  /**
+   * send login request to backend
+   * @param identity : string user_name or email
+   * @param password : string password
+   */
   authWithCredentials(
     identity: string,
     password: string
