@@ -38,6 +38,6 @@ export class AuthService {
   }
 
   public isAuthenticated(): boolean {
-    return false;
+    return this.AuthenticatedUser instanceof User;
   }
 }
