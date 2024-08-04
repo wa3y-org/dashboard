@@ -107,5 +107,6 @@ export class AuthService {
   public async logout(): Promise<void> {
     await this.repository.singOut();
     this.clearAuthFromSessionStorage();
+    this.AuthenticatedUser = null;
   }
 }
