@@ -7,6 +7,20 @@ import type {
 import { pb } from "./Connection";
 
 export class PocketBaseUserRepository implements UserRepository {
+  private createUserFromAuthModel(userModel: RecordModel): User {
+    const user = new User(
+      userModel.id,
+      userModel.userName,
+      userModel.name,
+      new Date(userModel.created),
+      new Date(userModel.updated)
+    );
+    user.email = userModel.email || "";
+    user.avatar = userModel.avatar || "";
+    user.status = userModel.status || UserStatus.Suspended;
+    return user;
+  }
+
   public async authWithCredentials(
     identity: string,
     password: string
@@ -20,17 +34,7 @@ export class PocketBaseUserRepository implements UserRepository {
     };
   }
 
-  private createUserFromAuthModel(userModel: RecordModel): User {
-    const user = new User(
-      userModel.id,
-      userModel.userName,
-      userModel.name,
-      new Date(userModel.created),
-      new Date(userModel.updated)
-    );
-    user.email = userModel.email || "";
-    user.avatar = userModel.avatar || "";
-    user.status = userModel.status || UserStatus.Suspended;
-    return user;
+  public async singOut(): Promise<void> {
+    pb.authStore.clear();
   }
 }

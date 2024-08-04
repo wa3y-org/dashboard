@@ -14,4 +14,6 @@ export interface UserRepository {
     identity: string,
     password: string
   ): Promise<AuthResponse>;
+
+  singOut(): Promise<void>;
 }
