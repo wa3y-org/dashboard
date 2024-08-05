@@ -5,7 +5,8 @@
       <v-img class="mx-auto mb-8" max-width="150" src="@/assets/images/wa3y-logo.png" rounded="xl"></v-img>
       <v-form @submit.prevent="login" @keyup.enter="login">
 
-        <v-card :loading="loading" class="mx-auto pa-12 pb-8" elevation="8" width="480" rounded="xl">
+        <v-card :loading="loading" class="mx-auto pa-12 pb-8" elevation="8"
+          width="480" rounded="xl">
           <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
           <v-text-field :tabindex="1" v-model="identity" color="primary" placeholder="User Name or Email Address"
@@ -25,6 +26,9 @@
             @click:append-inner="togglePasswordVisible"></v-text-field>
 
           <v-alert v-if="hasError" class="mb-6" variant="tonal" type="error" :text="errorMessage" />
+          <v-alert v-if="isLoginSuccess" class="mb-6" variant="tonal" type="success">
+            Login Success : Redirecting ...
+          </v-alert>
           <v-btn :tabindex="3" :loading="loading" block class="mb-8" color="primary" size="x-large" @click="login">
             Log In
           </v-btn>
@@ -47,6 +51,13 @@ definePageMeta({
 const isPasswordVisible = ref(false);
 function togglePasswordVisible() {
   isPasswordVisible.value = !isPasswordVisible.value
+}
+
+const isLoginSuccess: Ref<boolean> = ref(false);
+function setLoginSuccess() {
+  loading.value = true;
+  isLoginSuccess.value = true;
+  router.replace('/')
 }
 
 const identity: Ref<string> = ref('');
@@ -75,8 +86,7 @@ async function login() {
     return
   }
 
-  router.replace('/')
-
+  setLoginSuccess();
 }
 
 function resetError() {
