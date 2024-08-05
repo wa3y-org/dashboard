@@ -15,5 +15,8 @@ export interface IUserRepository {
     password: string
   ): Promise<AuthResponse>;
 
+  /**
+   * Perform sign out request to backend
+   */
   singOut(): Promise<void>;
 }
