@@ -2,11 +2,22 @@ import type { RecordModel } from "pocketbase";
 import { User, UserStatus } from "../../../domain/models/User";
 import type {
   AuthResponse,
-  UserRepository,
+  IUserRepository,
 } from "../../../domain/ports/UserRepository";
 import { pb } from "./Connection";
 
-export class PocketBaseUserRepository implements UserRepository {
+export class PocketBaseUserRepository implements IUserRepository {
+  // single instance to implement singleton Design pattern
+  static #instance: PocketBaseUserRepository;
+
+  public static get instance(): PocketBaseUserRepository {
+    if (!PocketBaseUserRepository.#instance) {
+      PocketBaseUserRepository.#instance = new PocketBaseUserRepository();
+    }
+
+    return PocketBaseUserRepository.#instance;
+  }
+
   private createUserFromAuthModel(userModel: RecordModel): User {
     const user = new User(
       userModel.id,

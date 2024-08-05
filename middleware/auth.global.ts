@@ -1,4 +1,4 @@
-import { AuthService } from "~/app/modules/users/services/auth/Auth.service";
+import { AuthService } from "~/app/modules/users/services";
 
 // routes that requires the user must be logged out
 const loggedOutRoutes = ["/auth/login"];
@@ -10,7 +10,7 @@ function isLoggedOutRoute(path: string): boolean {
 
 export default defineNuxtRouteMiddleware((to, from) => {
   const path = to.path.trim().toLocaleLowerCase();
-  const isAuthenticated = AuthService.instance.isAuthenticated;
+  const isAuthenticated = AuthService.isAuthenticated;
   if (isAuthenticated && isLoggedOutRoute(path)) {
     return navigateTo("/");
   }

@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AuthService } from "@/app/modules/users/services/auth/Auth.service";
+import { AuthService } from "~/app/modules/users/services";
 const isPasswordVisible = ref(false);
 function togglePasswordVisible() {
   isPasswordVisible.value = !isPasswordVisible.value
@@ -57,7 +57,7 @@ async function login() {
   resetError();
 
   loading.value = true;
-  const { user, error } = await AuthService.instance.login(identity.value, password.value);
+  const { user, error } = await AuthService.login(identity.value, password.value);
   loading.value = false;
 
   if (error !== null) {

@@ -1,35 +1,35 @@
+import { userRepository } from "../index";
 import { User } from "../../domain/models/User";
 import type {
   AuthResponse,
-  UserRepository,
+  IUserRepository,
 } from "../../domain/ports/UserRepository";
-import config from "../config";
+
 import { LoginFailedError } from "./Auth.exceptions";
 
 export const AuthenticatedUserStorageKey = "authenticated-user-data";
 /**
  * AuthService class responsible of authenticating user
  */
-export class AuthService {
+export class AuthenticationService {
   // the repository used for authentication
-  private readonly repository: UserRepository;
+  private readonly repository: IUserRepository = userRepository;
 
   // single instance to implement singleton Design pattern
-  static #instance: AuthService;
+  static #instance: AuthenticationService;
 
-  public static get instance(): AuthService {
-    if (!AuthService.#instance) {
-      AuthService.#instance = new AuthService();
+  public static get instance(): AuthenticationService {
+    if (!AuthenticationService.#instance) {
+      AuthenticationService.#instance = new AuthenticationService();
     }
 
-    return AuthService.#instance;
+    return AuthenticationService.#instance;
   }
 
   // the current authenticated user
   public AuthenticatedUser: User | null = null;
 
   constructor() {
-    this.repository = config.userRepository;
     this.init();
   }
 
