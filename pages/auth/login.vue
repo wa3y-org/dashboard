@@ -39,6 +39,11 @@
 
 <script lang="ts" setup>
 import { AuthService } from "~/app/modules/users/services";
+
+definePageMeta({
+  layout: 'blank'
+})
+
 const isPasswordVisible = ref(false);
 function togglePasswordVisible() {
   isPasswordVisible.value = !isPasswordVisible.value
