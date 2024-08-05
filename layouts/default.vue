@@ -3,7 +3,9 @@
     <v-navigation-drawer rail-width="92" rail permanent class="pa-4">
       <div class="d-flex justify-space-between flex-column fill-height">
         <div>
-          <v-img src="@/assets/images/wa3y-logo.png" rounded="lg"></v-img>
+          <v-card class="pa-0 ma-0" rounded="lg" to="/">
+            <v-img src="@/assets/images/wa3y-logo.png"></v-img>
+          </v-card>
           <div class="rounded-lg text-center modules-bar py-2 mt-4">
             <v-btn variant="plain" class="my-1" color="purple-darken-4" v-for="i in 5" icon="mdi-lock" />
           </div>
