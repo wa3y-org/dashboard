@@ -2,7 +2,7 @@
   <v-layout>
     
     <DefaultLayoutNavigationRail />
-    <DefaultLayoutDrawer />
+    
 
     <v-main class="main-app">
       <NuxtPage />
