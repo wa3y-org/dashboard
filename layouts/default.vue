@@ -20,7 +20,4 @@
   background-color: #F1F5F9;
 }
 
-.modules-bar {
-  background-color: #F3E5F500;
-}
 </style>

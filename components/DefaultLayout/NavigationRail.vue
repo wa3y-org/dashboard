@@ -1,109 +1,51 @@
 <template>
-  <v-navigation-drawer rail-width="92" rail permanent class="pa-4">
-    <div class="d-flex justify-space-between flex-column fill-height">
+  <v-navigation-drawer rail-width="96" rail permanent class="pa-4">
+    <div class="d-flex justify-space-between align-center flex-column fill-height">
       <div>
-        <v-card class="pa-0 ma-0" rounded="lg" to="/">
-          <v-img src="@/assets/images/wa3y-logo.png"></v-img>
+        <v-card class="pa-0 ma-0" rounded="lg" height="60" width="60" to="/">
+          <v-img cover :aspect-ratio="1 / 1" src="@/assets/images/wa3y-logo.png"></v-img>
         </v-card>
       </div>
       <div>
-        <div class="rounded-lg text-center modules-bar py-2 mt-4">
-          <v-btn variant="plain" class="my-1" color="purple-darken-4" v-for="navMod of navigationModules"
-            :icon="navMod.icon" :to="navMod.route" />
+        <div class="rounded-lg text-center modules-bar py-2 px-1 ">
+          <v-btn @click="navigationModules.selectModule(navMod)"
+            :variant="navigationModules.isSelectedModule(navMod) ? 'elevated' : 'plain'" size="50" class="my-1 rounded-lg"
+            color="purple-darken-4" v-for="navMod of navigationModules.all">
+            <v-icon size="28">{{ navMod.icon }}</v-icon>
+          </v-btn>
         </div>
       </div>
       <div></div>
     </div>
     <template v-slot:append>
-
-      <div class="text-center">
-        <v-menu v-model="menuModal.isShown.value" :close-on-content-click="false" location="top">
-          <template v-slot:activator="{ props }">
-            <v-avatar color="indigo" v-bind="props">
-              <v-img :src="user?.avatar"></v-img>
-            </v-avatar>
-          </template>
-
-          <v-card min-width="300" class="pa-4 my-2">
-            <v-list>
-              <v-list-item :prepend-avatar="user?.avatar" :title="user?.name" :subtitle="user?.email">
-
-              </v-list-item>
-            </v-list>
-
-            <v-divider></v-divider>
-
-            <v-list>
-              <!-- <v-list-item>
-                  <v-switch v-model="message" color="purple" label="Enable messages" hide-details></v-switch>
-                </v-list-item>
-
-                <v-list-item>
-                  <v-switch v-model="hints" color="purple" label="Enable hints" hide-details></v-switch>
-                </v-list-item> -->
-            </v-list>
-            <v-divider></v-divider>
-            <v-card-actions class="pa-2">
-              <v-btn color="error" block @click="doLogout" variant="tonal" prepend-icon="mdi-logout">Logout</v-btn>
-            </v-card-actions>
-
-          </v-card>
-        </v-menu>
-      </div>
-
+      <default-layout-user-card />
     </template>
   </v-navigation-drawer>
   <v-navigation-drawer permanent>
-    <v-list>
-      <v-list-item title="Home" value="home"></v-list-item>
+    <v-list class="pa-2" color="purple">
 
-      <v-list-item title="Contacts" value="contacts"></v-list-item>
-
-      <v-list-item title="Settings" value="settings"></v-list-item>
+      <v-list-item variant="plain" :to="selectedModule?.route" class="my-2 text-purple" rounded="lg"
+        :prepend-icon="selectedModule?.icon">
+        <v-list-item-title class="font-weight-bold">
+          {{ selectedModule?.name }}
+        </v-list-item-title>
+      </v-list-item>
+      <v-divider class="mb-4"></v-divider>
+      <v-list-item :to="navRoute.route" class="my-2" v-for="navRoute in selectedModule?.children" :title="navRoute.name"
+        rounded="lg" :value="navRoute.route" :prepend-icon="navRoute.icon"></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <script lang="ts" setup>
-import { AuthService } from "@/app/modules/users/services/index";
-function doLogout() {
-  useLogout().logout();
-}
+const navigationModules = useNavModules();
 
-const menuModal = useModal();
+const selectedModule = computed(() => navigationModules.selectedModule.value);
 
-const user = AuthService.AuthenticatedUser;
-
-const navigationModules = [
-  {
-    name: 'test',
-    icon: 'mdi-lock',
-    route: '/',
-    permission: [],
-    children: []
-  },
-  {
-    name: 'test 2',
-    icon: 'mdi-account',
-    route: '/',
-    permission: [],
-    children: []
-  },
-  {
-    name: 'test 3',
-    icon: 'mdi-book-open-variant-outline',
-    route: '/',
-    permission: [],
-    children: []
-  },
-  {
-    name: 'test 4',
-    icon: 'mdi-weather-moonset',
-    route: '/',
-    permission: [],
-    children: []
-  },
-]
 </script>
 
-<style></style>
+<style>
+.modules-bar {
+  background-color: #F3E5F5;
+}
+</style>
