@@ -29,8 +29,6 @@ export class PocketBaseUserRepository implements IUserRepository {
     user.email = userModel.email || "";
     user.avatar = pb.files.getUrl(userModel, userModel.avatar) || "";
     user.status = userModel.status || UserStatus.Suspended;
-    console.log(user);
-    alert();
     return user;
   }
 
