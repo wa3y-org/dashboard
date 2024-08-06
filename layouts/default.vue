@@ -13,10 +13,47 @@
         <div></div>
       </div>
       <template v-slot:append>
-        <div class="pa-2">
-          <v-btn @click="doLogout" icon="mdi-logout" variant="text" color="error">
-          </v-btn>
+
+        <div class="text-center">
+          <v-menu v-model="menuModal.isShown.value" :close-on-content-click="false" location="top">
+            <template v-slot:activator="{ props }">
+              <v-avatar color="indigo" v-bind="props">
+                <v-img src="@/assets/images/wa3y-logo.png"></v-img>
+              </v-avatar>
+            </template>
+
+            <v-card min-width="300" class="pa-4 my-2">
+              <v-list>
+                <v-list-item prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg" title="John Leider"
+                  subtitle="Founder of Vuetify">
+                  <template v-slot:append>
+                    <v-btn icon="mdi-close" color="error" variant="plain" @click="menuModal.hide" />
+
+
+                  </template>
+                </v-list-item>
+              </v-list>
+
+              <v-divider></v-divider>
+
+              <v-list>
+                <!-- <v-list-item>
+                  <v-switch v-model="message" color="purple" label="Enable messages" hide-details></v-switch>
+                </v-list-item>
+
+                <v-list-item>
+                  <v-switch v-model="hints" color="purple" label="Enable hints" hide-details></v-switch>
+                </v-list-item> -->
+              </v-list>
+              <v-divider></v-divider>
+              <v-card-actions class="pa-2">
+                <v-btn color="error" block @click="doLogout" variant="tonal" prepend-icon="mdi-logout">Logout</v-btn>
+              </v-card-actions>
+
+            </v-card>
+          </v-menu>
         </div>
+
       </template>
     </v-navigation-drawer>
 
@@ -41,6 +78,9 @@
 function doLogout() {
   useLogout().logout();
 }
+
+const menuModal = useModal();
+
 </script>
 
 <style lang="scss" scoped>
