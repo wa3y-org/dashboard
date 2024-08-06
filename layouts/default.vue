@@ -18,19 +18,14 @@
           <v-menu v-model="menuModal.isShown.value" :close-on-content-click="false" location="top">
             <template v-slot:activator="{ props }">
               <v-avatar color="indigo" v-bind="props">
-                <v-img src="@/assets/images/wa3y-logo.png"></v-img>
+                <v-img :src="user?.avatar"></v-img>
               </v-avatar>
             </template>
 
             <v-card min-width="300" class="pa-4 my-2">
               <v-list>
-                <v-list-item prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg" title="John Leider"
-                  subtitle="Founder of Vuetify">
-                  <template v-slot:append>
-                    <v-btn icon="mdi-close" color="error" variant="plain" @click="menuModal.hide" />
-
-
-                  </template>
+                <v-list-item :prepend-avatar="user?.avatar" :title="user?.name" :subtitle="user?.email">
+                  
                 </v-list-item>
               </v-list>
 
@@ -75,11 +70,14 @@
 </template>
 
 <script lang="ts" setup>
+import { AuthService } from "@/app/modules/users/services/index";
 function doLogout() {
   useLogout().logout();
 }
 
 const menuModal = useModal();
+
+const user = AuthService.AuthenticatedUser;
 
 </script>
 
