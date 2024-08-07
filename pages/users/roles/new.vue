@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-card class="mt-4" rounded="lg">
-      <v-toolbar color="white" >
+      <v-toolbar color="white">
         <v-toolbar-title color="text-primary">
           Create New Role
         </v-toolbar-title>
@@ -32,14 +32,24 @@
         </v-row>
         <v-row class="my-0">
           <v-col>
-            <v-card variant="outlined" class="px-2 py-4">
-              <div class="d-flex flex-direction-column">
-                <div class="mx-2 font-weight-bold text-primary">
-                  Granted Permissions
+            <v-card variant="outlined" class="px-0 py-0">
+              <div class="d-flex flex-direction-column align-start">
+                <div class="pa-4 font-weight-bold text-primary text-center">
+                  Permissions
+                  <v-divider class="my-2"></v-divider>
+                  0 Granted
                 </div>
-                <v-divider color="primary" vertical class="mx-2"></v-divider>
-                <div style="height: 300px;">
-                  
+                <v-divider color="primary" vertical class=""></v-divider>
+                <div class="w-100">
+                  <v-tabs bg-color="grey-lighten-3" grow size="large" center-active class="pa-0 ma-0" v-model="tab"
+                    >
+                    <v-tab color="blue-accent-4" :variant="mod.name == tab ? 'tonal' : 'text'" size="large"
+                      v-for="mod in permissionsModules" :key="mod.name" :value="mod.name">
+                      {{ mod.name }}
+                      <v-badge location="center center" rounded="lg" color="success" size="large" content="6"
+                        inline></v-badge>
+                    </v-tab>
+                  </v-tabs>
                 </div>
               </div>
             </v-card>
@@ -63,6 +73,20 @@ const router = useRouter();
 function cancel() {
   router.back();
 }
+
+const tab = ref(null)
+
+// #--> from here you should separate this logic to other files
+
+const permissionsModules = [
+  { name: 'Human Resources', permissions: [] },
+  { name: 'projects', permissions: [] },
+  { name: 'finance', permissions: [] },
+  { name: 'reports', permissions: [] },
+  { name: 'users', permissions: [] },
+];
+
+// #--> end of separation
 </script>
 
 <style></style>
