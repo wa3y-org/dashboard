@@ -7,7 +7,7 @@
         </v-avatar>
       </template>
 
-      <v-card min-width="300" class="pa-4 my-2">
+      <v-card min-width="300" class="pa-4 my-2" rounded="xl">
         <v-list>
           <v-list-item :prepend-avatar="user?.avatar" :title="user?.name" :subtitle="user?.email" />
         </v-list>
