@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer rail-width="96" rail permanent class="pa-4">
+  <v-navigation-drawer permanent touchless app rail-width="96" rail class="fill-height position-fixed pa-4">
     <div class="d-flex justify-space-between align-center flex-column fill-height">
       <div>
         <v-card class="pa-0 ma-0" rounded="lg" height="60" width="60" to="/">
@@ -21,7 +21,7 @@
       <default-layout-user-card />
     </template>
   </v-navigation-drawer>
-  <v-navigation-drawer permanent v-if="selectedModule && selectedModule.children.length > 0">
+  <v-navigation-drawer class="fill-height position-fixed" v-if="selectedModule && selectedModule.children.length > 0">
     <v-list class="pa-2" color="purple">
 
       <v-list-item variant="plain" :to="selectedModule?.route" class="my-2 text-purple" rounded="lg"
