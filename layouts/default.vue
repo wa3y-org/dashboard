@@ -1,16 +1,23 @@
 <template>
-  <!-- <MainAppBar /> -->
-   some data
-  <v-main>
-    <NuxtPage />
-  </v-main>
-  <!-- <main-footer /> -->
+  <v-layout>
+    
+    <DefaultLayoutNavigationRail />
+    
+
+    <v-main class="main-app">
+      <NuxtPage />
+    </v-main>
+  </v-layout>
 </template>
 
 <script lang="ts" setup>
 
+
 </script>
 
-<style>
+<style lang="scss" scoped>
+.main-app {
+  background-color: #F1F5F9;
+}
 
 </style>

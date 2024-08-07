@@ -27,7 +27,7 @@ export class PocketBaseUserRepository implements IUserRepository {
       new Date(userModel.updated)
     );
     user.email = userModel.email || "";
-    user.avatar = userModel.avatar || "";
+    user.avatar = pb.files.getUrl(userModel, userModel.avatar) || "";
     user.status = userModel.status || UserStatus.Suspended;
     return user;
   }
