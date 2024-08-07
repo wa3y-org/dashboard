@@ -24,8 +24,8 @@
           </v-list-item>
         </v-list>
         <v-divider></v-divider> -->
-        <v-card-actions class="px-2 py-4">
-          <v-btn color="error" block @click="doLogout" variant="tonal"
+        <v-card-actions class="pa-2 mt-2">
+          <v-btn color="error" block rounded="lg" size="large" @click="doLogout" variant="tonal"
             prepend-icon="mdi-logout mdi-rotate-180">Logout</v-btn>
         </v-card-actions>
 
