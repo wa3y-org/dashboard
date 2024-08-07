@@ -5,6 +5,8 @@ export interface NavItem {
   permissions: string[];
 }
 
+export type NavGroup = NavItem[]
+
 export interface NavModule extends NavItem {
-  children: NavItem[];
+  children: NavGroup[];
 }

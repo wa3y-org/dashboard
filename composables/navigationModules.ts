@@ -11,11 +11,11 @@ const MainNavModules: NavModule[] = [HRModule, ProjectsModule, FinanceModule, Re
 export function useNavModules() {
   const selectedModule: Ref<NavModule | null> = ref(null);
 
-  onMounted(() => {
-    if (!selectedModule.value) {
-      selectedModule.value = MainNavModules[0];
-    }
-  });
+  // onMounted(() => {
+  //   if (!selectedModule.value) {
+  //     selectedModule.value = MainNavModules[0];
+  //   }
+  // });
 
   function selectModule(module: NavModule) {
     selectedModule.value = module;
