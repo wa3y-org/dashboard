@@ -41,10 +41,9 @@
                 </div>
                 <v-divider color="primary" vertical class=""></v-divider>
                 <div class="w-100">
-                  <v-tabs bg-color="grey-lighten-3" grow size="large" center-active class="pa-0 ma-0" v-model="tab"
-                    >
+                  <v-tabs bg-color="grey-lighten-3" grow size="large" center-active class="pa-0 ma-0" v-model="tab">
                     <v-tab color="blue-accent-4" :variant="mod.name == tab ? 'tonal' : 'text'" size="large"
-                      v-for="mod in permissionsModules" :key="mod.name" :value="mod.name">
+                      v-for="mod in allPermissionsModules" :key="mod.name" :value="mod.name">
                       {{ mod.name }}
                       <v-badge location="center center" rounded="lg" color="success" size="large" content="6"
                         inline></v-badge>
@@ -78,12 +77,24 @@ const tab = ref(null)
 
 // #--> from here you should separate this logic to other files
 
-const permissionsModules = [
-  { name: 'Human Resources', permissions: [] },
-  { name: 'projects', permissions: [] },
-  { name: 'finance', permissions: [] },
-  { name: 'reports', permissions: [] },
-  { name: 'users', permissions: [] },
+type Permission = string;
+
+type PermissionsGroup = {
+  name: string,
+  permissions?: {
+    granted?: Permission[],
+    groups?: PermissionsGroup[]
+  }
+};
+
+const allPermissionsModules: PermissionsGroup[] = [
+  { name: 'Human Resources' },
+  { name: 'projects' },
+  { name: 'finance' },
+  { name: 'reports' },
+  {
+    name: 'users',
+  }
 ];
 
 // #--> end of separation
