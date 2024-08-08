@@ -21,7 +21,7 @@
       <default-layout-user-card />
     </template>
   </v-navigation-drawer>
-  <v-navigation-drawer class="fill-height position-fixed" v-if="selectedModule && selectedModule.children.length > 0">
+  <v-navigation-drawer permanent touchless app class="fill-height position-fixed" v-if="selectedModule && selectedModule.children.length > 0">
     <v-list class="pa-2" color="purple">
 
       <v-list-item variant="plain" :to="selectedModule?.route" class="my-2 text-purple" rounded="lg"
