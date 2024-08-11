@@ -5,32 +5,28 @@ type RoleJson = {
   title: string;
   description?: string;
   permissions?: Permission[];
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export class Role {
   public readonly id: string;
   public title: string;
-  public description: string;
+  public description?: string;
   public permissions?: Permission[] = [];
+  public createdAt: Date;
+  public updatedAt: Date;
 
-  constructor(
-    id: string = "",
-    title: string = "",
-    description: string = "",
-    permissions: Permission[] = []
-  ) {
-    this.id = id;
-    this.title = title;
-    this.description = description;
-    this.permissions = permissions;
+  constructor(data: RoleJson) {
+    this.id = data.id;
+    this.title = data.title;
+    this.description = data.description || "";
+    this.permissions = data.permissions || [];
+    this.createdAt = data.createdAt;
+    this.updatedAt = data.createdAt;
   }
 
   public static fromJson(data: RoleJson) {
-    const id = data.id;
-    const title = data.title;
-    const description = data.description || "";
-    const permissions = data.permissions || [];
-
-    return new Role(id, title, description, permissions);
+    return new Role(data);
   }
 }

@@ -1,6 +1,11 @@
+import type { RecordModel } from "pocketbase";
 import type { Permission } from "../../../domain/models/Permissions";
 import { Role } from "../../../domain/models/Roles";
-import type { IRolesRepository } from "../../../domain/ports/RolesRepository";
+import type {
+  CreateRoleResponse,
+  FetchRolesListResponse,
+  IRolesRepository,
+} from "../../../domain/ports/RolesRepository";
 import { BackendError } from "../../../services/BackendError";
 import { pb } from "./Connection";
 
@@ -16,11 +21,22 @@ export class PocketBaseRolesRepository implements IRolesRepository {
     return PocketBaseRolesRepository.#instance;
   }
 
+  public static recordToRole(record: RecordModel): Role {
+    return Role.fromJson({
+      id: record.id,
+      title: record.title,
+      description: record.description,
+      permissions: record.permissions,
+      createdAt: new Date(record.created),
+      updatedAt: new Date(record.updated),
+    });
+  }
+
   async create(
     title: string,
     description: string,
     permissions: Set<Permission>
-  ): Promise<{ role: Role | null; error: BackendError | null }> {
+  ): Promise<CreateRoleResponse> {
     const permissionsArray: Permission[] = [];
     for (let p of permissions) {
       permissionsArray.push(p);
@@ -34,10 +50,7 @@ export class PocketBaseRolesRepository implements IRolesRepository {
 
     try {
       const record = await pb.collection("roles").create(data);
-      const role = Role.fromJson({
-        id: record.id,
-        title: record.title,
-      });
+      const role = PocketBaseRolesRepository.recordToRole(record);
       return { role, error: null };
     } catch (e: any) {
       return {
@@ -45,5 +58,31 @@ export class PocketBaseRolesRepository implements IRolesRepository {
         error: new BackendError(e.response.message, e.response.code),
       };
     }
+  }
+
+  async fetchAll(): Promise<FetchRolesListResponse> {
+    let roles: Role[] | null = [];
+    let error: BackendError | null = null;
+
+    try {
+      const records = await pb.collection("roles").getFullList({
+        sort: "-created",
+      });
+
+      roles = [];
+      records.forEach((record) => {
+        roles?.push(PocketBaseRolesRepository.recordToRole(record));
+      });
+    } catch (e: any) {
+      roles = null;
+      error = new BackendError(e.response.message, e.response.code);
+    }
+
+    const response = {
+      roles,
+      error,
+    };
+
+    return response;
   }
 }

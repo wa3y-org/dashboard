@@ -2,6 +2,10 @@ import { rolesRepository } from "../index";
 import type { Permission } from "../../domain/models/Permissions";
 import type { Role } from "../../domain/models/Roles";
 import type { BackendError } from "../BackendError";
+import type {
+  CreateRoleResponse,
+  FetchRolesListResponse,
+} from "../../domain/ports/RolesRepository";
 
 const repository = rolesRepository;
 
@@ -15,12 +19,21 @@ async function createRole(
   title: string,
   description: string = "",
   permissions: Set<Permission> = new Set()
-): Promise<{ role: Role | null; error: BackendError | null }> {
+): Promise<CreateRoleResponse> {
   return await repository.create(title, description, permissions);
+}
+
+/**
+ * fetch all roles from backend
+ * @returns List of roles and possible backend error
+ */
+async function getAllRoles(): Promise<FetchRolesListResponse> {
+  return await repository.fetchAll();
 }
 
 export const RolesService = {
   createRole,
+  getAllRoles,
 };
 
 export default RolesService;
