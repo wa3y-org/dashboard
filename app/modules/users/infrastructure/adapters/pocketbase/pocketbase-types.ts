@@ -36,8 +36,8 @@ export type AuthSystemFields<T = never> = {
 
 export type RolesRecord<Tpermissions = unknown> = {
 	description?: HTMLString
-	name: string
 	permissions: null | Tpermissions
+	title: string
 }
 
 export enum UsersStatusOptions {
