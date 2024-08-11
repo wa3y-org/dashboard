@@ -1,5 +1,5 @@
+import type { Permission } from "~/app/modules/users/domain/models/Permissions";
 import type {
-  Permission,
   PermissionsGroup,
   PermissionsSet,
 } from "./permissions/types";

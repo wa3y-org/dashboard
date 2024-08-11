@@ -1,4 +1,4 @@
-export type Permission = string;
+import type { Permission } from "~/app/modules/users/domain/models/Permissions";
 
 export type PermissionsGroup = {
   name: string;

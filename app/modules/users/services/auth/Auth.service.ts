@@ -1,8 +1,8 @@
-import { userRepository } from "../index";
+import { usersRepository } from "../index";
 import { User } from "../../domain/models/User";
 import type {
   AuthResponse,
-  IUserRepository,
+  IUsersRepository,
 } from "../../domain/ports/UserRepository";
 
 import { LoginFailedError } from "./Auth.exceptions";
@@ -13,7 +13,7 @@ export const AuthenticatedUserStorageKey = "authenticated-user-data";
  */
 export class AuthenticationService {
   // the repository used for authentication
-  private readonly repository: IUserRepository = userRepository;
+  private readonly repository: IUsersRepository = usersRepository;
 
   // single instance to implement singleton Design pattern
   static #instance: AuthenticationService;

@@ -3,7 +3,7 @@
     <v-card-actions class="pa-4 text-h6 elevation-0">
       Permissions
       <v-spacer></v-spacer>
-      <span class="text-success font-weight-bold">
+      <span class="font-weight-bold" :class="permissions.grantedPermissions.value.size ? 'text-success' : ''">
         {{ permissions.grantedPermissions.value.size }} Granted
       </span>
     </v-card-actions>

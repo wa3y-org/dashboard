@@ -4,7 +4,7 @@ export type AuthResponse = {
   user: User;
   token: string;
 };
-export interface IUserRepository {
+export interface IUsersRepository {
   /**
    * send login request to backend
    * @param identity : string user_name or email

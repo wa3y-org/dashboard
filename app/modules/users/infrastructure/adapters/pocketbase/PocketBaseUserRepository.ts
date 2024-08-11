@@ -2,11 +2,11 @@ import type { RecordModel } from "pocketbase";
 import { User, UserStatus } from "../../../domain/models/User";
 import type {
   AuthResponse,
-  IUserRepository,
+  IUsersRepository,
 } from "../../../domain/ports/UserRepository";
 import { pb } from "./Connection";
 
-export class PocketBaseUserRepository implements IUserRepository {
+export class PocketBaseUserRepository implements IUsersRepository {
   // single instance to implement singleton Design pattern
   static #instance: PocketBaseUserRepository;
 
