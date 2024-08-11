@@ -37,7 +37,7 @@
             <v-btn color="info" prepend-icon="mdi-pencil" variant="text">update</v-btn>
           </template>
           <template v-slot:item.permissions="{ item }">
-            <v-chip color="green"> {{ item.permissions?.length || 0 }} Granted</v-chip>
+            <v-chip density="compact" class="font-weight-bold" color="green"> {{ item.permissions?.length || 0 }} Granted</v-chip>
           </template>
           <template v-slot:item.updatedAt="{ item }">
             {{ item.updatedAt.toLocaleString()}}
@@ -83,7 +83,7 @@ const headers = [
   { title: 'title', key: 'title' },
   { title: 'permissions', key: 'permissions' },
   { title: 'last update', key: 'updatedAt' },
-  { title: 'actions', key: 'actions' },
+  { title: 'actions', key: 'actions', align: 'end' },
 ];
 
 const router = useRouter();
