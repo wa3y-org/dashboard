@@ -2,6 +2,15 @@ import type { BackendError } from "../../services/BackendError";
 import type { Permission } from "../models/Permissions";
 import type { Role } from "../models/Roles";
 
+export type CreateRoleResponse = {
+  role: Role | null;
+  error: BackendError | null;
+};
+export type FetchRolesListResponse = {
+  roles: Role[] | null;
+  error: BackendError | null;
+};
+
 export interface IRolesRepository {
   /**
    * creates new role and store it the backend
@@ -14,4 +23,9 @@ export interface IRolesRepository {
     description: string,
     permissions: Set<Permission>
   ): Promise<{ role: Role | null; error: BackendError | null }>;
+
+  /**
+   * Fetch all roles from backend
+   */
+  fetchAll(): Promise<FetchRolesListResponse>;
 }
