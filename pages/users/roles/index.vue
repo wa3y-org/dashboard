@@ -39,6 +39,9 @@
           <template v-slot:item.permissions="{ item }">
             <v-chip color="green"> {{ item.permissions?.length || 0 }} Granted</v-chip>
           </template>
+          <template v-slot:item.updatedAt="{ item }">
+            {{ item.updatedAt.toLocaleString()}}
+          </template>
         </v-data-table>
       </v-card-text>
     </v-card>
