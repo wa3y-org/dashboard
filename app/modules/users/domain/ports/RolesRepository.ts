@@ -44,4 +44,11 @@ export interface IRolesRepository {
    * @param id : id of the role
    */
   fetchOne(id: string): Promise<FetchOneRoleResponse>;
+
+  /**
+   * update the role at the backend
+   * @param id : id of the role we want to update
+   * @param role : the new value of the role
+   */
+  update(id: string, role: Role): Promise<SaveRoleResponse>;
 }

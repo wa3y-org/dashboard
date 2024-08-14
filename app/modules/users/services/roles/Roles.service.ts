@@ -6,6 +6,7 @@ import type {
   CreateRoleResponse,
   FetchRolesListResponse,
   FetchOneRoleResponse,
+  SaveRoleResponse,
 } from "../../domain/ports/RolesRepository";
 
 const repository = rolesRepository;
@@ -36,10 +37,15 @@ async function fetchOne(id: string): Promise<FetchOneRoleResponse> {
   return await repository.fetchOne(id);
 }
 
+async function update(id: string, role: Role): Promise<SaveRoleResponse> {
+  return await repository.update(id, role);
+}
+
 export const RolesService = {
   createRole,
   getAllRoles,
   fetchOne,
+  update,
 };
 
 export default RolesService;

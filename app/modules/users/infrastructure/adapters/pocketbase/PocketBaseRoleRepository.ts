@@ -6,6 +6,7 @@ import type {
   FetchOneRoleResponse,
   FetchRolesListResponse,
   IRolesRepository,
+  SaveRoleResponse,
 } from "../../../domain/ports/RolesRepository";
 import { BackendError } from "../../../services/BackendError";
 import { pb } from "./Connection";
@@ -98,5 +99,22 @@ export class PocketBaseRolesRepository implements IRolesRepository {
       error = new BackendError(e.response.message, e.response.code);
     }
     return { role, error };
+  }
+
+  async update(id: string, newRole: Role): Promise<SaveRoleResponse> {
+    let role: Role | null = null;
+    let error: BackendError | null = null;
+    try {
+      const record = await pb.collection("roles").update(id, {
+        title: newRole.title,
+        description: newRole.description,
+        permissions: newRole.permissions,
+      });
+      role = PocketBaseRolesRepository.recordToRole(record);
+    } catch (e: any) {
+      role = null;
+      error = new BackendError(e.response.message, e.response.code);
+    }
+    return { role: role, error };
   }
 }

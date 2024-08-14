@@ -5,8 +5,8 @@ type RoleJson = {
   title: string;
   description?: string;
   permissions?: Permission[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export class Role {
@@ -14,8 +14,8 @@ export class Role {
   public title: string;
   public description?: string;
   public permissions?: Permission[] = [];
-  public createdAt: Date;
-  public updatedAt: Date;
+  public createdAt?: Date;
+  public updatedAt?: Date;
 
   constructor(data: RoleJson) {
     this.id = data.id;

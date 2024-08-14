@@ -4,6 +4,13 @@ import type { Permission } from "@/app/modules/users/domain/models/Permissions";
 import { BackendError } from "@/app/modules/users/services/BackendError";
 import type { SaveRoleResponse } from "~/app/modules/users/domain/ports/RolesRepository";
 
+export type SaveFn = (
+  title: string,
+  description: string,
+  selectedPermissions: Set<Permission>
+) => Promise<SaveRoleResponse>;
+
+
 export function useSaveRole() {
   const title = ref("");
   const titleErrors: Ref<string[]> = ref([]);
@@ -74,11 +81,7 @@ export function useSaveRole() {
     isSaved.value = false;
   }
 
-  type SaveFn = (
-    title: string,
-    description: string,
-    selectedPermissions: Set<Permission>
-  ) => Promise<SaveRoleResponse>;
+  
 
   /**
    * Send request to store the role in backends
