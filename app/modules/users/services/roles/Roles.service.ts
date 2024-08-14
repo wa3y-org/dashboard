@@ -5,6 +5,7 @@ import type { BackendError } from "../BackendError";
 import type {
   CreateRoleResponse,
   FetchRolesListResponse,
+  FetchOneRoleResponse,
 } from "../../domain/ports/RolesRepository";
 
 const repository = rolesRepository;
@@ -31,9 +32,14 @@ async function getAllRoles(): Promise<FetchRolesListResponse> {
   return await repository.fetchAll();
 }
 
+async function fetchOne(id: string): Promise<FetchOneRoleResponse> {
+  return await repository.fetchOne(id);
+}
+
 export const RolesService = {
   createRole,
   getAllRoles,
+  fetchOne,
 };
 
 export default RolesService;

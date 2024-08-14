@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card class="my-4" rounded="lg" :loading="loading.isLoading.value">
+    <v-card class="my-4" rounded="lg">
       <v-toolbar color="white" class="py-1">
         <v-toolbar-title color="text-primary">
           <v-icon>mdi-tag-multiple</v-icon>
@@ -37,10 +37,11 @@
             <v-btn color="info" prepend-icon="mdi-pencil" variant="text">update</v-btn>
           </template>
           <template v-slot:item.permissions="{ item }">
-            <v-chip density="compact" class="font-weight-bold" color="green"> {{ item.permissions?.length || 0 }} Granted</v-chip>
+            <v-chip density="compact" class="font-weight-bold" color="green"> {{ item.permissions?.length || 0 }}
+              Granted</v-chip>
           </template>
           <template v-slot:item.updatedAt="{ item }">
-            {{ item.updatedAt.toLocaleString()}}
+            {{ item.updatedAt.toLocaleString() }}
           </template>
         </v-data-table>
       </v-card-text>
@@ -85,11 +86,6 @@ const headers = [
   { title: 'last update', key: 'updatedAt' },
   { title: 'actions', key: 'actions', align: 'end' },
 ];
-
-const router = useRouter();
-function goToRolePage(e: Event, { item }: any) {
-  router.push(`/users/roles/${item.id}`);
-}
 </script>
 
 <style></style>

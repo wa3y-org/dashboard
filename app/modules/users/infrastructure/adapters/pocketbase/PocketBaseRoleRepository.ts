@@ -3,6 +3,7 @@ import type { Permission } from "../../../domain/models/Permissions";
 import { Role } from "../../../domain/models/Roles";
 import type {
   CreateRoleResponse,
+  FetchOneRoleResponse,
   FetchRolesListResponse,
   IRolesRepository,
 } from "../../../domain/ports/RolesRepository";
@@ -84,5 +85,18 @@ export class PocketBaseRolesRepository implements IRolesRepository {
     };
 
     return response;
+  }
+
+  async fetchOne(id: string): Promise<FetchOneRoleResponse> {
+    let role: Role | null = null;
+    let error: BackendError | null = null;
+    try {
+      const record = await pb.collection("roles").getOne(id);
+      role = PocketBaseRolesRepository.recordToRole(record);
+    } catch (e: any) {
+      role = null;
+      error = new BackendError(e.response.message, e.response.code);
+    }
+    return { role, error };
   }
 }

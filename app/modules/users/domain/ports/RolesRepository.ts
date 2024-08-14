@@ -6,8 +6,13 @@ export type CreateRoleResponse = {
   role: Role | null;
   error: BackendError | null;
 };
+
 export type FetchRolesListResponse = {
   roles: Role[] | null;
+  error: BackendError | null;
+};
+export type FetchOneRoleResponse = {
+  role: Role | null;
   error: BackendError | null;
 };
 
@@ -28,4 +33,10 @@ export interface IRolesRepository {
    * Fetch all roles from backend
    */
   fetchAll(): Promise<FetchRolesListResponse>;
+
+  /**
+   * Fetch one role from backend
+   * @param id : id of the role
+   */
+  fetchOne(id: string): Promise<FetchOneRoleResponse>;
 }
