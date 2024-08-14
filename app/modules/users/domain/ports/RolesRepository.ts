@@ -7,6 +7,11 @@ export type CreateRoleResponse = {
   error: BackendError | null;
 };
 
+export type SaveRoleResponse = {
+  role: Role | null;
+  error: BackendError | null;
+};
+
 export type FetchRolesListResponse = {
   roles: Role[] | null;
   error: BackendError | null;

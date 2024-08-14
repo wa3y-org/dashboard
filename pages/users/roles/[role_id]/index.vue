@@ -1,31 +1,33 @@
 <template>
   <v-container>
-    <loading-from-backend v-if="loading.isLoading.value" />
-    <backend-error-wrapper v-if="backendError.hasError" :backend-error="backendError.error" />
-    <v-card v-else-if="!loading.isLoading.value">
+    <loading-from-backend v-if="loadRole.loading.isLoading.value" />
+    <backend-error-wrapper v-if="loadRole.backendError.hasError" :backend-error="loadRole.backendError.error" />
+    <v-card v-else-if="!loadRole.loading.isLoading.value">
       <v-toolbar>
         <v-toolbar-title>
-          {{ role?.title }}
+          {{ loadRole.role.value?.title }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn :to="`/users/roles/${role?.id}/update`" class="mx-4" color="info" prepend-icon="mdi-pencil" variant="text">update</v-btn>
+        <v-btn :to="`/users/roles/${loadRole.role.value?.id}/update`" class="mx-4" color="info" prepend-icon="mdi-pencil"
+          variant="text">update</v-btn>
       </v-toolbar>
 
       <v-card-text>
 
-        {{ role?.description }}
+        {{ loadRole.role.value?.description }}
       </v-card-text>
       <v-divider></v-divider>
       <v-card-text>
         <span class="font-weight-black text-h6">
           Permissions
-          <v-chip density="compact" class="font-weight-bold" color="green"> {{ role?.permissions?.length || 0 }}
+          <v-chip density="compact" class="font-weight-bold" color="green"> {{ loadRole.role.value?.permissions?.length ||
+            0 }}
             Granted</v-chip>
         </span>
         <div class="my-4">
           <v-row>
             <v-col class="pa-2 ma-0" cols="12" xl="3" lg="4" md="6" sm="6" xs="12"
-              v-for="permission of role?.permissions">
+              v-for="permission of loadRole.role.value?.permissions">
               <v-checkbox :label="permission" :model-value="true" :value="true" readonly hide-details
                 color="success"></v-checkbox>
             </v-col>
@@ -54,34 +56,12 @@
 </template>
 
 <script lang="ts" setup>
-import { RolesService } from "@/app/modules/users/services/roles/Roles.service";
-import { Role } from "@/app/modules/users/domain/models/Roles";
 
+const loadRole = useLoadRole();
 
-const route = useRoute();
-
-const loading = useLoading();
-
-const roleId = route.params['role_id'].toString();
-
-const role: Ref<Role | null> = ref(null);
-const backendError = useBackendError();
-
-async function loadRole() {
-  loading.start();
-  const response = await RolesService.fetchOne(roleId);
-  loading.end();
-  if (response.error) {
-    backendError.set(response.error);
-    return;
-  }
-
-  role.value = response.role;
-}
-
-onMounted(() => {
-  loadRole();
-})
+onMounted(async () => {
+  await loadRole.load();
+});
 </script>
 
 <style></style>

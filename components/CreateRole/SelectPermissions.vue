@@ -63,21 +63,36 @@
         </v-window>
       </div>
     </div>
-
   </v-card>
 </template>
 
 <script lang="ts" setup>
+import equal from "fast-deep-equal";
+
 const permissions = usePermissionsController();
 const tab = ref(null)
 
-const model = defineModel()
+const model = defineModel<Set<string>>()
 
 function update() {
   model.value = permissions.grantedPermissions.value;
 }
 
+function updatePermissionsFromModel() {
+
+  for (let p of model.value || []) {
+    if (!permissions.grantedPermissions.value.has(p)) {
+      permissions.grantedPermissions.value.add(p)
+    }
+  }
+
+
+}
+
+onMounted(() => { updatePermissionsFromModel() })
+
 watch(() => permissions.grantedPermissions, update, { deep: true });
+watch(() => model, updatePermissionsFromModel, { deep: true });
 
 
 
