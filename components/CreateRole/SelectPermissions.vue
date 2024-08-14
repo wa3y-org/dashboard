@@ -39,7 +39,7 @@
 
 
             <div class="ma-4" v-for="group of permissionsSet.groups">
-              <p class="font-weight-bold text-h6 mt-8 text-capitalize">{{ group.name }} Permissions</p>
+              <p class="font-weight-bold text-h6 mt-8 text-capitalize">{{ group.name }}</p>
               <v-divider class="my-3"></v-divider>
               <v-row>
                 <v-col class="pa-2 ma-0" cols="12" xl="3" lg="4" md="6" sm="6" xs="12"
@@ -67,7 +67,6 @@
 </template>
 
 <script lang="ts" setup>
-import equal from "fast-deep-equal";
 
 const permissions = usePermissionsController();
 const tab = ref(null)
