@@ -1,5 +1,5 @@
 <template>
-  <v-card variant="outlined" class="px-0 py-0">
+  <v-card variant="outlined" rounded="lg" class="border elevation-3">
     <v-card-actions class="pa-4 text-h6 elevation-0">
       Permissions
       <v-spacer></v-spacer>
