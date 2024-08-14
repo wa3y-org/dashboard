@@ -4,7 +4,7 @@
       <v-toolbar color="transparent">
         <v-toolbar-title>
           <div class="text-primary text-no-wrap font-weight-bold">
-            <v-icon>mdi-account-tag</v-icon>
+            <v-icon>mdi-account-tag-outline</v-icon>
             Select Roles
           </div>
         </v-toolbar-title>

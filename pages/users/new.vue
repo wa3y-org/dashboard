@@ -30,7 +30,7 @@
         <v-spacer></v-spacer>
         <div class="ma-2">
           <v-btn :loading="false" color="error" rounded="lg" size="x-large" class="text-body-1" variant="text"
-            @click="() => { }">cancel</v-btn>
+            @click="cancel">cancel</v-btn>
 
           <v-btn :loading="false" class="px-6" variant="elevated" prepend-icon="mdi-check" rounded="lg" color="primary"
             size="x-large" @click="() => { }">Save</v-btn>
@@ -41,6 +41,11 @@
 </template>
 
 <script lang="ts" setup>
+
+const router = useRouter();
+function cancel() {
+  router.back();
+}
 
 
 </script>
