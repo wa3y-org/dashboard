@@ -33,8 +33,9 @@
               <span>{{ item.title }}</span>
             </nuxt-link>
           </template>
-          <template v-slot:item.actions>
-            <v-btn color="info" prepend-icon="mdi-pencil" variant="text">update</v-btn>
+          <template v-slot:item.actions="{ item }">
+            <v-btn :to="`/users/roles/${item.id}/update`" color="info" prepend-icon="mdi-pencil"
+              variant="text">update</v-btn>
           </template>
           <template v-slot:item.permissions="{ item }">
             <v-chip density="compact" class="font-weight-bold" color="green"> {{ item.permissions?.length || 0 }}

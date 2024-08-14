@@ -8,7 +8,7 @@
           {{ role?.title }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn class="mx-4" color="info" prepend-icon="mdi-pencil" variant="text">update</v-btn>
+        <v-btn :to="`/users/roles/${role?.id}/update`" class="mx-4" color="info" prepend-icon="mdi-pencil" variant="text">update</v-btn>
       </v-toolbar>
 
       <v-card-text>
