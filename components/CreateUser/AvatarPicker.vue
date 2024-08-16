@@ -1,6 +1,6 @@
 <template>
-  <div class="my-2 text-center">
-    <v-file-input v-show="false" v-model="avatarImage" ref="imageFilePicker" accept="image/*" label="File input" />
+  <div class="my-4 text-center">
+    <v-file-input v-show="false" v-model="image" ref="imageFilePicker" accept="image/*" label="File input" />
 
     <v-avatar size="280" @click="openImageFilePicker" v-if="!previewURL" color="grey-lighten-3" width="100%" height="250"
       class="cursor-pointer elevation-2" rounded="xl">
@@ -24,16 +24,17 @@
 </template>
 
 <script lang="ts" setup>
-const avatarImage: Ref<File | null> = ref(null);
+
+const image = defineModel('image', { required: true })
 const imageFilePicker: Ref<HTMLElement | null> = ref(null);
 
 const previewURL = computed(() => {
-  if (avatarImage.value) {
-    if (avatarImage.value instanceof File) {
-      return URL.createObjectURL(avatarImage.value);
+  if (image.value) {
+    if (image.value instanceof File) {
+      return URL.createObjectURL(image.value);
     }
-    else if (typeof avatarImage.value == "string") {
-      return avatarImage.value;
+    else if (typeof image.value == "string") {
+      return image.value;
     }
   }
   return null;
@@ -46,7 +47,7 @@ function openImageFilePicker() {
 }
 
 const resetImages = () => {
-  avatarImage.value = null
+  image.value = null
 }
 </script>
 

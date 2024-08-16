@@ -1,3 +1,4 @@
+import { Model, type ModelJson } from "./Model";
 import type { Role } from "./Roles";
 
 export enum UserStatus {
@@ -5,28 +6,42 @@ export enum UserStatus {
   Suspended = "SUSPENDED",
 }
 
-export class User {
-  public readonly id: string;
-  public name: string;
-  public userName: string;
-  public email: string = "";
-  public avatar: string = "";
-  public status: UserStatus = UserStatus.Suspended;
-  public createdAt: Date;
-  public updatedAt: Date;
-  public roles: Role[] = [];
+export type UserProps = {
+  id?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  email: string;
+  name: string;
+  avatar?: string | File;
+  verified: boolean;
+  bio?: string;
+  roles?: Role[];
+  status: UserStatus;
+};
 
-  constructor(
-    id: string,
-    userName: string,
-    name: string,
-    created: Date,
-    updated: Date
-  ) {
-    this.id = id;
-    this.userName = userName;
-    this.name = name;
-    this.createdAt = created;
-    this.updatedAt = updated;
+export const NewUserDefaultPassword = "12345678";
+
+export class User extends Model {
+  public email: string;
+  public name: string;
+  public avatar?: string | File;
+  public verified: boolean;
+  public bio?: string;
+  public roles: Role[];
+  public status: UserStatus;
+
+  constructor(props: UserProps) {
+    super({
+      id: props.id,
+      createdAt: props.createdAt,
+      updatedAt: props.updatedAt,
+    });
+    this.email = props.email;
+    this.name = props.name;
+    this.avatar = props.avatar;
+    this.verified = props.verified;
+    this.bio = props.bio;
+    this.roles = props.roles || [];
+    this.status = props.status;
   }
 }

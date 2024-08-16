@@ -4,7 +4,7 @@ import type { Permission } from "@/app/modules/users/domain/models/Permissions";
 import { BackendError } from "@/app/modules/users/services/BackendError";
 import type { SaveRoleResponse } from "~/app/modules/users/domain/ports/RolesRepository";
 
-export type SaveFn = (
+export type SaveRoleFn = (
   title: string,
   description: string,
   selectedPermissions: Set<Permission>
@@ -53,9 +53,11 @@ export function useSaveRole() {
    * validate the input
    */
   function validateInput(): boolean {
+    
     resetErrors();
 
     if (!title.value || title.value.trim() == "") {
+      
       titleErrors.value.push("Enter Valid title");
     }
 
@@ -86,7 +88,7 @@ export function useSaveRole() {
   /**
    * Send request to store the role in backends
    */
-  async function saveRole(saveFun: SaveFn) {
+  async function saveRole(saveFun: SaveRoleFn) {
     hideSaveSuccess();
 
     // validate data

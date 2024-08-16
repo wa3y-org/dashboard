@@ -1,6 +1,10 @@
 <template>
-  <div class="my-1">
-    <v-card variant="outlined" rounded="lg" class="border elevation-3">
+  <div class="my-1" :class="hasError || false ? 'border bg-red-lighten-4 pa-1 rounded-lg' : ''">
+
+    <div class="ma-3 font-weight-bold" v-if="hasError">
+      <p v-for="e in errors.value">{{ e }}</p>
+    </div>
+    <v-card variant="outlined" rounded="lg" class="border bg-white" :class="hasError ? '' : 'elevation-3'">
       <v-toolbar color="transparent">
         <v-toolbar-title>
           <div class="text-primary text-no-wrap font-weight-bold">
@@ -29,13 +33,15 @@
             <v-card @click="toggleRoleSelection(role)" variant="tonal" class="pa-3" rounded="lg"
               :color="isSelected(role) ? 'green' : 'grey-darken-3'">
               <v-toolbar color="transparent" density="compact">
-                <v-checkbox v-if="isSelected(role)" class="d-inline-block" hide-details :model-value="true" color="success"></v-checkbox>
+                <v-checkbox v-if="isSelected(role)" class="d-inline-block" hide-details :model-value="true"
+                  color="success"></v-checkbox>
                 <v-toolbar-title>
                   {{ role.title }}
                 </v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-chip class="mx-2" :variant="isSelected(role) ? 'flat' : 'tonal'"
-                :color="isSelected(role) ? 'success' : 'grey-darken-3'">{{ role.permissions?.length || 0 }} Granted</v-chip>
+                  :color="isSelected(role) ? 'success' : 'grey-darken-3'">{{ role.permissions?.length || 0 }}
+                  Granted</v-chip>
               </v-toolbar>
             </v-card>
           </v-col>
@@ -75,7 +81,13 @@ onMounted(() => {
   loadAllRoles()
 });
 
-const selectedRoles: Ref<Set<Role>> = ref(new Set());
+
+const selectedRoles = defineModel('selectedRoles', { required: true, type: Set })
+const props = defineProps(['errors'])
+
+const hasError = computed(() => {
+  return props.errors?.value.length || false;
+})
 
 function toggleRoleSelection(role: Role) {
   if (selectedRoles.value.has(role)) {
