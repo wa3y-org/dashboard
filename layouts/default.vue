@@ -5,7 +5,9 @@
     
 
     <v-main class="main-app">
-      <NuxtPage />
+      <v-container class="py-4">
+        <NuxtPage />
+      </v-container>
     </v-main>
   </v-layout>
 </template>

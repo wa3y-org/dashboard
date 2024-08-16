@@ -9,7 +9,7 @@
           width="480" rounded="xl">
           <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
-          <v-text-field :tabindex="1" v-model="identity" color="primary" placeholder="User Name or Email Address"
+          <v-text-field :tabindex="1" v-model="identity" color="primary" placeholder="Email Address"
             prepend-inner-icon="mdi-email-outline" variant="outlined"></v-text-field>
 
           <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">

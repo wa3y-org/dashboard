@@ -42,7 +42,7 @@
               Granted</v-chip>
           </template>
           <template v-slot:item.updatedAt="{ item }">
-            {{ item.updatedAt.toLocaleString() }}
+            {{ item.updatedAt?.toLocaleString() }}
           </template>
         </v-data-table>
       </v-card-text>

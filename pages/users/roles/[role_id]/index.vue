@@ -2,8 +2,8 @@
   <v-container>
     <loading-from-backend v-if="loadRole.loading.isLoading.value" />
     <backend-error-wrapper v-if="loadRole.backendError.hasError" :backend-error="loadRole.backendError.error!" />
-    <v-card v-else-if="!loadRole.loading.isLoading.value">
-      <v-toolbar>
+    <v-card v-else-if="!loadRole.loading.isLoading.value" class="my-4" rounded="lg">
+      <v-toolbar >
         <v-toolbar-title>
           {{ loadRole.role.value?.title }}
         </v-toolbar-title>
@@ -44,7 +44,7 @@
             <p class="px-4 text-red text-h6 font-weight-bold">
               Remove
             </p>
-            <v-divider class="my-4"></v-divider>
+            <v-divider class="my-3"></v-divider>
             <div class="px-4">
               <p class="my-4">
                 Removing this role is permanent, you cant undo this command

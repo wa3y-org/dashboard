@@ -1,5 +1,5 @@
 <template>
-  <v-alert :title="'Server Error Code : ' + backendError.code" prominent variant="tonal" type="error" :value="true">
+  <v-alert rounded="lg" :title="'Server Error Code : ' + backendError.code" prominent variant="tonal" type="error" :value="true">
     {{ backendError.message }}
   </v-alert>
 </template>
