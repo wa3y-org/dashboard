@@ -1,10 +1,12 @@
 import equal from "fast-deep-equal";
 import type { NavModule } from "./NavModules/types";
-import { HRModule } from "./NavModules/HR";
-import { ProjectsModule } from "./NavModules/Projects";
-import { FinanceModule } from "./NavModules/Finance";
-import { UsersModule } from "./NavModules/User";
-import { ReportsModule } from "./NavModules/Reports";
+
+
+import { HRModule } from "./NavModules/hr";
+import { FinanceModule } from "./NavModules/finance";
+import { ProjectsModule } from "./NavModules/projects";
+import { ReportsModule } from "./NavModules/reports";
+import { UsersModule } from "./NavModules/users";
 
 const MainNavModules: NavModule[] = [HRModule, ProjectsModule, FinanceModule, ReportsModule, UsersModule];
 

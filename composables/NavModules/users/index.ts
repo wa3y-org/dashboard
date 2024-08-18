@@ -1,6 +1,6 @@
-import type { NavGroup, NavItem, NavModule } from "./types";
+import type { NavGroup, NavModule } from "../types";
 
-const userRoutes: NavItem[] = [
+const userRoutes: NavGroup = [
   {
     name: "Create New User",
     icon: "mdi-account-plus-outline",
@@ -14,7 +14,7 @@ const userRoutes: NavItem[] = [
     permissions: [],
   },
 ];
-const rolesRoutes: NavItem[] = [
+const rolesRoutes: NavGroup = [
   {
     name: "Create Role",
     icon: "mdi-tag-plus",
@@ -29,7 +29,7 @@ const rolesRoutes: NavItem[] = [
   },
 ];
 
-const UsersModuleNavGroups: NavGroup[] = [userRoutes, rolesRoutes];
+const UsersModuleNavGroups: NavGroup[] = [/*userRoutes,*/ rolesRoutes];
 
 export const UsersModule: NavModule = {
   name: "System Users",

@@ -1,4 +1,4 @@
-import type { NavModule } from "./types";
+import type { NavModule } from "../types";
 
 export const ProjectsModule: NavModule = {
   name: "Projects",
