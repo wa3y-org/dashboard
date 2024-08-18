@@ -23,7 +23,7 @@
                 </div>
               </template>
             </v-text-field>
-            {{ roleSaver.errors }}
+            
           </v-col>
         </v-row>
         <v-row class="my-0">
