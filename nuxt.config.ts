@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     transpile: ["vuetify"],
   },
   modules: [
+    'nuxt-tiptap-editor',
     (_options, nuxt) => {
       nuxt.hooks.hook("vite:extendConfig", (config) => {
         // @ts-expect-error
@@ -17,6 +18,10 @@ export default defineNuxtConfig({
     },
     //...
   ],
+  tiptap: {
+    prefix: 'Tiptap', //prefix for Tiptap imports, composables not included
+  },
+
   vite: {
     vue: {
       template: {
