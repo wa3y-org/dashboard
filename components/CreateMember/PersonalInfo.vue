@@ -8,7 +8,9 @@
       <text-field placeholder="Enter the name of the new member" name="name" />
       <v-row class="my-3 py-0">
         <v-col class="">
-          <select-field name="Sex" placeholder="Select Sex" />
+          <select-field name="Sex" placeholder="Select Sex" :items="validSex" :props="{
+            clearable: true
+          }" />
         </v-col>
         <v-col class="">
           <DatePicker name="Birth Date" />
@@ -20,7 +22,7 @@
 </template>
 
 <script lang="ts" setup>
-
+const validSex = ["Male", "Female"]
 </script>
 
 <style></style>
