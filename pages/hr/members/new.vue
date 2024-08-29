@@ -24,6 +24,9 @@
 
         <v-stepper-window-item :value="1">
           <create-member-personal-info />
+          <!-- <v-divider class="my-6"></v-divider>
+          <w-id-info class="my-4"/> -->
+
         </v-stepper-window-item>
 
         <v-stepper-window-item :value="2">
@@ -32,12 +35,18 @@
         </v-stepper-window-item>
 
         <v-stepper-window-item :value="3">
+          <date-picker name="Joining Date" />
+          
+
+        </v-stepper-window-item>
+
+        <v-stepper-window-item :value="4">
           <w-id-info />
         </v-stepper-window-item>
       </v-stepper-window>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
-          <v-btn v-f :disabled="step >= 3" @click="next">Next</v-btn>
+          <v-btn v-f :disabled="step >= items.length" @click="next">Next</v-btn>
         </template>
         <template v-slot:prev>
           <v-btn :disabled="step <= 1" @click="pervious">Previous</v-btn>
@@ -67,10 +76,18 @@
 </template>
 
 <script lang="ts" setup>
+const date = ref(new Date());
+
+const formattedDate = computed({
+  get() {
+    date.value.toDateString();
+  }, set(new_value) { }
+});
 const step = ref(1);
 const items = [
   { title: 'Personal', subtitle: '', isComplete: false },
   { title: 'Contact', subtitle: '', isComplete: false },
+  { title: 'Organization', subtitle: '', isComplete: false },
   { title: 'Identification', subtitle: '', isComplete: false },
 ];
 
