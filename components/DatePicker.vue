@@ -15,23 +15,23 @@
 
             <div class="d-flex rounded-md elevation-0 ma-1 overflow-hidden">
               <div>
-                <v-text-field density="comfortable" class="elevation-0" type="number" min="1" max="31" :hide-spin-buttons="true"
-                  v-bind="props.props" width="80" menu-icon="" v-model="selectedDay" rounded="0" variant="solo"
-                  hide-details="auto" label="Day"></v-text-field>
+                <v-text-field density="comfortable" class="elevation-0" type="number" min="1" max="31"
+                  :hide-spin-buttons="true" v-bind="props.props" width="80" menu-icon="" v-model="selectedDay" rounded="0"
+                  variant="solo" hide-details="auto" label="Day"></v-text-field>
               </div>
 
               <div>
 
-                <v-text-field density="comfortable" class="elevation-0" type="number" min="1" max="12" :hide-spin-buttons="true"
-                  v-bind="props.props" width="90" menu-icon="" v-model="selectedMonth" rounded="0" variant="solo"
-                  hide-details="auto" label="Month"></v-text-field>
+                <v-text-field density="comfortable" class="elevation-0" type="number" min="1" max="12"
+                  :hide-spin-buttons="true" v-bind="props.props" width="90" menu-icon="" v-model="selectedMonth"
+                  rounded="0" variant="solo" hide-details="auto" label="Month"></v-text-field>
               </div>
 
               <div>
 
-                <v-text-field density="comfortable" class="elevation-0" type="number" :hide-spin-buttons="true" v-bind="props.props" width="100"
-                  menu-icon="" v-model="selectedYear" rounded="0" variant="solo" hide-details="auto"
-                  label="Year"></v-text-field>
+                <v-text-field density="comfortable" class="elevation-0" type="number" :hide-spin-buttons="true"
+                  v-bind="props.props" width="100" menu-icon="" v-model="selectedYear" rounded="0" variant="solo"
+                  hide-details="auto" label="Year"></v-text-field>
               </div>
             </div>
           </div>
@@ -47,6 +47,7 @@
 </template>
 
 <script lang="ts" setup>
+import moment from "moment";
 const model = defineModel();
 
 const props = defineProps(['errors', 'placeholder', 'name', 'icon', 'props'])
@@ -79,6 +80,11 @@ const calendarPickedDate = ref(new Date());
 watch(
   calendarPickedDate,
   () => {
+    // console.log(calendarPickedDate.value.get)
+    const date = moment(calendarPickedDate.value);
+    selectedDay.value = date.get('D');
+    selectedMonth.value = date.get("M") + 1;
+    selectedYear.value = date.get('year');
     hideCalendarPopup();
   },
   { deep: true }

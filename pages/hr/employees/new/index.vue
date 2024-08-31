@@ -2,47 +2,21 @@
   <v-card class="my-4" rounded="lg">
     <v-toolbar color="white">
       <v-toolbar-title color="text-primary">
-        <v-icon>mdi-account-box-plus-outline</v-icon>
+        <v-icon>mdi-account-plus-outline</v-icon>
         <span class="mx-2 font-weight-bold">
-          Create New Member
+          Create New Employee
         </span>
       </v-toolbar-title>
     </v-toolbar>
     <v-divider></v-divider>
-
     <v-stepper v-model="step" show-actions editable>
       <v-stepper-header>
         <template v-for="(item, index) of items ">
           <v-stepper-item :complete="item.isComplete" :title="item.title" :subtitle="item.subtitle" :value="index + 1" />
           <v-divider v-if="index < (items.length - 1)"></v-divider>
         </template>
-
-
-
       </v-stepper-header>
       <v-stepper-window style="min-height: 24rem;">
-
-        <v-stepper-window-item :value="1">
-          <create-member-personal-info />
-          <!-- <v-divider class="my-6"></v-divider>
-          <w-id-info class="my-4"/> -->
-
-        </v-stepper-window-item>
-
-        <v-stepper-window-item :value="2">
-          <create-member-contact-info />
-
-        </v-stepper-window-item>
-
-        <v-stepper-window-item :value="3">
-          <date-picker name="Joining Date" />
-          
-
-        </v-stepper-window-item>
-
-        <v-stepper-window-item :value="4">
-          <w-id-info />
-        </v-stepper-window-item>
       </v-stepper-window>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
@@ -54,35 +28,17 @@
       </v-stepper-actions>
     </v-stepper>
   </v-card>
-
-  <!-- 
-  <v-card class="my-4" rounded="lg">
-    <v-toolbar color="white">
-      <v-toolbar-title color="text-primary">
-        <v-icon>mdi-account-box-plus-outline</v-icon>
-        <span class="mx-2 font-weight-bold">
-          Create New Member
-        </span>
-      </v-toolbar-title>
-    </v-toolbar>
-    <v-divider></v-divider>
-    <v-card-text>
-      <create-member-personal-info />
-      <v-divider class="my-4"></v-divider>
-      <create-member-contact-info />
-
-    </v-card-text>
-  </v-card> -->
 </template>
 
 <script lang="ts" setup>
-
 const step = ref(1);
 const items = [
   { title: 'Personal', subtitle: '', isComplete: false },
+  { title: 'ID', subtitle: '', isComplete: false },
   { title: 'Contact', subtitle: '', isComplete: false },
-  { title: 'Organization', subtitle: '', isComplete: false },
-  { title: 'Identification', subtitle: '', isComplete: false },
+  { title: 'Qualifications', subtitle: '', isComplete: false },
+  { title: 'Employment', subtitle: '', isComplete: false },
+  { title: 'Salary', subtitle: '', isComplete: false },
 ];
 
 function next() {
