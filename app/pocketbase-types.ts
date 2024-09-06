@@ -7,6 +7,7 @@ import type { RecordService } from 'pocketbase'
 
 export enum Collections {
 	AllowanceOptions = "allowance_options",
+	DeductionOptions = "deduction_options",
 	Roles = "roles",
 	Users = "users",
 }
@@ -36,9 +37,15 @@ export type AuthSystemFields<T = never> = {
 // Record types for each collection
 
 export type AllowanceOptionsRecord = {
-	amount?: number
+	amount: number
 	description?: HTMLString
-	title?: string
+	title: string
+}
+
+export type DeductionOptionsRecord = {
+	amount: number
+	description?: HTMLString
+	title: string
 }
 
 export type RolesRecord<Tpermissions = unknown> = {
@@ -61,6 +68,7 @@ export type UsersRecord = {
 
 // Response types include system fields and match responses from the PocketBase API
 export type AllowanceOptionsResponse<Texpand = unknown> = Required<AllowanceOptionsRecord> & BaseSystemFields<Texpand>
+export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOptionsRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -68,12 +76,14 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 
 export type CollectionRecords = {
 	allowance_options: AllowanceOptionsRecord
+	deduction_options: DeductionOptionsRecord
 	roles: RolesRecord
 	users: UsersRecord
 }
 
 export type CollectionResponses = {
 	allowance_options: AllowanceOptionsResponse
+	deduction_options: DeductionOptionsResponse
 	roles: RolesResponse
 	users: UsersResponse
 }
@@ -83,6 +93,7 @@ export type CollectionResponses = {
 
 export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'allowance_options'): RecordService<AllowanceOptionsResponse>
+	collection(idOrName: 'deduction_options'): RecordService<DeductionOptionsResponse>
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }

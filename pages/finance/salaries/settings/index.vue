@@ -1,7 +1,9 @@
 <template>
   <allowances-options-create @saved="handleNewAllowance" :show="createAllowanceModal.isShown.value"
     @close="createAllowanceModal.hide" />
-  
+
+  <deductions-options-create @saved="handleNewDeduction" :show="createDeductionModal.isShown.value"
+    @close="createDeductionModal.hide" />
   <v-card class="my-4" rounded="lg">
     <v-toolbar color="white">
       <v-toolbar-title>
@@ -16,8 +18,9 @@
       <div class="d-flex justify-center align-center">
         <p class="text-h5 font-weight-bold my-4"> Allowances </p>
         <v-spacer></v-spacer>
-        <v-btn color="primary" @click="createAllowanceModal.show" prepend-icon="mdi-plus-thick" variant="tonal">Create
-          new</v-btn>
+        <v-btn color="primary" @click="createAllowanceModal.show" prepend-icon="mdi-plus-thick" variant="tonal">
+          Create allowance
+        </v-btn>
       </div>
       <allowances-options-list />
     </v-card-text>
@@ -25,7 +28,14 @@
       <v-divider></v-divider>
     </div>
     <v-card-text class="my-4">
-      <p class="text-h5 font-weight-bold">Deductions</p>
+      <div class="d-flex justify-center align-center">
+        <p class="text-h5 font-weight-bold my-4"> Deductions </p>
+        <v-spacer></v-spacer>
+        <v-btn color="primary" @click="createDeductionModal.show" prepend-icon="mdi-plus-thick" variant="tonal">
+          Create deduction
+        </v-btn>
+      </div>
+      <deductions-options-list />
     </v-card-text>
   </v-card>
 </template>
@@ -35,6 +45,11 @@
 const createAllowanceModal = useModal();
 function handleNewAllowance() {
   createAllowanceModal.hide();
+}
+
+const createDeductionModal = useModal();
+function handleNewDeduction() {
+  createDeductionModal.hide();
 }
 
 
