@@ -13,24 +13,24 @@
           <div v-bind="props">
             <!-- <text-field :name="name" :icon="icon" v-model="model" /> -->
 
-            <div class="d-flex rounded-md elevation-0 ma-1 overflow-hidden">
+            <div class="d-flex rounded-md elevation-0 my-1 overflow-hidden">
               <div>
-                <v-text-field density="comfortable" class="elevation-0" type="number" min="1" max="31"
-                  :hide-spin-buttons="true" v-bind="props.props" width="80" menu-icon="" v-model="selectedDay" rounded="0"
+                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" min="1" max="31"
+                  :hide-spin-buttons="true" v-bind="props.props" width="60" menu-icon="" v-model="selectedDay" rounded="0"
                   variant="solo" hide-details="auto" label="Day"></v-text-field>
               </div>
 
               <div>
 
-                <v-text-field density="comfortable" class="elevation-0" type="number" min="1" max="12"
-                  :hide-spin-buttons="true" v-bind="props.props" width="90" menu-icon="" v-model="selectedMonth"
+                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" min="1" max="12"
+                  :hide-spin-buttons="true" v-bind="props.props" width="70" menu-icon="" v-model="selectedMonth"
                   rounded="0" variant="solo" hide-details="auto" label="Month"></v-text-field>
               </div>
 
               <div>
 
-                <v-text-field density="comfortable" class="elevation-0" type="number" :hide-spin-buttons="true"
-                  v-bind="props.props" width="100" menu-icon="" v-model="selectedYear" rounded="0" variant="solo"
+                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" :hide-spin-buttons="true"
+                  v-bind="props.props" width="90" menu-icon="" v-model="selectedYear" rounded="0" variant="solo"
                   hide-details="auto" label="Year"></v-text-field>
               </div>
             </div>

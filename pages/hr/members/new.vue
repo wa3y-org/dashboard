@@ -40,9 +40,9 @@
 
         </v-stepper-window-item>
 
-        <v-stepper-window-item :value="4">
+        <!-- <v-stepper-window-item :value="4">
           <w-id-info />
-        </v-stepper-window-item>
+        </v-stepper-window-item> -->
       </v-stepper-window>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
@@ -82,7 +82,7 @@ const items = [
   { title: 'Personal', subtitle: '', isComplete: false },
   { title: 'Contact', subtitle: '', isComplete: false },
   { title: 'Organization', subtitle: '', isComplete: false },
-  { title: 'Identification', subtitle: '', isComplete: false },
+  // { title: 'Identification', subtitle: '', isComplete: false },
 ];
 
 function next() {

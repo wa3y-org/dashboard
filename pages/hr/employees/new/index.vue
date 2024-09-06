@@ -17,6 +17,21 @@
         </template>
       </v-stepper-header>
       <v-stepper-window style="min-height: 24rem;">
+        <v-stepper-window-item :value="1">
+          <create-employee-personal-info />
+        </v-stepper-window-item>
+        <!-- <v-stepper-window-item :value="2">
+          <w-id-info />
+        </v-stepper-window-item> -->
+        <v-stepper-window-item :value="2">
+          <create-employee-contact-info />
+        </v-stepper-window-item>
+        <v-stepper-window-item :value="3">
+          <create-employee-employment-info />
+        </v-stepper-window-item>
+        <v-stepper-window-item :value="4">
+          <create-employee-salary />
+        </v-stepper-window-item>
       </v-stepper-window>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
@@ -34,9 +49,9 @@
 const step = ref(1);
 const items = [
   { title: 'Personal', subtitle: '', isComplete: false },
-  { title: 'ID', subtitle: '', isComplete: false },
+  // { title: 'ID', subtitle: '', isComplete: false },
   { title: 'Contact', subtitle: '', isComplete: false },
-  { title: 'Qualifications', subtitle: '', isComplete: false },
+  // { title: 'Qualifications', subtitle: '', isComplete: false },
   { title: 'Employment', subtitle: '', isComplete: false },
   { title: 'Salary', subtitle: '', isComplete: false },
 ];
