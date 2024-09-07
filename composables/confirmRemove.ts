@@ -21,8 +21,7 @@ export function useConfirmRemove() {
       showCancelButton: false,
       focusConfirm: false,
       confirmButtonColor: "#d333",
-      confirmButtonText:
-        "<p class='font-weight-black'> Remove (permanently) </p>",
+      confirmButtonText: "<p class='font-weight-black'> Remove </p>",
       denyButtonText: "cancel",
       denyButtonColor: "#aaa",
       showDenyButton: true,
@@ -48,6 +47,11 @@ export function useConfirmRemove() {
         Swal.showLoading();
         await removeFn();
         Swal.close();
+        Swal.fire({
+          title: "Removed!",
+          text: "Your item has been removed.",
+          icon: "success",
+        });
       },
     });
   }

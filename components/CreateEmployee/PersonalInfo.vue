@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row class="px-4 mt-4">
     <v-col>
       <AvatarPicker />
     </v-col>

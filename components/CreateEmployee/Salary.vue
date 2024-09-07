@@ -1,14 +1,15 @@
 <template>
-  <div>
+  <div class="px-4 pt-4">
     <NumberField name="Basic Salary" placeholder="Enter employee basic salary" :props="{
       step: 0.1,
       suffix: 'USD/month',
     }" />
   </div>
-  
-  <v-divider><h3 class="text-h5 my-12 font-weight-bold">Fixed Allowances</h3></v-divider>
-  <v-divider><h3 class="text-h5 my-12 font-weight-bold">Fixed Deductions</h3></v-divider>
-  
+  <v-divider class="my-8"></v-divider>
+
+  <create-employee-salary-select-allowances class="px-4" />
+  <v-divider class="my-8"></v-divider>
+  <create-employee-salary-select-deductions class="px-4"   />
 </template>
 
 <script lang="ts" setup>

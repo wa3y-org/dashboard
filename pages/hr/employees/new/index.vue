@@ -16,7 +16,7 @@
           <v-divider v-if="index < (items.length - 1)"></v-divider>
         </template>
       </v-stepper-header>
-      <v-stepper-window style="min-height: 24rem;">
+      <v-stepper-window style="min-height: 24rem;" class="pa-0 ma-0 my-4">
         <v-stepper-window-item :value="1">
           <create-employee-personal-info />
         </v-stepper-window-item>
@@ -33,6 +33,7 @@
           <create-employee-salary />
         </v-stepper-window-item>
       </v-stepper-window>
+      <v-divider class="my-4"></v-divider>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
           <v-btn v-f :disabled="step >= items.length" @click="next">Next</v-btn>
