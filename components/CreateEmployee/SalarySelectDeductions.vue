@@ -29,7 +29,7 @@
         </tr>
         <tr class="bg-red-lighten-4 ">
           <td colspan="4" class="font-weight-bold text-end text-h6 border">
-            Total :  <w-usd :amount="totalAmount" />
+            Total : <w-usd :amount="totalAmount" />
           </td>
         </tr>
       </tbody>
@@ -41,6 +41,10 @@
 
 <script lang="ts" setup>
 import type { DeductionOptionsRecord } from "~/app/pocketbase-types";
+import type { EmployeesRecord } from "~/app/pocketbase-types";
+
+const employee = defineModel<EmployeesRecord>({ required: true })
+
 
 const selectedDeductions: Ref<DeductionOptionsRecord[]> = ref([])
 
@@ -53,6 +57,15 @@ function setEmployeeDeductions() {
 
   selectedDeductions.value = []
 }
+
+watch(employeeDeductions.value, () => {
+  const ids = [];
+  for (let deduction of employeeDeductions.value) {
+    ids.push(deduction.id)
+  }
+
+  employee.value.deductions = ids;
+})
 
 const totalAmount = computed(() => {
   let total = 0;

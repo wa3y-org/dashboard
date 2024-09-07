@@ -6,7 +6,8 @@
         multiple: true
       }" :hidden="employeeAllowances.values()" />
       <span class="mx-2"></span>
-      <v-btn :disabled="selectedAllowances.length < 1" color="primary" size="large" icon="mdi-plus-thick" rounded="lg" @click="setEmployeeAllowances"></v-btn>
+      <v-btn :disabled="selectedAllowances.length < 1" color="primary" size="large" icon="mdi-plus-thick" rounded="lg"
+        @click="setEmployeeAllowances"></v-btn>
     </div>
     <v-table class="border rounded-lg my-4">
       <thead class="bg-grey-lighten-2 font-weight-black">
@@ -28,18 +29,22 @@
         </tr>
         <tr class="bg-green-lighten-4 ">
           <td colspan="4" class="font-weight-bold text-end text-h6 border">
-            Total :  <w-usd :amount="totalAmount" />
+            Total : <w-usd :amount="totalAmount" />
           </td>
         </tr>
       </tbody>
 
     </v-table>
-    
+
   </div>
 </template>
 
 <script lang="ts" setup>
 import type { AllowanceOptionsRecord } from "~/app/pocketbase-types";
+import type { EmployeesRecord } from "~/app/pocketbase-types";
+
+const employee = defineModel<EmployeesRecord>({ required: true })
+
 
 const selectedAllowances: Ref<AllowanceOptionsRecord[]> = ref([])
 
@@ -52,6 +57,15 @@ function setEmployeeAllowances() {
 
   selectedAllowances.value = []
 }
+
+watch(employeeAllowances.value, () => {
+  const ids = [];
+  for (let allowance of employeeAllowances.value) {
+    ids.push(allowance.id)
+  }
+
+  employee.value.allowances = ids;
+})
 
 const totalAmount = computed(() => {
   let total = 0;
@@ -73,6 +87,4 @@ async function confirmRemoveAllowance(allowance: AllowanceOptionsRecord) {
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

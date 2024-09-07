@@ -29,9 +29,9 @@
 
               <div>
 
-                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" :hide-spin-buttons="true"
-                  v-bind="props.props" width="90" menu-icon="" v-model="selectedYear" rounded="0" variant="solo"
-                  hide-details="auto" label="Year"></v-text-field>
+                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number"
+                  :hide-spin-buttons="true" v-bind="props.props" width="90" menu-icon="" v-model="selectedYear"
+                  rounded="0" variant="solo" hide-details="auto" label="Year"></v-text-field>
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 import moment from "moment";
-const model = defineModel();
+const model = defineModel<Date>();
 
 const props = defineProps(['errors', 'placeholder', 'name', 'icon', 'props'])
 
@@ -82,10 +82,15 @@ watch(
   () => {
     // console.log(calendarPickedDate.value.get)
     const date = moment(calendarPickedDate.value);
+    
     selectedDay.value = date.get('D');
     selectedMonth.value = date.get("M") + 1;
     selectedYear.value = date.get('year');
+
+    model.value = new Date(`${selectedYear.value}-${selectedMonth.value}-${selectedDay.value}`)
+    
     hideCalendarPopup();
+    
   },
   { deep: true }
 )

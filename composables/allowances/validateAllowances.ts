@@ -15,7 +15,7 @@ export function validateAllowance(allowance: AllowanceOptionsRecord) {
     errors.title.push("Allowance title must be at least two characters long");
   }
 
-  if (!v8n().number().greaterThan(0.009).test(allowance.amount)) {
+  if (!v8n().numeric().greaterThan(0.009).test(allowance.amount)) {
     errors.amount.push("Minimum amount must be 0.01");
   }
 

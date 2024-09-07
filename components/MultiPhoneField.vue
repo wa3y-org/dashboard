@@ -1,5 +1,5 @@
 <template>
-  <v-combobox v-bind="props.props" multiple hide-details="auto" rounded="lg" variant="outlined" class="font-weight-bold"
+  <v-combobox v-model="model" v-bind="props.props" multiple hide-details="auto" rounded="lg" variant="outlined" class="font-weight-bold"
     :placeholder="placeholder">
     <template v-slot:prepend-inner>
       <div class="mx-2 text-primary text-no-wrap">
