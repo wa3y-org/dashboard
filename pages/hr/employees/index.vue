@@ -1,5 +1,5 @@
 <template>
-  <v-card rounded="lg" >
+  <v-card rounded="lg" class="my-4">
     <v-toolbar color="transparent">
       <v-toolbar-title class="font-weight-bold">
         <v-icon>mdi-account-multiple-outline</v-icon>

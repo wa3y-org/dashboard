@@ -6,14 +6,10 @@ import { NewUserDefaultPassword } from "../users/domain/models/User";
 
 const pb = usePocketBase();
 
-export async function createEmployee(
+export async function updateEmployee(
   employee: EmployeesRecord | EmployeesResponse
 ) {
   const data = new FormData();
-  data.append("password", NewUserDefaultPassword);
-  data.append("passwordConfirm", NewUserDefaultPassword);
-  data.append("verified", '');
-  data.append("emailVisibility", '1');
 
   for (let key of Object.keys(employee)) {
     if (key == "allowances" || key == "deductions") continue;
@@ -25,12 +21,23 @@ export async function createEmployee(
     data.append(key, employee[key] || "");
   }
 
-  for (let allowance of employee.allowances || []) {
+  alert(employee.allowances)
+  alert(employee.deductions)
+
+  for (let allowance of employee.allowances || ['']) {
     data.append("allowances", allowance);
   }
 
-  for (let deduction of employee.deductions || []) {
-    data.append("allowances", deduction);
+  for (let deduction of employee.deductions || ['']) {
+    data.append("deductions", deduction);
+  }
+
+  if (!data.has('allowances')) {
+    data.append('allowances', []);
+  }
+
+  if (!data.has('deductions')) {
+    data.append('deductions', []);
   }
 
   data.set(
@@ -45,6 +52,5 @@ export async function createEmployee(
   );
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
-  const record = await pb.collection("employees").create(data);
-  await pb.collection("employees").requestVerification(record.email);
+  const record = await pb.collection("employees").update(employee.id, data);
 }

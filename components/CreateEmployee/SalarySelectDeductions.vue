@@ -67,6 +67,21 @@ watch(employeeDeductions.value, () => {
   employee.value.deductions = ids;
 })
 
+onMounted(() => {
+  if (employee.value.expand && employee.value.expand.deductions) {
+    for (let deduction of employee.value.expand.deductions) {
+      employeeDeductions.value.add(deduction)
+    }
+  }
+})
+// watch(() => employee.value, () => {
+//   if (employee.value.expand && employee.value.expand.deductions) {
+//     for (let deduction of employee.value.expand.deductions) {
+//       employeeDeductions.value.add(deduction)
+//     }
+//   }
+// }, { deep: true })
+
 const totalAmount = computed(() => {
   let total = 0;
   for (let deduction of employeeDeductions.value) {

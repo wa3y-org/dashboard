@@ -82,18 +82,34 @@ watch(
   () => {
     // console.log(calendarPickedDate.value.get)
     const date = moment(calendarPickedDate.value);
-    
+
     selectedDay.value = date.get('D');
     selectedMonth.value = date.get("M") + 1;
     selectedYear.value = date.get('year');
 
     model.value = new Date(`${selectedYear.value}-${selectedMonth.value}-${selectedDay.value}`)
-    
+
     hideCalendarPopup();
-    
+
   },
   { deep: true }
 )
+
+watch(model, () => {
+  const date = moment(model.value);
+
+  selectedDay.value = date.get('D');
+  selectedMonth.value = date.get("M") + 1;
+  selectedYear.value = date.get('year');
+}, { deep: true });
+
+onMounted(() => {
+  const date = moment(model.value);
+
+  selectedDay.value = date.get('D');
+  selectedMonth.value = date.get("M") + 1;
+  selectedYear.value = date.get('year');
+})
 </script>
 
 <style></style>

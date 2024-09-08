@@ -4,22 +4,24 @@
     <v-data-table :loading="employeesFetcher.loading.isLoading.value" :headers="headers"
       :items="employeesFetcher.employeesList.value">
       <template v-slot:item.avatar="{ item }">
+        <NuxtLink :to="`/hr/employees/${item.id}`">
         <div class="d-flex align-center">
-          <v-avatar cover size="84" rounded="lg"  class="my-2 elevation-1">
+            <v-avatar cover size="84" rounded="lg" class="my-2 elevation-1">
 
-            <v-img :src="getAvatarUrl(item)" alt="employee avatar image" />
+              <v-img :src="getAvatarUrl(item)" alt="employee avatar image" />
 
-          </v-avatar>
-          <div class="d-inline-block mx-4">
-            <span class="font-weight-bold text-nowrap">{{ item.name }}</span>
-            <p class="text-grey-darken-2"> {{ item.email }}</p>
-            <p class="mt-2">
-              <v-chip density="compact" color="primary" class="px-4" label>
-                {{ item.sex }} ({{ calcAge(item.birth_date?.toString() || '') }})
-              </v-chip>
-            </p>
+            </v-avatar>
+            <div class="d-inline-block mx-4">
+              <span class="font-weight-bold text-nowrap">{{ item.name }}</span>
+              <p class="text-grey-darken-2"> {{ item.email }}</p>
+              <p class="mt-2">
+                <v-chip density="compact" color="primary" class="px-4" label>
+                  {{ item.sex }} ({{ calcAge(item.birth_date?.toString() || '') }})
+                </v-chip>
+              </p>
+            </div>
           </div>
-        </div>
+        </NuxtLink>
       </template>
 
       <template v-slot:item.position="{ item }">

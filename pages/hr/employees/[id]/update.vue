@@ -2,11 +2,16 @@
   <v-card class="my-4" rounded="lg" :disabled="loading.isLoading.value" :loading="loading.isLoading.value">
     <v-toolbar color="white">
       <v-toolbar-title color="text-primary">
-        <v-icon>mdi-account-plus-outline</v-icon>
+        <v-icon>mdi-account-edit-outline</v-icon>
         <span class="mx-2 font-weight-bold">
-          Create New Employee
+          Update Employee
         </span>
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      {{ employee.name }}
+      <span class="text-grey mx-2">
+        ({{ employee.email }})
+      </span>
     </v-toolbar>
     <v-divider></v-divider>
     <v-stepper v-model="step" show-actions editable>
@@ -51,7 +56,7 @@
 <script lang="ts" setup>
 import type { EmployeesRecord } from "~/app/pocketbase-types";
 import { validateEmployee } from "~/app/modules/employees/validateEmployee";
-import { createEmployee } from "~/app/modules/employees/create";
+import { updateEmployee } from "~/app/modules/employees/update";
 const step = ref(1);
 const items = [
   { title: 'Personal', subtitle: '', isComplete: false },
@@ -70,7 +75,9 @@ function pervious() {
   step.value -= 1;
 }
 
-const employee: Ref<EmployeesRecord> = ref({
+const id = useRoute().params.id;
+
+const employee: Ref<EmployeesRecord | any> = ref({
   basic_salary: 0,
   name: '',
   address: '',
@@ -90,10 +97,18 @@ const employee: Ref<EmployeesRecord> = ref({
   starting_date: null,
 })
 
+
+const { loadOneEmployee } = useEmployees();
+
+onMounted(async () => {
+  loading.start();
+  employee.value = await loadOneEmployee(id.toString());
+  loading.end();
+});
+
 const isFirstAttempt = ref(true);
 
 const validationErrors = computed(() => {
-  if (isFirstAttempt.value) return { errors: [] }
   return validateEmployee(employee.value);
 });
 provide('validationErrors', validationErrors);
@@ -120,16 +135,18 @@ function jumpToValidationErrors() {
 
 const loading = useLoading();
 async function save() {
-  isFirstAttempt.value = false;
+
   if (useErrors().hasError(validationErrors.value)) {
     jumpToValidationErrors();
     return;
   }
 
   loading.start()
-  await createEmployee(employee.value);
+  await updateEmployee(employee.value);
   loading.end();
-} 
+
+  alert('done')
+}
 
 </script>
 

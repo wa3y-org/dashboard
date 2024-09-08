@@ -21,7 +21,7 @@
         icon="mdi-delete">
 
       </v-btn>
-      
+
       <span class="mx-2"></span>
       <v-btn color="success" class="my-2 px-4" v-if="previewURL" rounded="lg" variant="tonal" @click="openImageFilePicker"
         icon="mdi-file-replace-outline">
@@ -40,6 +40,7 @@
 <script lang="ts" setup>
 
 const image = defineModel('image', { required: true })
+const props = defineProps(['pocketUrl'])
 const imageFilePicker: Ref<HTMLElement | null> = ref(null);
 
 const previewURL = computed(() => {
@@ -48,7 +49,7 @@ const previewURL = computed(() => {
       return URL.createObjectURL(image.value);
     }
     else if (typeof image.value == "string") {
-      return image.value;
+      return props.pocketUrl;
     }
   }
   return null;

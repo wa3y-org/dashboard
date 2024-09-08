@@ -1,4 +1,4 @@
-import { getAllEmployees } from "~/app/modules/employees/get";
+import { getAllEmployees, getOneEmployee } from "~/app/modules/employees/get";
 import type { EmployeesRecord } from "~/app/pocketbase-types";
 
 export function useEmployees() {
@@ -11,9 +11,18 @@ export function useEmployees() {
     loading.end();
   }
 
+  async function loadOneEmployee(id: string) {
+    loading.start();
+    const record = await getOneEmployee(id);
+    loading.end();
+
+    return record;
+  }
+
   return {
     loading,
     employeesList,
     loadEmployees,
+    loadOneEmployee,
   };
 }

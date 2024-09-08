@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <h3 class="text-h5 mb-4 mt-8 font-weight-bold">Fixed Allowances</h3>
     <div class="d-flex align-center rounded-lg">
       <w-select-allowances v-model="selectedAllowances" :props="{
@@ -66,6 +67,21 @@ watch(employeeAllowances.value, () => {
 
   employee.value.allowances = ids;
 })
+
+onMounted(() => {
+  if (employee.value.expand && employee.value.expand.allowances) {
+    for (let allowance of employee.value.expand.allowances) {
+      employeeAllowances.value.add(allowance)
+    }
+  }
+})
+// watch(() => employee.value, () => {
+//   if (employee.value.expand && employee.value.expand.allowances) {
+//     for (let allowance of employee.value.expand.allowances) {
+//       employeeAllowances.value.add(allowance)
+//     }
+//   }
+// }, { deep: true })
 
 const totalAmount = computed(() => {
   let total = 0;
