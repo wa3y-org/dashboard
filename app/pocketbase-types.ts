@@ -61,7 +61,6 @@ export enum EmployeesEmploymentStatusOptions {
 	"In_Vacation" = "In_Vacation",
 }
 export type EmployeesRecord<Tphone_numbers = unknown> = {
-	Sex?: EmployeesSexOptions
 	address?: string
 	allowances?: RecordIdString[]
 	avatar?: string
@@ -76,6 +75,7 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 	number_of_children?: number
 	phone_numbers?: null | Tphone_numbers
 	qualification?: string
+	sex?: EmployeesSexOptions
 	specialization?: string
 	starting_date?: IsoDateString
 }

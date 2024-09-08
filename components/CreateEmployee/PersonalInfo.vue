@@ -8,7 +8,7 @@
       <text-field :errors="validationErrors.name" v-model="employee.name" placeholder="Enter the name of the new member" name="name" />
       <v-row class="my-3 py-0">
         <v-col class="" cols="6">
-          <w-sex-picker v-model="employee.Sex" />
+          <w-sex-picker v-model="employee.sex" />
         </v-col>
         <v-col class="" cols="6">
           <DatePicker name="Birth Date" v-model="employee.birth_date" />
