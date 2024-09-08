@@ -5,8 +5,7 @@
       <v-toolbar color="">
         <v-tabs v-model="tab">
           <v-tab value="employee">Employee</v-tab>
-          <v-tab value="employment">Employment</v-tab>
-          <v-tab value="salary">Salary</v-tab>
+          <v-tab value="salary_archive">Salary Archive</v-tab>
           <v-spacer></v-spacer>
         </v-tabs>
         <v-spacer></v-spacer>
@@ -19,12 +18,10 @@
       <v-card-text>
         <v-tabs-window v-model="tab">
           <v-tabs-window-item value="employee" transition="fade-transition">
-            employee information
+            <employees-employee-info :employee="employee" />
           </v-tabs-window-item>
-          <v-tabs-window-item value="employment" transition="fade-transition">
-            employment information
-          </v-tabs-window-item>
-          <v-tabs-window-item value="salary" transition="fade-transition">
+          
+          <v-tabs-window-item value="salary_archive" transition="fade-transition">
             salary information
           </v-tabs-window-item>
         </v-tabs-window>

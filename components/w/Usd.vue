@@ -1,5 +1,5 @@
 <template>
-  <span class="mx-1 text-success font-weight-bold" :props="props.props"> {{ amount || 'N/A' }} USD</span>
+  <span class="mx-1 text-success font-weight-black" :props="props.props"> {{ amount || 'N/A' }} USD</span>
 </template>
 
 <script lang="ts" setup>
