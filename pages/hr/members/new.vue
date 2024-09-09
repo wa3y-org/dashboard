@@ -40,9 +40,9 @@
 
         </v-stepper-window-item>
 
-        <v-stepper-window-item :value="4">
+        <!-- <v-stepper-window-item :value="4">
           <w-id-info />
-        </v-stepper-window-item>
+        </v-stepper-window-item> -->
       </v-stepper-window>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
@@ -76,19 +76,13 @@
 </template>
 
 <script lang="ts" setup>
-const date = ref(new Date());
 
-const formattedDate = computed({
-  get() {
-    date.value.toDateString();
-  }, set(new_value) { }
-});
 const step = ref(1);
 const items = [
   { title: 'Personal', subtitle: '', isComplete: false },
   { title: 'Contact', subtitle: '', isComplete: false },
   { title: 'Organization', subtitle: '', isComplete: false },
-  { title: 'Identification', subtitle: '', isComplete: false },
+  // { title: 'Identification', subtitle: '', isComplete: false },
 ];
 
 function next() {
