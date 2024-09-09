@@ -2,11 +2,21 @@
   <div class="my-4">
     <loading-from-backend v-if="loading.isLoading.value" />
     <v-card rounded="lg" v-else>
-      <v-toolbar color="">
-        <v-tabs v-model="tab">
-          <v-tab value="employee">Employee</v-tab>
-          <v-tab value="salary_archive">Salary Archive</v-tab>
+      <v-toolbar color="transparent">
+        <v-tabs v-model="tab" >
+          <v-tab value="employee" class="font-weight-black">
+            <v-icon size="x-large" class="mx-2">mdi-account-tie</v-icon>
+            Employee
+          </v-tab>
+          <v-tab value="salary_archive" class="font-weight-black">
+            <v-icon size="x-large" class="mx-2">mdi-archive-outline</v-icon>
+            Salary Archive
+          </v-tab>
           <v-spacer></v-spacer>
+          <v-tab value="settings" class="font-weight-black">
+            <v-icon size="x-large" class="mx-2">mdi-account-settings-outline</v-icon>
+            setting
+          </v-tab>
         </v-tabs>
         <v-spacer></v-spacer>
         <div class="mx-4">
