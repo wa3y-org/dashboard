@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-table class="border-xl rounded-xl font-weight-bold text-h6 ">
+    <v-table class="border-xl elevation-2 mx-4 mb-8 border-success rounded-xl font-weight-black text-center">
       <tr>
         <td class="border pa-4">
           Salary :
@@ -12,7 +12,7 @@
         <td class="border pa-4">
           Deductions : <w-usd :amount="totalDeductionsAmount" />
         </td>
-        <td class="text-end px-4">
+        <td class="px-4">
           Total: <w-usd :amount="totalSalary" /> /month
         </td>
       </tr>

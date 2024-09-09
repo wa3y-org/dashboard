@@ -12,8 +12,8 @@ export async function createEmployee(
   const data = new FormData();
   data.append("password", NewUserDefaultPassword);
   data.append("passwordConfirm", NewUserDefaultPassword);
-  data.append("verified", '');
-  data.append("emailVisibility", '1');
+  data.append("verified", "");
+  data.append("emailVisibility", "1");
 
   for (let key of Object.keys(employee)) {
     if (key == "allowances" || key == "deductions") continue;
@@ -30,7 +30,7 @@ export async function createEmployee(
   }
 
   for (let deduction of employee.deductions || []) {
-    data.append("allowances", deduction);
+    data.append("deductions", deduction);
   }
 
   data.set(
@@ -47,4 +47,6 @@ export async function createEmployee(
 
   const record = await pb.collection("employees").create(data);
   await pb.collection("employees").requestVerification(record.email);
+
+  return record;
 }

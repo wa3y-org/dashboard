@@ -142,10 +142,11 @@ async function save() {
   }
 
   loading.start()
-  await updateEmployee(employee.value);
+  const record = await updateEmployee(employee.value);
   loading.end();
 
-  alert('done')
+  useRouter().push(`/hr/employees/${record.id}`)
+
 }
 
 </script>

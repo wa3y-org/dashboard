@@ -21,8 +21,7 @@ export async function updateEmployee(
     data.append(key, employee[key] || "");
   }
 
-  alert(employee.allowances)
-  alert(employee.deductions)
+ 
 
   for (let allowance of employee.allowances || ['']) {
     data.append("allowances", allowance);
@@ -53,4 +52,6 @@ export async function updateEmployee(
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
   const record = await pb.collection("employees").update(employee.id, data);
+
+  return record;
 }

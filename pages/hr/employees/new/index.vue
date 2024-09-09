@@ -127,9 +127,12 @@ async function save() {
   }
 
   loading.start()
-  await createEmployee(employee.value);
+  const record = await createEmployee(employee.value);
   loading.end();
-} 
+
+
+  useRouter().push(`/hr/employees/${record.id}`)
+}
 
 </script>
 
