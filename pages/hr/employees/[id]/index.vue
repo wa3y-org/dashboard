@@ -3,7 +3,7 @@
     <loading-from-backend v-if="loading.isLoading.value" />
     <v-card rounded="lg" v-else>
       <v-toolbar color="transparent">
-        <v-tabs v-model="tab" >
+        <v-tabs v-model="tab">
           <v-tab value="employee" class="font-weight-black">
             <v-icon size="x-large" class="mx-2">mdi-account-tie</v-icon>
             Employee
@@ -20,8 +20,9 @@
         </v-tabs>
         <v-spacer></v-spacer>
         <div class="mx-4">
-          
-          <v-btn :to="`/hr/employees/${id}/update`" color="info" variant="elevated" prepend-icon="mdi-pencil">Update</v-btn>
+
+          <v-btn :to="`/hr/employees/${id}/update`" color="info" variant="elevated"
+            prepend-icon="mdi-pencil">Update</v-btn>
         </div>
       </v-toolbar>
       <v-divider></v-divider>
@@ -30,9 +31,13 @@
           <v-tabs-window-item value="employee" transition="fade-transition">
             <employees-employee-info :employee="employee" />
           </v-tabs-window-item>
-          
+
           <v-tabs-window-item value="salary_archive" transition="fade-transition">
             salary information
+          </v-tabs-window-item>
+
+          <v-tabs-window-item value="settings" transition="fade-transition">
+            <employees-employee-settings :employee="employee" />
           </v-tabs-window-item>
         </v-tabs-window>
       </v-card-text>
