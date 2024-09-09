@@ -33,9 +33,11 @@ const loading = useLoading();
 async function confirmRemove() {
   const isConfirmed = (await remove.confirm()).isConfirmed;
   if (isConfirmed) {
-    const response = await deleteEmployee(props.employee?.id || '')
-    console.log('Deleted: ',response);
-    useRouter().replace('/hr/employees')
+    remove.doRemove(async () => {
+      const response = await deleteEmployee(props.employee?.id || '')
+      console.log('Deleted: ',response);
+      useRouter().replace('/hr/employees')
+    });
   }
 }
 </script>
