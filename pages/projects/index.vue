@@ -10,7 +10,8 @@
         class="mx-4">Create Project</v-btn>
     </v-toolbar>
     <v-divider></v-divider>
-    <v-card-text class="pa-8">
+    <v-card-text class="">
+      <projects-list />
     </v-card-text>
   </v-card>
 </template>
