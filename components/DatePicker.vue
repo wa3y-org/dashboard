@@ -96,19 +96,31 @@ watch(
 )
 
 watch(model, () => {
-  const date = moment(model.value);
-
-  selectedDay.value = date.get('D');
-  selectedMonth.value = date.get("M") + 1;
-  selectedYear.value = date.get('year');
+  if (model.value) {
+    const date = moment(model.value);
+  
+    selectedDay.value = date.get('D');
+    selectedMonth.value = date.get("M") + 1;
+    selectedYear.value = date.get('year');
+  }else {
+    selectedDay.value = null;
+    selectedMonth.value = null;
+    selectedYear.value = null;
+  }
 }, { deep: true });
 
 onMounted(() => {
-  const date = moment(model.value);
-
-  selectedDay.value = date.get('D');
-  selectedMonth.value = date.get("M") + 1;
-  selectedYear.value = date.get('year');
+  if (model.value) {
+    const date = moment(model.value);
+  
+    selectedDay.value = date.get('D');
+    selectedMonth.value = date.get("M") + 1;
+    selectedYear.value = date.get('year');
+  }else {
+    selectedDay.value = null;
+    selectedMonth.value = null;
+    selectedYear.value = null;
+  }
 })
 </script>
 

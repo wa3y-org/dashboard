@@ -9,6 +9,7 @@ export enum Collections {
 	AllowanceOptions = "allowance_options",
 	DeductionOptions = "deduction_options",
 	Employees = "employees",
+	Projects = "projects",
 	Roles = "roles",
 	Users = "users",
 }
@@ -80,6 +81,14 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 	starting_date?: IsoDateString
 }
 
+export type ProjectsRecord = {
+	details?: HTMLString
+	end_date?: IsoDateString
+	place?: string
+	starting_date?: IsoDateString
+	title: string
+}
+
 export type RolesRecord<Tpermissions = unknown> = {
 	description?: HTMLString
 	permissions: null | Tpermissions
@@ -102,6 +111,7 @@ export type UsersRecord = {
 export type AllowanceOptionsResponse<Texpand = unknown> = Required<AllowanceOptionsRecord> & BaseSystemFields<Texpand>
 export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOptionsRecord> & BaseSystemFields<Texpand>
 export type EmployeesResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<EmployeesRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
+export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -111,6 +121,7 @@ export type CollectionRecords = {
 	allowance_options: AllowanceOptionsRecord
 	deduction_options: DeductionOptionsRecord
 	employees: EmployeesRecord
+	projects: ProjectsRecord
 	roles: RolesRecord
 	users: UsersRecord
 }
@@ -119,6 +130,7 @@ export type CollectionResponses = {
 	allowance_options: AllowanceOptionsResponse
 	deduction_options: DeductionOptionsResponse
 	employees: EmployeesResponse
+	projects: ProjectsResponse
 	roles: RolesResponse
 	users: UsersResponse
 }
@@ -130,6 +142,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'allowance_options'): RecordService<AllowanceOptionsResponse>
 	collection(idOrName: 'deduction_options'): RecordService<DeductionOptionsResponse>
 	collection(idOrName: 'employees'): RecordService<EmployeesResponse>
+	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }
