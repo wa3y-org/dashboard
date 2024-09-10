@@ -1,13 +1,66 @@
 <template>
-  <div>
-    the project [{{ useRoute().params }}]
-  </div>
+  <v-card class="my-4" rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
+    <v-toolbar color="transparent">
+      <v-tabs v-model="tab">
+        <v-tab value="project" class="font-weight-black"> Project </v-tab>
+        <v-tab value="activities" class="font-weight-black"> Activities </v-tab>
+        <v-tab value="finance" class="font-weight-black"> Finance </v-tab>
+        <v-tab value="staff" class="font-weight-black"> Staff </v-tab>
+        <v-tab value="settings" class="font-weight-black"> Settings </v-tab>
+      </v-tabs>
+
+      <v-spacer></v-spacer>
+      <v-btn color="info" class="rounded-lg mx-4" variant="elevated" :to="`/projects/${projectId}/update`">
+        <v-icon>mdi-pencil</v-icon>
+        <span class="mx-2"></span>
+        Update
+      </v-btn>
+    </v-toolbar>
+    <v-divider></v-divider>
+    <v-card-text class="pa-0">
+      <v-tabs-window v-model="tab">
+        <v-tabs-window-item value="settings" transition="fade-transition">
+          <ProjectsProjectSettings :project="project" />
+        </v-tabs-window-item>
+      </v-tabs-window>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts" setup>
+import type { ProjectsRecord } from "~/app/pocketbase-types";
 
+const projectId = useRoute().params.id;
+const tab = ref('project');
+
+const project: Ref<ProjectsRecord> = ref({
+  title: '',
+  place: '',
+  starting_date: null,
+  end_date: null,
+  details: '',
+})
+
+const loading = useLoading();
+const backendError = useBackendError();
+async function loadProject() {
+  loading.start();
+  const response = await useProjects().getOne(projectId.toString())
+  loading.end();
+
+  if (response.error) {
+    backendError.set(response.error)
+    return;
+  }
+
+  if (response.model) {
+    project.value = response.model;
+  }
+}
+
+onMounted(() => {
+  loadProject();
+});
 </script>
 
-<style>
-
-</style>
+<style></style>
