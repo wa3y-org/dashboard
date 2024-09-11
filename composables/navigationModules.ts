@@ -8,7 +8,7 @@ import { ProjectsModule } from "./NavModules/projects";
 import { ReportsModule } from "./NavModules/reports";
 import { UsersModule } from "./NavModules/users";
 
-const MainNavModules: NavModule[] = [HRModule, ProjectsModule, FinanceModule, ReportsModule, UsersModule];
+const MainNavModules: NavModule[] = [HRModule, ProjectsModule, FinanceModule, ReportsModule/*, UsersModule */];
 
 export function useNavModules() {
   const selectedModule: Ref<NavModule | null> = ref(null);

@@ -2,7 +2,7 @@ import type { NavGroup } from "../types";
 
 export const memberRoutes: NavGroup = [
   {
-    name: "List Members",
+    name: "All Members",
     icon: "mdi-account-box-multiple-outline",
     route: "/hr/members",
     permissions: [],
