@@ -11,15 +11,15 @@
 
       <v-divider></v-divider>
       <v-card-text>
-        <QuillEditor  style="min-height: 200px;" read-only class="w-100 elevation-4 pa-4 rounded-lg" theme="bubble" contentType="html" :content="html" />
+        <div class="">
+          <w-html-view :html="html" />  
+        </div>
       </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts" setup>
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 
 defineProps({
