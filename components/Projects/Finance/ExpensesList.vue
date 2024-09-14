@@ -5,6 +5,14 @@
     <projects-finance-update-project-finance @cancel="cancelUpdate" @saved="handleUpdate"
     :show="updateFinanceModal.isShown.value" :finance="financeToUpdate"  />
   <div>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <div class="font-weight-black text-h6">
+        Total :
+        <w-usd :amount="totalAmount" />
+      </div>
+    </v-card-actions>
+    <v-divider></v-divider>
     <v-data-table :loading="loading.isLoading.value" :headers="headers" :items="expensesList" item-key="id">
       <template v-slot:item.fund_facility="{ item }">
         <span class="font-weight-black text-capitalize">
@@ -45,6 +53,15 @@ const headers = [
 
 
 const expensesList = ref<TProjectFinance[]>([])
+
+const totalAmount = computed<Number>(() => {
+  let total = 0;
+  for (let expense of expensesList.value) {
+    total += expense.amount;
+  }
+  return total;
+});
+
 
 const loading = useLoading();
 async function loadExpenses() {

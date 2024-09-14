@@ -2,9 +2,17 @@
   <w-html-view-dialog :title="financeStatementTitle" :show="financeStatementModal.isShown.value"
     :html="financeStatementToShow" @close="financeStatementModal.hide" />
 
-    <projects-finance-update-project-finance @cancel="cancelUpdate" @saved="handleUpdate"
-    :show="updateFinanceModal.isShown.value" :finance="financeToUpdate"  />
+  <projects-finance-update-project-finance @cancel="cancelUpdate" @saved="handleUpdate"
+    :show="updateFinanceModal.isShown.value" :finance="financeToUpdate" />
   <div>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <div class="font-weight-black text-h6">
+        Total :
+        <w-usd :amount="totalAmount" />
+      </div>
+    </v-card-actions>
+    <v-divider></v-divider>
     <v-data-table :loading="loading.isLoading.value" :headers="headers" :items="donationsList" item-key="id">
       <template v-slot:item.fund_facility="{ item }">
         <span class="font-weight-black text-capitalize">
@@ -19,9 +27,11 @@
       </template>
       <template v-slot:item.actions="{ item }">
         <div class="my-2">
-          <v-btn color="primary" variant="text" icon="mdi-file-document-outline" @click="showFinanceStatement(item)"></v-btn>
+          <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
+            @click="showFinanceStatement(item)"></v-btn>
 
-          <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg" @click="setFinanceToUpdate(item)"></v-btn>
+          <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"
+            @click="setFinanceToUpdate(item)"></v-btn>
 
           <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
         </div>
@@ -45,6 +55,15 @@ const headers = [
 
 
 const donationsList = ref<TProjectFinance[]>([])
+
+const totalAmount = computed<Number>(() => {
+  let total = 0;
+  for (let donation of donationsList.value) {
+    total += donation.amount;
+  }
+  return total;
+});
+
 
 const loading = useLoading();
 async function loadDonations() {
@@ -109,6 +128,8 @@ function showFinanceStatement(finance: TProjectFinance) {
   `;
   financeStatementModal.show();
 }
+
+
 </script>
 
 <style></style>
