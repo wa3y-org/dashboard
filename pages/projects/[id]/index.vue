@@ -40,6 +40,9 @@
         <v-tabs-window-item value="staff" transition="fade-transition">
           <projects-staff :project="project" /> 
         </v-tabs-window-item>
+        <v-tabs-window-item value="finance" transition="fade-transition">
+          <ProjectsFinance :project="project" />
+        </v-tabs-window-item>
         <v-tabs-window-item value="settings" transition="fade-transition">
           <ProjectsProjectSettings :project="project" />
         </v-tabs-window-item>
