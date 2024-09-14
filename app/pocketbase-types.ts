@@ -12,6 +12,7 @@ export enum Collections {
 	Members = "members",
 	Projects = "projects",
 	ProjectsActivities = "projects_activities",
+	ProjectsStaff = "projects_staff",
 	Roles = "roles",
 	Users = "users",
 }
@@ -123,6 +124,18 @@ export type ProjectsActivitiesRecord = {
 	title: string
 }
 
+export enum ProjectsStaffTypeOptions {
+	"employee" = "employee",
+	"member" = "member",
+}
+export type ProjectsStaffRecord = {
+	description?: HTMLString
+	person_id: string
+	position: string
+	project: RecordIdString
+	type: ProjectsStaffTypeOptions
+}
+
 export type RolesRecord<Tpermissions = unknown> = {
 	description?: HTMLString
 	permissions: null | Tpermissions
@@ -148,6 +161,7 @@ export type EmployeesResponse<Tphone_numbers = unknown, Texpand = unknown> = Req
 export type MembersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<MembersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
 export type ProjectsActivitiesResponse<Texpand = unknown> = Required<ProjectsActivitiesRecord> & BaseSystemFields<Texpand>
+export type ProjectsStaffResponse<Texpand = unknown> = Required<ProjectsStaffRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
@@ -160,6 +174,7 @@ export type CollectionRecords = {
 	members: MembersRecord
 	projects: ProjectsRecord
 	projects_activities: ProjectsActivitiesRecord
+	projects_staff: ProjectsStaffRecord
 	roles: RolesRecord
 	users: UsersRecord
 }
@@ -171,6 +186,7 @@ export type CollectionResponses = {
 	members: MembersResponse
 	projects: ProjectsResponse
 	projects_activities: ProjectsActivitiesResponse
+	projects_staff: ProjectsStaffResponse
 	roles: RolesResponse
 	users: UsersResponse
 }
@@ -185,6 +201,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'members'): RecordService<MembersResponse>
 	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
 	collection(idOrName: 'projects_activities'): RecordService<ProjectsActivitiesResponse>
+	collection(idOrName: 'projects_staff'): RecordService<ProjectsStaffResponse>
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 }

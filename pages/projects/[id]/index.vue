@@ -2,25 +2,25 @@
   <v-card class="my-4" rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
     <v-toolbar color="transparent">
       <v-tabs v-model="tab">
-        <v-tab value="project" class="font-weight-black"> 
+        <v-tab value="project" class="font-weight-black">
           <v-icon class="mx-2" size="24">mdi-folder-open-outline</v-icon>
           Project
-         </v-tab>
-        <v-tab value="activities" class="font-weight-black"> 
-          <v-icon class="mx-2" size="24">mdi-folder-table-outline</v-icon>
-          Activities 
         </v-tab>
-        <v-tab value="finance" class="font-weight-black"> 
-          <v-icon class="mx-2" size="24">mdi-finance</v-icon>
-          Finance 
-        </v-tab>
-        <v-tab value="staff" class="font-weight-black"> 
+        <v-tab value="staff" class="font-weight-black">
           <v-icon class="mx-2" size="24">mdi-account-group</v-icon>
-          Staff 
+          Staff
         </v-tab>
-        <v-tab value="settings" class="font-weight-black"> 
+        <v-tab value="finance" class="font-weight-black">
+          <v-icon class="mx-2" size="24">mdi-finance</v-icon>
+          Finance
+        </v-tab>
+        <v-tab value="activities" class="font-weight-black">
+          <v-icon class="mx-2" size="24">mdi-folder-table-outline</v-icon>
+          Activities
+        </v-tab>
+        <v-tab value="settings" class="font-weight-black">
           <v-icon class="mx-2" size="24">mdi-folder-settings-outline</v-icon>
-          Settings 
+          Settings
         </v-tab>
       </v-tabs>
 
@@ -32,10 +32,13 @@
       </v-btn>
     </v-toolbar>
     <v-divider></v-divider>
-    <v-card-text class="pa-0">
+    <v-card-text>
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="activities" transition="fade-transition">
           <ProjectsProjectActivities :project="project" />
+        </v-tabs-window-item>
+        <v-tabs-window-item value="staff" transition="fade-transition">
+          <projects-staff :project="project" /> 
         </v-tabs-window-item>
         <v-tabs-window-item value="settings" transition="fade-transition">
           <ProjectsProjectSettings :project="project" />

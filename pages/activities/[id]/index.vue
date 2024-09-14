@@ -8,14 +8,15 @@
           <v-icon size="24" class="mx-2">mdi-folder-table-outline</v-icon>
           Activity
         </v-tab>
-        <v-tab class="font-weight-black" value="finance">
-          <v-icon size="24" class="mx-2">mdi-finance</v-icon>
-          Finance
-        </v-tab>
         <v-tab class="font-weight-black" value="staff">
           <v-icon size="24" class="mx-2">mdi-account-group</v-icon>
           Staff
         </v-tab>
+        <v-tab class="font-weight-black" value="finance">
+          <v-icon size="24" class="mx-2">mdi-finance</v-icon>
+          Finance
+        </v-tab>
+
         <v-tab class="font-weight-black" value="on_going">
           <v-icon size="24" class="mx-2">mdi-dots-horizontal</v-icon>
           On Going

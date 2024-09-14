@@ -1,5 +1,5 @@
 <template>
-  <v-autocomplete v-model="model" item-value="id" chips closable-chips v-bind="props.props" return-object hide-selected
+  <v-autocomplete :loading="loading.isLoading.value" :error-messages="errors" v-model="model" item-value="id" chips closable-chips v-bind="props.props" return-object hide-selected
     auto-select-first clearable open-on-clear hide-details="auto" rounded="lg" variant="outlined"
     :items="visibleAllowances" class="font-weight-bold" :placeholder="placeholder">
     <template v-slot:prepend-inner>
