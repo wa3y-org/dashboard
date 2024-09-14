@@ -2,6 +2,8 @@
   <ProjectsProjectUpdateStaff @saved="handleUpdate" :staff="staffToUpdate" :show="updateStaffModal.isShown.value"
     @cancel="cancelUpdate" />
 
+  <w-html-view-dialog :title="jobDescriptionTitle" :show="jobDescriptionModal.isShown.value" :html="jobDescriptionToShow"
+    @close="jobDescriptionModal.hide" />
   <div>
     <v-data-table :headers="headers" :items="staffList" :loading="loading.isLoading.value">
       <template v-slot:item.person="{ item }">
@@ -14,9 +16,12 @@
         </span>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn color="info" variant="tonal" prependIcon="mdi-pencil" rounded="lg"
-          @click="setStaffToUpdate(item)">Update</v-btn>
-        <span class="mx-2"></span>
+        <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
+          @click="showStaffJobDescription(item)"></v-btn>
+
+        <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"
+          @click="setStaffToUpdate(item)"></v-btn>
+
         <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
       </template>
     </v-data-table>
@@ -83,6 +88,18 @@ function cancelUpdate() {
 
 function handleUpdate() {
   updateStaffModal.hide();
+}
+
+const jobDescriptionModal = useModal();
+const jobDescriptionToShow = ref<string>('');
+const jobDescriptionTitle = ref<string>('');
+
+function showStaffJobDescription(staff: TStaff) {
+  jobDescriptionToShow.value = staff.description || '';
+  jobDescriptionTitle.value = `
+    Job Description : ( ${staff.position} ) - ${staff.person.name}
+  `;
+  jobDescriptionModal.show();
 }
 </script>
 
