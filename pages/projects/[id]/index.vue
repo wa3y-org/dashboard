@@ -34,6 +34,9 @@
     <v-divider></v-divider>
     <v-card-text>
       <v-tabs-window v-model="tab">
+        <v-tabs-window-item value="project" transition="fade-transition">
+          <ProjectsProjectViewData :project="project" />
+        </v-tabs-window-item>
         <v-tabs-window-item value="activities" transition="fade-transition">
           <ProjectsProjectActivities :project="project" />
         </v-tabs-window-item>
