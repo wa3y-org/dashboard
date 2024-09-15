@@ -24,16 +24,21 @@
                 {{ employee?.sex }} ({{ calcAge(employee?.birth_date?.toString() || '') }})
               </v-chip>
             </p>
-            <div class="font-weight-bold my-4 border-lg pa-2 rounded-lg">
-              {{ employee?.employment_position }}
-              <v-divider class="my-2"></v-divider>
-              ({{ employee?.employment_section }})
-            </div>
+            
 
           </div>
         </div>
       </v-col>
-      <v-divider vertical></v-divider>
+      <v-col cols="3">
+        <div class="font-weight-bold my-4 border-lg pa-2 rounded-lg">
+              {{ employee?.employment_position }}
+              <v-divider class="my-2"></v-divider>
+              ({{ employee?.employment_section }})
+            </div>
+      </v-col>
+    </v-row>
+    <v-divider class="my-8"></v-divider>
+    <v-row>
       <v-col class="font-weight-bold px-4">
 
         <div class="d-flex justify-space-between align-center">
@@ -68,12 +73,11 @@
         </div>
       </v-col>
     </v-row>
-    <v-divider class="my-8"></v-divider>
-    <v-row>
+    <!-- <v-row>
       <v-col>
         <EmployeesEmployeeSalaryInfo :employee="employee" />
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 

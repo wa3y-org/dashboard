@@ -8,11 +8,14 @@
             <v-icon size="x-large" class="mx-2">mdi-account-tie</v-icon>
             Employee
           </v-tab>
-          <v-tab value="salary_archive" class="font-weight-black">
+          <v-tab value="salary" class="font-weight-black">
             <v-icon size="x-large" class="mx-2">mdi-archive-outline</v-icon>
-            Salary Archive
+            Salary
           </v-tab>
-          <v-spacer></v-spacer>
+          <v-tab value="authentication" class="font-weight-black">
+            <v-icon size="x-large" class="mx-2">mdi-fingerprint</v-icon>
+            Authentication
+          </v-tab>
           <v-tab value="settings" class="font-weight-black">
             <v-icon size="x-large" class="mx-2">mdi-account-settings-outline</v-icon>
             setting
@@ -32,8 +35,13 @@
             <employees-employee-info :employee="employee" />
           </v-tabs-window-item>
 
-          <v-tabs-window-item value="salary_archive" transition="fade-transition">
-            salary information
+          <v-tabs-window-item value="salary" transition="fade-transition">
+            <div class="my-2"></div>
+            <EmployeesEmployeeSalaryInfo  :employee="employee" />
+          </v-tabs-window-item>
+
+          <v-tabs-window-item value="authentication" transition="fade-transition">
+            Auth
           </v-tabs-window-item>
 
           <v-tabs-window-item value="settings" transition="fade-transition">
