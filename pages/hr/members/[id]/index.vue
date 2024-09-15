@@ -12,7 +12,7 @@
           <v-spacer></v-spacer>
           <v-tab value="settings" class="font-weight-black">
             <v-icon size="x-large" class="mx-2">mdi-account-settings-outline</v-icon>
-            setting
+            settings
           </v-tab>
         </v-tabs>
         <v-spacer></v-spacer>
