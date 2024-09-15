@@ -89,7 +89,7 @@ export function useSaveUser() {
     //validate bio
     //validate selected roles
     if (selectedRoles.value.size < 1) {
-      selectedRolesErrors.value.push("Please Select one role ata least");
+      selectedRolesErrors.value.push("Please Select one role at least");
     }
   }
 

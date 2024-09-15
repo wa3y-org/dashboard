@@ -1,5 +1,6 @@
 import v8n from "v8n";
-import type { EmployeesRecord } from "~/app/pocketbase-types";
+import type { EmployeesRecord, RolesRecord } from "~/app/pocketbase-types";
+import { employeeConfig } from ".";
 
 function validateName(name: string): string[] {
   const errors: string[] = [];
@@ -53,7 +54,41 @@ function validateBasicSalary(salary: any) {
   return errors;
 }
 
-export function validateEmployee(employee: EmployeesRecord) {
+function validateRoles(roles: any) {
+  const errors: string[] = [];
+  if (roles.length < 1) {
+    errors.push("Please Select one role ata least");
+  }
+  return errors;
+}
+
+function validatePassword(password: any) {
+  const errors: string[] = [];
+  if (
+    !v8n().string().minLength(employeeConfig.minPasswordLength).test(password)
+  ) {
+    errors.push(
+      `Invalid Password, min length must be ${employeeConfig.minPasswordLength} characters`
+    );
+  }
+  return errors;
+}
+
+function validatePasswordConfirmation(
+  password: any,
+  passwordConfirmation: any
+) {
+  const errors: string[] = [];
+  if (password !== passwordConfirmation) {
+    errors.push("Password Confirmation Does'nt Match Password");
+  }
+  return errors.concat(validatePassword(password));
+}
+
+export function validateEmployee(
+  employee: EmployeesRecord,
+  shouldValidatePassword: boolean = true
+) {
   const errors: { [key: string]: string[] } = {
     name: validateName(employee.name || ""),
     email: validateEmail(employee.email || ""),
@@ -67,6 +102,15 @@ export function validateEmployee(employee: EmployeesRecord) {
       employee.employment_status || ""
     ),
     basicSalary: validateBasicSalary(employee.basic_salary || 0),
+    roles: validateRoles(employee.roles),
+    password: shouldValidatePassword ? validatePassword(employee.password) : [],
+    passwordConfirm: shouldValidatePassword
+      ? validatePasswordConfirmation(
+          employee.password,
+          employee.passwordConfirm
+        )
+      : [],
+    oldPassword: [],
   };
 
   return errors;

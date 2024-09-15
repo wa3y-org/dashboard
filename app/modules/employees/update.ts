@@ -3,6 +3,8 @@ import type {
   EmployeesResponse,
 } from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
+import { employeeConfig } from ".";
+import { backendRequestOne } from "~/app/core/BackendRequest";
 
 const pb = usePocketBase();
 
@@ -11,8 +13,13 @@ export async function updateEmployee(
 ) {
   const data = new FormData();
 
+  const keysToPass = ["allowances", "deductions", "roles"];
+
+  if (!employee.oldPassword) {
+    keysToPass.push("password", "passwordConfirm", "oldPassword")
+  }
   for (let key of Object.keys(employee)) {
-    if (key == "allowances" || key == "deductions") continue;
+    if (keysToPass.includes(key)) continue;
     if (key.trim().toLocaleLowerCase() == "avatar") {
       if (!(employee.avatar instanceof File)) {
         continue;
@@ -21,22 +28,28 @@ export async function updateEmployee(
     data.append(key, employee[key] || "");
   }
 
- 
-
-  for (let allowance of employee.allowances || ['']) {
+  for (let allowance of employee.allowances || [""]) {
     data.append("allowances", allowance);
   }
 
-  for (let deduction of employee.deductions || ['']) {
+  for (let deduction of employee.deductions || [""]) {
     data.append("deductions", deduction);
   }
 
-  if (!data.has('allowances')) {
-    data.append('allowances', []);
+  for (let role of employee.roles || [""]) {
+    data.append("roles", role);
   }
 
-  if (!data.has('deductions')) {
-    data.append('deductions', []);
+  if (!data.has("allowances")) {
+    data.append("allowances", []);
+  }
+
+  if (!data.has("deductions")) {
+    data.append("deductions", []);
+  }
+
+  if (!data.has("roles")) {
+    data.append("roles", []);
   }
 
   data.set(
@@ -51,7 +64,7 @@ export async function updateEmployee(
   );
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
-  const record = await pb.collection("employees").update(employee.id, data);
-
-  return record;
+  return await backendRequestOne<EmployeesRecord>(async () => {
+    return await pb.collection("employees").update(employee.id, data);
+  });
 }

@@ -1,28 +1,33 @@
 import type {
   EmployeesRecord,
   EmployeesResponse,
+  RolesResponse,
 } from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
+import type { AuthModel, BaseModel } from "pocketbase";
+import { backendRequestOne } from "~/app/core/BackendRequest";
 
 const pb = usePocketBase();
 
 export async function createEmployee(
-  employee: EmployeesRecord | EmployeesResponse
+  employee: EmployeesRecord & EmployeesResponse & BaseModel & AuthModel
 ) {
   const data = new FormData();
-  data.append("password", NewUserDefaultPassword);
-  data.append("passwordConfirm", NewUserDefaultPassword);
-  data.append("verified", "");
   data.append("emailVisibility", "1");
+  data.append("verified", "1");
 
   for (let key of Object.keys(employee)) {
-    if (key == "allowances" || key == "deductions") continue;
+    if (key == "allowances" || key == "deductions" || key == "roles") continue;
     if (key.trim().toLocaleLowerCase() == "avatar") {
       if (!(employee.avatar instanceof File)) {
         continue;
       }
     }
     data.append(key, employee[key] || "");
+  }
+
+  for (let role of employee.roles || []) {
+    data.append("roles", role);
   }
 
   for (let allowance of employee.allowances || []) {
@@ -45,8 +50,9 @@ export async function createEmployee(
   );
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
-  const record = await pb.collection("employees").create(data);
-  await pb.collection("employees").requestVerification(record.email);
-
-  return record;
+  return await backendRequestOne<EmployeesRecord>(async () => {
+    const response = await pb.collection("employees").create(data);
+    await pb.collection("employees").requestVerification(response.email);
+    return response;
+  });
 }

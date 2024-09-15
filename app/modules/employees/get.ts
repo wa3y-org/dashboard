@@ -5,13 +5,13 @@ const pb = usePocketBase();
 export async function getAllEmployees() {
   return await pb.collection("employees").getFullList({
     sort: "-created",
-    expand: "allowances, deductions",
+    expand: "allowances, deductions, roles",
   });
 }
 
 export async function getOneEmployee(id: string) {
   const record : EmployeesRecord = await pb.collection("employees").getOne(id, {
-    expand: "allowances, deductions",
+    expand: "allowances, deductions, roles",
   });
 
   console.log(record)

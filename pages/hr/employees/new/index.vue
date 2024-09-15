@@ -32,7 +32,14 @@
         <v-stepper-window-item :value="4">
           <create-employee-salary v-model="employee" />
         </v-stepper-window-item>
+        <v-stepper-window-item :value="5">
+          <create-employee-authentication update-mode v-model="employee" />
+        </v-stepper-window-item>
       </v-stepper-window>
+      <div v-if="backendError.error && backendError.hasError" class="my-4">
+        <v-divider class="my-4"></v-divider>
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+      </div>
       <v-divider class="my-4"></v-divider>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
@@ -60,6 +67,8 @@ const items = [
   // { title: 'Qualifications', subtitle: '', isComplete: false },
   { title: 'Employment', subtitle: '', isComplete: false },
   { title: 'Salary', subtitle: '', isComplete: false },
+  { title: 'Authentication', subtitle: '', isComplete: false },
+
 ];
 
 function next() {
@@ -88,6 +97,9 @@ const employee: Ref<EmployeesRecord> = ref({
   Sex: null,
   specialization: null,
   starting_date: null,
+  roles: [],
+  password: null,
+  passwordConfirm: null
 })
 
 const isFirstAttempt = ref(true);
@@ -99,6 +111,9 @@ const validationErrors = computed(() => {
 provide('validationErrors', validationErrors);
 
 function jumpToValidationErrors() {
+  if (validationErrors.value.roles.length) {
+    step.value = 5;
+  }
   if (validationErrors.value.basicSalary.length) {
     step.value = 4;
   }
@@ -119,19 +134,30 @@ function jumpToValidationErrors() {
 }
 
 const loading = useLoading();
+const backendError = useBackendError();
+
 async function save() {
   isFirstAttempt.value = false;
+  backendError.clear();
   if (useErrors().hasError(validationErrors.value)) {
     jumpToValidationErrors();
     return;
   }
 
   loading.start()
-  const record = await createEmployee(employee.value);
+  const response = await createEmployee(employee.value);
   loading.end();
 
+  if (response.error) {
+    backendError.set(response.error)
+    return;
+  }
 
-  useRouter().push(`/hr/employees/${record.id}`)
+  if (response.model) {
+    useRouter().push(`/hr/employees/${response.model.id}`)
+    return;
+  }
+
 }
 
 </script>

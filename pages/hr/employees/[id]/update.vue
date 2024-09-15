@@ -37,7 +37,14 @@
         <v-stepper-window-item :value="4">
           <create-employee-salary v-model="employee" />
         </v-stepper-window-item>
+        <v-stepper-window-item :value="5">
+          <create-employee-authentication v-model="employee" :update-mode="true" />
+        </v-stepper-window-item>
       </v-stepper-window>
+      <div v-if="backendError.error && backendError.hasError" class="my-4">
+        <v-divider class="my-4"></v-divider>
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+      </div>
       <v-divider class="my-4"></v-divider>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
@@ -65,6 +72,8 @@ const items = [
   // { title: 'Qualifications', subtitle: '', isComplete: false },
   { title: 'Employment', subtitle: '', isComplete: false },
   { title: 'Salary', subtitle: '', isComplete: false },
+  { title: 'Authentication', subtitle: '', isComplete: false },
+
 ];
 
 function next() {
@@ -95,6 +104,11 @@ const employee: Ref<EmployeesRecord | any> = ref({
   Sex: null,
   specialization: null,
   starting_date: null,
+  roles: [],
+  password: null,
+  passwordConfirm: null,
+  OldPassword: null,
+  isNew: false
 })
 
 
@@ -109,7 +123,7 @@ onMounted(async () => {
 const isFirstAttempt = ref(true);
 
 const validationErrors = computed(() => {
-  return validateEmployee(employee.value);
+  return validateEmployee(employee.value, employee.value.oldPassword ? true : false);
 });
 provide('validationErrors', validationErrors);
 
@@ -133,8 +147,11 @@ function jumpToValidationErrors() {
   }
 }
 
+const backendError = useBackendError();
 const loading = useLoading();
 async function save() {
+
+  backendError.clear();
 
   if (useErrors().hasError(validationErrors.value)) {
     jumpToValidationErrors();
@@ -142,10 +159,19 @@ async function save() {
   }
 
   loading.start()
-  const record = await updateEmployee(employee.value);
+  const response = await updateEmployee(employee.value);
   loading.end();
 
-  useRouter().push(`/hr/employees/${record.id}`)
+  if (response.error) {
+    backendError.set(response.error)
+    return;
+  }
+
+  if (response.model) {
+    useRouter().push(`/hr/employees/${response.model.id}`)
+    return;
+  }
+
 
 }
 

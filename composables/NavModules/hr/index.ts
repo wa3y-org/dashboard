@@ -1,5 +1,5 @@
 import type { NavGroup, NavModule } from "../types";
-import { rolesRoutes } from "../users";
+import { rolesRoutes, userRoutes } from "../users";
 import { employeesRoutes } from "./employees";
 import { memberRoutes } from "./members";
 
