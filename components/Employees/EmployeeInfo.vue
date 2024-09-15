@@ -2,18 +2,12 @@
   <div class="my-8">
     <v-row>
       <v-col class="px-4">
-        <div class="d-flex align-center">
+        <div class="d-flex ">
           <div>
             <v-avatar size="184" class="elevation-4" rounded="xl">
               <v-img contain :src="avatarImage" alt="alt" />
             </v-avatar>
-            <div class="text-center mt-4">
-              <v-chip density="compact" variant="outlined" size="large" class="font-weight-bold"
-                :color="employee ? getStatusColor(employee) : ''">{{
-                  employee?.employment_status
-                }}</v-chip>
 
-            </div>
           </div>
           <span class="mx-2"></span>
           <div class="d-inline-block ma-4">
@@ -24,45 +18,25 @@
                 {{ employee?.sex }} ({{ calcAge(employee?.birth_date?.toString() || '') }})
               </v-chip>
             </p>
-            
+
+            <div class="mt-6">
+              <v-chip density="compact" variant="outlined" size="large" class="font-weight-bold"
+                :color="employee ? getStatusColor(employee) : ''">{{
+                  employee?.employment_status
+                }}</v-chip>
+
+            </div>
 
           </div>
         </div>
       </v-col>
       <v-col cols="3">
-        <div class="font-weight-bold my-4 border-lg pa-2 rounded-lg">
-              {{ employee?.employment_position }}
-              <v-divider class="my-2"></v-divider>
-              ({{ employee?.employment_section }})
-            </div>
-      </v-col>
-    </v-row>
-    <v-divider class="my-8"></v-divider>
-    <v-row>
-      <v-col class="font-weight-bold px-4">
-
-        <div class="d-flex justify-space-between align-center">
-          <p class="my-6">Address: {{ employee?.address }}</p>
-          <div>
-            <span class="border pa-2 rounded-lg font-weight-bold">
-              {{ employee?.marital_status }} |
-              {{ employee?.number_of_children }} children
-            </span>
-          </div>
-
+        <div class="font-weight-bold my-4 border-lg border-primary elevation-2 pa-2 rounded-lg">
+          {{ employee?.employment_position }}
+          <v-divider class="my-2"></v-divider>
+          {{ employee?.employment_section }}
         </div>
-        <v-divider></v-divider>
-        <div class="my-3 d-flex">
-          Phones:
-          <div>
-            <div v-for="phone of employee?.phone_numbers">
-              <v-chip class="mx-2 mb-2" label density="compact">{{ phone }}</v-chip>
-
-            </div>
-          </div>
-        </div>
-        <v-divider></v-divider>
-        <div class="my-3">
+        <div class="my-3 font-weight-bold">
           <p>
             Qualification: {{ employee?.qualification }} - ({{ employee?.specialization }})
           </p>
@@ -71,6 +45,35 @@
             }})
           </p>
         </div>
+      </v-col>
+    </v-row>
+    <v-divider class="my-8"></v-divider>
+    <v-row>
+      <v-col class="font-weight-black px-4">
+
+        <div class="">
+          <p class="my-6">Address: {{ employee?.address }}</p>
+        </div>
+        <div class="my-4"></div>
+
+        <div>
+          <span class="border pa-2 rounded-lg font-weight-bold">
+            {{ employee?.marital_status }} |
+            {{ employee?.number_of_children }} children
+          </span>
+        </div>
+      </v-col>
+      
+      <v-col cols="3">
+        <div class="my-3 d-flex font-weight-bold">
+          Phones:
+          <div>
+            <div v-for="phone of employee?.phone_numbers">
+              <v-chip class="mx-2 mb-2" label density="compact">{{ phone }}</v-chip>
+            </div>
+          </div>
+        </div>
+
       </v-col>
     </v-row>
     <!-- <v-row>

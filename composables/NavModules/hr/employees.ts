@@ -13,10 +13,5 @@ export const employeesRoutes: NavGroup = [
     route: "/hr/employees/new",
     permissions: [],
   },
-  {
-    name: "Employees Settings",
-    icon: "mdi-account-settings-outline",
-    route: "/hr/employees/settings",
-    permissions: [],
-  },
+  
 ];

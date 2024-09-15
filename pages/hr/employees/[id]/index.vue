@@ -41,7 +41,10 @@
           </v-tabs-window-item>
 
           <v-tabs-window-item value="authentication" transition="fade-transition">
-            Auth
+            <div class="my-4">
+              <EmployeesEmployeeAuthInfo  :employee="employee" />
+            </div>
+
           </v-tabs-window-item>
 
           <v-tabs-window-item value="settings" transition="fade-transition">
