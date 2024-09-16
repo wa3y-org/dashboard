@@ -36,7 +36,7 @@
       </div>
 
     </div>
-    <v-row class="align-center text-h6 my-8 mx-2 pa-1 border-lg border-primary rounded-lg bg-indigo-lighten-5">
+    <v-row class="align-center text-h6 my-8 mx-2 pa-1 border-lg border-blue rounded-lg bg-light-blue-lighten-5">
       <v-col>
         <v-icon class="mx-2">mdi-map-marker</v-icon>
         {{ activity?.place || 'N/A' }}
@@ -54,7 +54,7 @@
       </v-col>
     </v-row>
   </div>
-  <div class="my-12 border-lg rounded-lg mx-1 ">
+  <div class="my-6 border-lg rounded-lg mx-1 ">
 
     <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
       <v-icon class="mx-4">mdi-file-document-outline</v-icon>
