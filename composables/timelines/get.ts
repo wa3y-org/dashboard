@@ -20,3 +20,18 @@ export async function getProjectTimelinePosts(
     });
   });
 }
+
+export async function getProjectTimelinePostsReplies(
+  post: TTimeLinePost,
+  page: number = 1
+) {
+  return await backendRequestMultiple<TTimeLinePost>(async () => {
+    return await ProjectTimelineCollection.getList(page, postsPerPage, {
+      filter: `
+        reply_to="${post.id}"
+      `,
+      expand: "creator",
+      sort: "-created",
+    });
+  });
+}

@@ -13,14 +13,11 @@
 </template>
 
 <script lang="ts" setup>
-import moment from "moment";
+
+
 const props = defineProps(['project'])
 
-function calcProjectTimeInDays(dateOne: string | Date, dateTwo: string | Date) {
-  const diffInDays = Math.abs(moment(dateOne).diff(dateTwo, 'days'));
-  if (isNaN(diffInDays)) return 'N/A';
-  return diffInDays + 1;
-}
+
 </script>
 
 <style></style>

@@ -1,5 +1,5 @@
 import { createProjectPost, createProjectPostReply } from "./timelines/create";
-import { getProjectTimelinePosts } from "./timelines/get";
+import { getProjectTimelinePosts, getProjectTimelinePostsReplies } from "./timelines/get";
 import { validatePost } from "./timelines/validatePost";
 
 export function useProjectTimeline() {
@@ -8,5 +8,6 @@ export function useProjectTimeline() {
     createPost: createProjectPost,
     createReply: createProjectPostReply,
     getPosts: getProjectTimelinePosts,
+    getReplies: getProjectTimelinePostsReplies
   };
 }

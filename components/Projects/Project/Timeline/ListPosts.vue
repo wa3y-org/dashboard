@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4">
-    <v-timeline side="end" v-for="post of postsList" :key="post.id">
+    <v-timeline align="start" side="end" v-for="post of postsList" :key="post.id">
       <ProjectsProjectTimelineUserTimelinePostCard :post="post"
         v-if="post.creator && post.expand && post.expand.creator" />
       <ProjectsProjectTimelineSystemTimelinePostCard :post="post" v-else />
@@ -33,7 +33,7 @@ const isAllItemsLoaded = computed(() => {
 });
 
 const loading = useLoading();
-async function loadMorePostsPosts() {
+async function loadMorePosts() {
   loading.start();
   pagination.value.perPage + 1
   const response = await useProjectTimeline().getPosts(props.project, pagination.value.page + 1);
@@ -53,7 +53,15 @@ async function loadMorePostsPosts() {
   }
 }
 
-onMounted(loadMorePostsPosts);
+onMounted(() => {
+  loadMorePosts();
+  useNuxtApp().$activeModalsBus.$on('timeline:post:created', () => {
+    postsList.value = new Set();
+    pagination.value.page = 0;
+    loadMorePosts();
+  })
+
+});
 </script>
 
 <style></style>

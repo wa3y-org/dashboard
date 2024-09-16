@@ -1,5 +1,5 @@
 <template>
-  <div class="ma-2 rounded-xl border border overflow-hidden">
+  <div class="my-2 elevation-2 rounded-lg border border-lg border-primary overflow-hidden">
 
     <v-expansion-panels :multiple="false" v-model="createPostPanel" :loading="loading.isLoading.value">
       <v-expansion-panel value="createPostMainPanel" :loading="loading.isLoading.value"
@@ -90,7 +90,7 @@ async function save() {
     };
     isFirstAttempt.value = true;
     hideCreatePostMainPanel();
-    useNuxtApp().$activeModalsBus.$emit('timeline:post:created')
+    useNuxtApp().$activeModalsBus.$emit(`timeline:posts:${props.post.id}:replies:created`)
   }
 }
 </script>
