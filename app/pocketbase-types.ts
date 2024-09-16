@@ -6,6 +6,8 @@ import type PocketBase from 'pocketbase'
 import type { RecordService } from 'pocketbase'
 
 export enum Collections {
+	ActivitiesFinance = "activities_finance",
+	ActivitiesStaff = "activities_staff",
 	AllowanceOptions = "allowance_options",
 	DeductionOptions = "deduction_options",
 	Employees = "employees",
@@ -41,6 +43,30 @@ export type AuthSystemFields<T = never> = {
 } & BaseSystemFields<T>
 
 // Record types for each collection
+
+export enum ActivitiesFinanceTypeOptions {
+	"donation" = "donation",
+	"expense" = "expense",
+}
+export type ActivitiesFinanceRecord = {
+	activity: RecordIdString
+	amount: number
+	fund_facility: string
+	statement?: HTMLString
+	type: ActivitiesFinanceTypeOptions
+}
+
+export enum ActivitiesStaffTypeOptions {
+	"employee" = "employee",
+	"member" = "member",
+}
+export type ActivitiesStaffRecord = {
+	activity: RecordIdString
+	description?: HTMLString
+	person_id: string
+	position: string
+	type: ActivitiesStaffTypeOptions
+}
 
 export type AllowanceOptionsRecord = {
 	amount: number
@@ -80,6 +106,7 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 	number_of_children?: number
 	phone_numbers?: null | Tphone_numbers
 	qualification?: string
+	roles?: RecordIdString[]
 	sex?: EmployeesSexOptions
 	specialization?: string
 	starting_date?: IsoDateString
@@ -168,6 +195,8 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type ActivitiesFinanceResponse<Texpand = unknown> = Required<ActivitiesFinanceRecord> & BaseSystemFields<Texpand>
+export type ActivitiesStaffResponse<Texpand = unknown> = Required<ActivitiesStaffRecord> & BaseSystemFields<Texpand>
 export type AllowanceOptionsResponse<Texpand = unknown> = Required<AllowanceOptionsRecord> & BaseSystemFields<Texpand>
 export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOptionsRecord> & BaseSystemFields<Texpand>
 export type EmployeesResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<EmployeesRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
@@ -182,6 +211,8 @@ export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSyste
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	activities_finance: ActivitiesFinanceRecord
+	activities_staff: ActivitiesStaffRecord
 	allowance_options: AllowanceOptionsRecord
 	deduction_options: DeductionOptionsRecord
 	employees: EmployeesRecord
@@ -195,6 +226,8 @@ export type CollectionRecords = {
 }
 
 export type CollectionResponses = {
+	activities_finance: ActivitiesFinanceResponse
+	activities_staff: ActivitiesStaffResponse
 	allowance_options: AllowanceOptionsResponse
 	deduction_options: DeductionOptionsResponse
 	employees: EmployeesResponse
@@ -211,6 +244,8 @@ export type CollectionResponses = {
 // https://github.com/pocketbase/js-sdk#specify-typescript-definitions
 
 export type TypedPocketBase = PocketBase & {
+	collection(idOrName: 'activities_finance'): RecordService<ActivitiesFinanceResponse>
+	collection(idOrName: 'activities_staff'): RecordService<ActivitiesStaffResponse>
 	collection(idOrName: 'allowance_options'): RecordService<AllowanceOptionsResponse>
 	collection(idOrName: 'deduction_options'): RecordService<DeductionOptionsResponse>
 	collection(idOrName: 'employees'): RecordService<EmployeesResponse>

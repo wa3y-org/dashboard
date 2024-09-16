@@ -1,15 +1,15 @@
 <template>
   <div class="pa-2">
-    <ProjectsFinanceDonations :project="project" />
+    <ProjectsActivityFinanceDonations :activity="activity" />
     <v-divider class="my-16">
       <v-icon>mdi-dots-vertical</v-icon>
     </v-divider>
-    <ProjectsFinanceExpenses :project="project" />
+    <ProjectsActivityFinanceExpenses :activity="activity" />
   </div>
 </template>
 
 <script lang="ts" setup>
-const props = defineProps(['project'])
+const props = defineProps(['activity'])
 </script>
 
 <style>

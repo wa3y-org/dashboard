@@ -45,6 +45,10 @@
           <projects-activity-staff :activity="activity" />
         </v-tabs-window-item>
 
+        <v-tabs-window-item value="finance" transition="fade-transition">
+          <projects-activity-finance :activity="activity" />
+        </v-tabs-window-item>
+
         <v-tabs-window-item value="settings" transition="fade-transition">
           <projects-project-activity-settings :activity="activity" />
         </v-tabs-window-item>
