@@ -24,7 +24,9 @@ export async function getOneActivity(
   id: string
 ): Promise<OneModelResponse<TActivity>> {
   async function activitiesFetcher() {
-    return await ActivitiesCollection.getOne(id);
+    return await ActivitiesCollection.getOne(id, {
+      expand: 'project'
+    });
   }
   return await backendRequestOne<TActivity>(activitiesFetcher);
 }

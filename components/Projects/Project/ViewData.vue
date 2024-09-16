@@ -1,7 +1,10 @@
 <template>
   <div>
-    <h1 class="text-ht font-weight-bold my-12 text-center">
-      {{ project.title }}
+    <h1 class="text-h4 font-weight-bold my-12 text-center">
+      <v-icon>mdi-folder-open</v-icon>
+      <p class="my-4">
+        {{ project.title }}
+      </p>
     </h1>
     <v-row class="align-center text-h6 my-8 mx-2 pa-1 border-lg border-primary rounded-lg bg-indigo-lighten-5">
       <v-col>
