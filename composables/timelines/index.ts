@@ -9,5 +9,7 @@ export type TTimeLinePost = ProjectsTimelinesRecord &
   BaseModel &
   RecordModel;
 
+export const ProjectTimelineCollection =
+  usePocketBase().collection("projects_timelines");
 
-export const ProjectTimelineCollection = usePocketBase().collection('projects_timelines');
+export const postsPerPage = 5;

@@ -1,5 +1,6 @@
 <template>
-  <v-dialog @click:outside="close" :model-value="show" :fullscreen="fullscreen" :overlay="true" :max-width="maxWidth">
+  <v-dialog scrollable @click:outside="close" :model-value="show" :fullscreen="fullscreen" :overlay="true"
+    :max-width="maxWidth">
     <v-card rounded="lg">
       <v-toolbar color="transparent">
         <v-toolbar-title class="font-weight-bold">
@@ -10,10 +11,8 @@
       </v-toolbar>
 
       <v-divider></v-divider>
-      <v-card-text>
-        <div class="">
-          <w-html-view :html="html" />  
-        </div>
+      <v-card-text class="pa-0 ma-0">
+        <w-html-view :html="html" />
       </v-card-text>
     </v-card>
   </v-dialog>

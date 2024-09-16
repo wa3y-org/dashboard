@@ -1,6 +1,6 @@
 <template>
   <div>
-    <QuillEditor style="min-height: 200px;" read-only class="w-100" theme="bubble" contentType="html" :content="html" />
+    <QuillEditor style="min-height: 25px;" read-only class="w-100" theme="bubble" contentType="html" :content="html" />
   </div>
 </template>
 
