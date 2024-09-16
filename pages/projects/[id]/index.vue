@@ -6,6 +6,10 @@
           <v-icon class="mx-2" size="24">mdi-folder-open-outline</v-icon>
           Project
         </v-tab>
+        <v-tab value="timeline" class="font-weight-black">
+          <v-icon class="mx-2" size="24">mdi-clock-outline</v-icon>
+          Timeline
+        </v-tab>
         <v-tab value="staff" class="font-weight-black">
           <v-icon class="mx-2" size="24">mdi-account-group</v-icon>
           Staff
@@ -37,15 +41,23 @@
         <v-tabs-window-item value="project" transition="fade-transition">
           <ProjectsProjectViewData :project="project" />
         </v-tabs-window-item>
+        
+        <v-tabs-window-item value="timeline" transition="fade-transition">
+          <ProjectsProjectTimeline :project="project" />
+        </v-tabs-window-item>
+
         <v-tabs-window-item value="activities" transition="fade-transition">
           <ProjectsProjectActivities :project="project" />
         </v-tabs-window-item>
+        
         <v-tabs-window-item value="staff" transition="fade-transition">
           <projects-staff :project="project" /> 
         </v-tabs-window-item>
+        
         <v-tabs-window-item value="finance" transition="fade-transition">
           <ProjectsFinance :project="project" />
         </v-tabs-window-item>
+        
         <v-tabs-window-item value="settings" transition="fade-transition">
           <ProjectsProjectSettings :project="project" />
         </v-tabs-window-item>
