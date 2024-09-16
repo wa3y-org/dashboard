@@ -6,15 +6,15 @@
     <v-row class="align-center text-h6 my-8 mx-2 pa-1 border-lg border-primary rounded-lg bg-indigo-lighten-5">
       <v-col>
         <v-icon class="mx-2">mdi-map-marker</v-icon>
-        {{ project.place }}
+        {{ project.place || 'N/A' }}
       </v-col>
       <v-divider vertical><v-icon color="grey">mdi-dots-vertical</v-icon></v-divider>
       <v-col class="text-end">
         <DateView :date="project.starting_date" />
-        <v-chip size="x-large" density="compact" class="font-weight-black mx-2">
+        <v-chip size="large" density="compact" class="font-weight-black mx-2 text-grey-darken-1">
           <v-icon class="mx-2">mdi-calendar-expand-horizontal</v-icon>
 
-          {{ calcDateDiff(project.starting_date, project.end_date) }}
+          {{ calcProjectTimeInDays(project.starting_date, project.end_date) }} Days
         </v-chip>
         <DateView :date="project.end_date" />
 
@@ -36,8 +36,10 @@
 import moment from "moment";
 const props = defineProps(['project'])
 
-function calcDateDiff(dateOne: string | Date, dateTwo: string | Date) {
-  return Math.abs(moment(dateOne).diff(dateTwo, 'days')) + ' Days'
+function calcProjectTimeInDays(dateOne: string | Date, dateTwo: string | Date) {
+  const diffInDays = Math.abs(moment(dateOne).diff(dateTwo, 'days'));
+  if (isNaN(diffInDays)) return 'N/A';
+  return diffInDays + 1;
 }
 </script>
 
