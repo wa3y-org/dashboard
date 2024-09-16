@@ -1,9 +1,9 @@
 <template>
   <div class="pa-4">
     <v-timeline align="start" side="end" v-for="post of postsList" :key="post.id">
-      <ProjectsProjectTimelineUserTimelinePostCard :post="post"
+      <ProjectsActivityTimelineUserTimelinePostCard :post="post"
         v-if="post.creator && post.expand && post.expand.creator" />
-      <ProjectsProjectTimelineSystemTimelinePostCard :post="post" v-else />
+      <ProjectsActivityTimelineSystemTimelinePostCard :post="post" v-else />
     </v-timeline>
     <v-btn :prepend-icon="isAllItemsLoaded ? 'mdi-check-all' : 'mdi-download'" :loading="loading.isLoading.value"
       :disabled="isAllItemsLoaded" size="large" :color="isAllItemsLoaded ? 'black' : 'primary'" rounded="pill"
@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { type TTimeLinePost } from "~/composables/timelines/index";
-const props = defineProps(['project'])
+const props = defineProps(['activity'])
 
 const postsList = ref<Set<TTimeLinePost>>(new Set());
 const pagination = ref({
@@ -36,7 +36,7 @@ const loading = useLoading();
 async function loadMorePosts() {
   loading.start();
   pagination.value.perPage + 1
-  const response = await useProjectTimeline().getPosts(props.project, pagination.value.page + 1);
+  const response = await useProjectTimeline().activity.getPosts(props.activity, pagination.value.page + 1);
   loading.end();
   console.log(response)
 

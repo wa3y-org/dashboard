@@ -1,5 +1,15 @@
-import { createProjectPost, createProjectPostReply } from "./timelines/create";
-import { getProjectTimelinePosts, getProjectTimelinePostsReplies } from "./timelines/get";
+import {
+  createActivityPost,
+  createActivityPostReply,
+  createProjectPost,
+  createProjectPostReply,
+} from "./timelines/create";
+import {
+  getActivityTimelinePosts,
+  getActivityTimelinePostsReplies,
+  getProjectTimelinePosts,
+  getProjectTimelinePostsReplies,
+} from "./timelines/get";
 import { validatePost } from "./timelines/validatePost";
 
 export function useProjectTimeline() {
@@ -8,6 +18,13 @@ export function useProjectTimeline() {
     createPost: createProjectPost,
     createReply: createProjectPostReply,
     getPosts: getProjectTimelinePosts,
-    getReplies: getProjectTimelinePostsReplies
+    getReplies: getProjectTimelinePostsReplies,
+    activity: {
+      createPost: createActivityPost,
+      createReply: createActivityPostReply,
+      getPosts: getActivityTimelinePosts,
+      getReplies: getActivityTimelinePostsReplies,
+      validatePost,
+    },
   };
 }

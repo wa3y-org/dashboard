@@ -8,6 +8,12 @@
           <v-icon size="24" class="mx-2">mdi-folder-table-outline</v-icon>
           Activity
         </v-tab>
+
+        <v-tab class="font-weight-black" value="timeline">
+          <v-icon class="mx-2" size="24">mdi-clock-outline</v-icon>
+          Timeline
+        </v-tab>
+
         <v-tab class="font-weight-black" value="staff">
           <v-icon size="24" class="mx-2">mdi-account-group</v-icon>
           Staff
@@ -17,14 +23,8 @@
           Finance
         </v-tab>
 
-        <v-tab class="font-weight-black" value="on_going">
-          <v-icon size="24" class="mx-2">mdi-dots-horizontal</v-icon>
-          On Going
-        </v-tab>
-        <v-tab class="font-weight-black" value="output">
-          <v-icon size="24" class="mx-2">mdi-message-check-outline</v-icon>
-          Output
-        </v-tab>
+
+
         <v-tab class="font-weight-black" value="settings">
           <v-icon size="24" class="mx-2">mdi-folder-settings-outline</v-icon>
           Settings
@@ -39,6 +39,10 @@
       <v-tabs-window v-model="tab">
         <v-tabs-window-item value="activity" transition="fade-transition">
           <projects-activity-view-data :activity="activity" />
+        </v-tabs-window-item>
+
+        <v-tabs-window-item value="timeline" transition="fade-transition">
+          <ProjectsActivityTimeline :activity="activity" />
         </v-tabs-window-item>
 
         <v-tabs-window-item value="staff" transition="fade-transition">

@@ -1,10 +1,12 @@
 import { backendRequestMultiple } from "~/app/core/BackendRequest";
 import type { TProject } from "../projects/index";
 import {
+  ActivityTimelineCollection,
   postsPerPage,
   ProjectTimelineCollection,
   type TTimeLinePost,
 } from "./index";
+import type { TActivity } from "../activities/index";
 
 export async function getProjectTimelinePosts(
   project: TProject,
@@ -27,6 +29,36 @@ export async function getProjectTimelinePostsReplies(
 ) {
   return await backendRequestMultiple<TTimeLinePost>(async () => {
     return await ProjectTimelineCollection.getList(page, postsPerPage, {
+      filter: `
+        reply_to="${post.id}"
+      `,
+      expand: "creator",
+      sort: "-created",
+    });
+  });
+}
+
+export async function getActivityTimelinePosts(
+  activity: TActivity,
+  page: number = 1
+) {
+  return await backendRequestMultiple<TTimeLinePost>(async () => {
+    return await ActivityTimelineCollection.getList(page, postsPerPage, {
+      filter: `
+        activity="${activity.id}"
+      `,
+      expand: "creator",
+      sort: "-created",
+    });
+  });
+}
+
+export async function getActivityTimelinePostsReplies(
+  post: TTimeLinePost,
+  page: number = 1
+) {
+  return await backendRequestMultiple<TTimeLinePost>(async () => {
+    return await ActivityTimelineCollection.getList(page, postsPerPage, {
       filter: `
         reply_to="${post.id}"
       `,

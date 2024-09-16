@@ -1,9 +1,9 @@
 <template>
   <div class="px-4 py-2">
     <div class="pl-16">
-      <ProjectsProjectTimelineCreatePostReply :post="post" />
+      <ProjectsActivityTimelineCreatePostReply :post="post" />
       <div class="my-6" v-for="reply of repliesList" :key="reply.id">
-        <ProjectsProjectTimelineUserTimelineReplyCard :post="reply" />
+        <ProjectsActivityTimelineUserTimelineReplyCard :post="reply" />
       </div>
       <v-btn v-if="!isAllItemsLoaded" prepend-icon="mdi-download" :loading="loading.isLoading.value" size="large"
         color="primary" rounded="pill" @click="loadMoreReplies">
@@ -34,7 +34,7 @@ const isAllItemsLoaded = computed(() => {
 const loading = useLoading();
 async function loadMoreReplies() {
   loading.start();
-  const response = await useProjectTimeline().getReplies(props.post, pagination.value.page + 1);
+  const response = await useProjectTimeline().activity.getReplies(props.post, pagination.value.page + 1);
   loading.end();
   console.log(response)
 
