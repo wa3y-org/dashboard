@@ -1,5 +1,5 @@
 <template>
-  <ProjectsProjectUpdateStaff @saved="handleUpdate" :staff="staffToUpdate" :show="updateStaffModal.isShown.value"
+  <ProjectsActivityUpdateStaff @saved="handleUpdate" :staff="staffToUpdate" :show="updateStaffModal.isShown.value"
     @cancel="cancelUpdate" />
 
   <w-html-view-dialog :title="jobDescriptionTitle" :show="jobDescriptionModal.isShown.value" :html="jobDescriptionToShow"
@@ -7,7 +7,7 @@
   <div>
     <v-data-table :headers="headers" :items="staffList" :loading="loading.isLoading.value">
       <template v-slot:item.person="{ item }">
-        <ProjectsProjectStaffCard :staffMember="item" />
+        <ProjectsActivityStaffCard :staffMember="item" />
       </template>
 
       <template v-slot:item.position="{ item }">
@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import { type StaffPerson, type TStaff } from "~/composables/staff/index";
 
-const props = defineProps(['project'])
+const props = defineProps(['activity'])
 
 const loading = useLoading();
 
@@ -48,7 +48,7 @@ const Staff = useStaff();
 async function loadStaff() {
   staffList.value = []
   loading.start();
-  const response = await Staff.getProjectStaff(props.project)
+  const response = await Staff.getActivityStaff(props.activity)
   loading.end();
 
   staffList.value = response.models || [];
@@ -56,9 +56,9 @@ async function loadStaff() {
 
 onMounted(() => {
   loadStaff();
-  useNuxtApp().$activeModalsBus.$on('project:staff:created', loadStaff);
-  useNuxtApp().$activeModalsBus.$on('project:staff:removed', loadStaff);
-  useNuxtApp().$activeModalsBus.$on('project:staff:updated', loadStaff);
+  useNuxtApp().$activeModalsBus.$on('activity:staff:created', loadStaff);
+  useNuxtApp().$activeModalsBus.$on('activity:staff:removed', loadStaff);
+  useNuxtApp().$activeModalsBus.$on('activity:staff:updated', loadStaff);
 });
 
 const Remove = useConfirmRemove();
@@ -66,8 +66,8 @@ async function confirmRemove(staff: TStaff) {
   const { isConfirmed } = await Remove.confirm();
   if (isConfirmed) {
     await Remove.doRemove(async () => {
-      await Staff.remove(staff.id)
-      useNuxtApp().$activeModalsBus.$emit('project:staff:removed');
+      await Staff.removeActivityStaff(staff.id)
+      useNuxtApp().$activeModalsBus.$emit('activity:staff:removed');
 
     });
   }

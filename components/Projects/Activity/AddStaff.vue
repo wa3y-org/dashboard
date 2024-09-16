@@ -5,7 +5,7 @@
         <v-toolbar-title>
           <v-icon>mdi-account-multiple-plus-outline</v-icon>
           <span class="mx-2 font-weight-black">
-            Add To Project Staff
+            Add To Activity Staff
           </span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-const props = defineProps(['project', 'show'])
+const props = defineProps(['activity', 'show'])
 const emit = defineEmits(['cancel', 'saved']);
 
 function cancel() {
@@ -62,6 +62,7 @@ const hasValidationErrors = computed(() => {
   if (isFirstAttempt.value) return false;
   return validationErrorsWrapper.hasError(Staff.validate(staff.value))
 });
+
 async function save() {
   isFirstAttempt.value = false;
   backendError.clear();
@@ -71,7 +72,7 @@ async function save() {
   }
 
   loading.start();
-  const response = await Staff.addProjectStaff(props.project, staff.value);
+  const response = await Staff.addActivityStaff(props.activity, staff.value);
   loading.end();
 
   if (response.error) {
@@ -85,7 +86,7 @@ async function save() {
     type: null,
     person: null
   }
-  useNuxtApp().$activeModalsBus.$emit('project:staff:created');
+  useNuxtApp().$activeModalsBus.$emit('activity:staff:created');
   isFirstAttempt.value = true;
   emit('saved');
 

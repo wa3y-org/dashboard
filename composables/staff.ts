@@ -1,7 +1,7 @@
-import { addProjectStaff } from "./staff/create";
-import { getProjectStaff } from "./staff/get";
-import { removeStaff } from "./staff/remove";
-import { updateStaff } from "./staff/update";
+import { addActivityStaff, addProjectStaff } from "./staff/create";
+import { getActivityStaff, getProjectStaff } from "./staff/get";
+import { removeActivityStaff, removeStaff } from "./staff/remove";
+import { updateActivityStaff, updateStaff } from "./staff/update";
 import { validateStaff } from "./staff/validateStaff";
 
 export function useStaff() {
@@ -9,7 +9,11 @@ export function useStaff() {
     validate: validateStaff,
     addProjectStaff,
     getProjectStaff,
+    addActivityStaff,
+    getActivityStaff,
     remove: removeStaff,
     update: updateStaff,
+    removeActivityStaff,
+    updateActivityStaff
   };
 }

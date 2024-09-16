@@ -40,6 +40,11 @@
         <v-tabs-window-item value="activity" transition="fade-transition">
           <projects-activity-view-data :activity="activity" />
         </v-tabs-window-item>
+
+        <v-tabs-window-item value="staff" transition="fade-transition">
+          <projects-activity-staff :activity="activity" />
+        </v-tabs-window-item>
+
         <v-tabs-window-item value="settings" transition="fade-transition">
           <projects-project-activity-settings :activity="activity" />
         </v-tabs-window-item>

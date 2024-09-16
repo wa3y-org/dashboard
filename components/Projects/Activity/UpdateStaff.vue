@@ -5,7 +5,7 @@
         <v-toolbar-title>
           <v-icon>mdi-account-multiple-plus-outline</v-icon>
           <span class="mx-2 font-weight-black">
-            Update Project Staff Member Data
+            Update Activity Staff Member Data
           </span>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -61,7 +61,7 @@ async function save() {
   }
 
   loading.start();
-  const response = await Staff.update(props.staff);
+  const response = await Staff.updateActivityStaff(props.staff);
   loading.end();
 
   if (response.error) {
@@ -70,7 +70,7 @@ async function save() {
   }
 
 
-  useNuxtApp().$activeModalsBus.$emit('project:staff:updated');
+  useNuxtApp().$activeModalsBus.$emit('activity:staff:updated');
   isFirstAttempt.value = true;
   emit('saved');
 

@@ -1,8 +1,9 @@
 import type { CollectionModel } from "pocketbase";
-import { ProjectsStaffCollection, type TStaff } from "./index";
+import { ActivitiesStaffCollection, ProjectsStaffCollection, type TStaff } from "./index";
 import type { TProject } from "../projects/index";
 import type { OneModelResponse } from "~/app/core/CRUDRepository";
 import { backendRequestOne } from "~/app/core/BackendRequest";
+import type { TActivity } from "../activities";
 
 export async function addProjectStaff(
   project: TProject,
@@ -19,4 +20,21 @@ export async function addProjectStaff(
   }
 
   return await backendRequestOne<TStaff>(projectStaffCreator);
+}
+
+export async function addActivityStaff(
+  activity: TActivity,
+  staff: TStaff
+): Promise<OneModelResponse<TStaff>> {
+  async function activityStaffCreator() {
+    return await ActivitiesStaffCollection.create({
+      activity: activity.id,
+      position: staff.position,
+      description: staff.description,
+      type: staff.type,
+      person_id: staff.person.id,
+    });
+  }
+
+  return await backendRequestOne<TStaff>(activityStaffCreator);
 }

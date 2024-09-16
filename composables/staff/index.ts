@@ -18,3 +18,6 @@ export type TStaff = {
 } & RecordModel & BaseModel;
 
 export const ProjectsStaffCollection = usePocketBase().collection('projects_staff');
+
+export const ActivitiesStaffCollection = usePocketBase().collection('activities_staff');
+
