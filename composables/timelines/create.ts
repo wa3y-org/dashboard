@@ -8,8 +8,6 @@ export async function createProjectPost(
   post: TTimeLinePost
 ) {
   return await backendRequestOne<TTimeLinePost>(async () => {
-    console.log(usePocketBase().authStore.model);
-    alert(usePocketBase().authStore.model.id)
     return await ProjectTimelineCollection.create({
       project: project.id,
       creator: usePocketBase().authStore.model?.id || '',

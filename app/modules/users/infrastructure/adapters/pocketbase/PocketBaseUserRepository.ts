@@ -49,7 +49,7 @@ export class PocketBaseUserRepository implements IUsersRepository {
     password: string
   ): Promise<AuthResponse> {
     const authData = await pb
-      .collection("users")
+      .collection("employees")
       .authWithPassword(identity, password);
     return {
       user: PocketBaseUserRepository.createUserFromAuthModel(authData.record),
