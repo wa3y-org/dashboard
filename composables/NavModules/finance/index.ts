@@ -1,7 +1,8 @@
 import type { NavGroup, NavModule } from "../types";
+import { assetsRoutes } from "./assets";
 import { salaryRoutes } from "./salary";
 
-const FinanceModuleChildren: NavGroup[] = [salaryRoutes];
+const FinanceModuleChildren: NavGroup[] = [assetsRoutes, salaryRoutes];
 
 export const FinanceModule: NavModule = {
   name: "Finance",
