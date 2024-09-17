@@ -16,7 +16,7 @@
         Add Asset
       </v-btn>
     </v-card-actions>
-    <div class="my-4"></div>
+    <v-divider class="mt-4"></v-divider>
     <v-data-table :loading="loading.isLoading.value" :headers="headers" :items="assetsList" item-key="id">
       <template v-slot:item.title="{ item }">
         <span class="font-weight-bold">{{ item.title }}</span>

@@ -2,7 +2,11 @@ import {
   backendRequestMultiple,
   backendRequestOne,
 } from "~/app/core/BackendRequest";
-import { EmployeesAdvancesCollection, type TAdvance } from "./index";
+import {
+  EmployeesAdvancesCollection,
+  EmployeesAdvancesPaymentsCollection,
+  type TAdvance,
+} from "./index";
 import type {
   EmployeesRecord,
   EmployeesResponse,
@@ -33,6 +37,15 @@ export async function getOneEmployeeAdvances(employee: TEmployee) {
     return await EmployeesAdvancesCollection.getFullList({
       filter: `employee="${employee.id}"`,
       expand: "employee",
+    });
+  });
+}
+
+export async function getAdvancesPayments(advance: TAdvance) {
+  return await backendRequestMultiple<TAdvance>(async () => {
+    return await EmployeesAdvancesPaymentsCollection.getFullList({
+      filter: `advance="${advance.id}"`,
+      sort: "-created",
     });
   });
 }

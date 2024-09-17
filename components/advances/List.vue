@@ -4,6 +4,9 @@
   <advances-update :advance="advanceToUpdate" :show="updateAdvanceModal.isShown.value" @cancel="updateAdvanceModal.hide"
     @saved="updateAdvanceModal.hide" />
 
+  <AdvancesPaymentsList :advance="advanceToShowPayments" :show="showAdvancePaymentsModal.isShown.value"
+    @close="showAdvancePaymentsModal.hide" />
+
   <w-html-view-dialog :title="advanceDetailsTitle" :show="advanceDetailsModal.isShown.value" :html="advanceDetailsToShow"
     @close="advanceDetailsModal.hide" />
 
@@ -19,7 +22,8 @@
         Add Advance
       </v-btn>
     </v-card-actions>
-    <div class="my-4"></div>
+
+    <v-divider class="mt-4"></v-divider>
     <v-data-table :loading="loading.isLoading.value" :headers="headers" :items="advancesList" item-key="id">
 
       <template v-slot:item.employee="{ item }">
@@ -49,21 +53,31 @@
       </template>
 
       <template v-slot:item.payed="{ item }">
-        <w-usd  :amount="item.payed" />
+        <w-usd :amount="item.payed" />
       </template>
 
       <template v-slot:item.remaining="{ item }">
-        <w-usd color="red" :amount="item.amount - item.payed" />
+        <w-usd :color="calcRemaining(item) > 0 ? 'red' : 'back'" :amount="calcRemaining(item)" />
       </template>
+
+      <template v-slot:item.status="{ item }">
+        <v-icon color="warning" v-if="calcRemaining(item) > 0" size="32">mdi-information mdi-rotate-180</v-icon>
+        <v-icon color="green" v-else size="32">mdi-check-all</v-icon>
+
+      </template>
+
 
       <template v-slot:item.actions="{ item }">
         <div class="my-2">
-          <v-btn color="primary" variant="text" icon="mdi-file-document-outline" @click="showAdvanceDetails(item)"  />
-          <v-btn color="success" variant="text" rounded="lg" icon="mdi-invoice-text"  />
+          <v-btn color="primary" variant="text" icon="mdi-file-document-outline" @click="showAdvanceDetails(item)" />
 
-          <v-btn class="mx-2" @click="setAdvanceToUpdate(item)" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"  />
+          <v-btn color="black" @click="setAdvanceToShowPayments(item)" variant="text" rounded="lg"
+            icon="mdi-invoice-text" />
 
-          <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)" ></v-btn>
+          <v-btn class="mx-2" @click="setAdvanceToUpdate(item)" color="info" variant="tonal" icon="mdi-pencil"
+            rounded="lg" />
+
+          <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
         </div>
 
       </template>
@@ -77,9 +91,10 @@ import { type TAdvance } from "~/composables/advances/index";
 
 const headers = [
   { key: 'employee', title: 'Employee' },
-  { key: 'amount', title: 'Amount', align: 'end' },
-  { key: 'payed', title: 'Payed', align: 'end' },
-  { key: 'remaining', title: 'Remaining', align: 'end' },
+  { key: 'amount', title: 'Amount' },
+  { key: 'payed', title: 'Payed' },
+  { key: 'remaining', title: 'Remaining' },
+  { key: 'status', title: 'Status', align: 'end' },
   { key: 'actions', title: 'Actions', align: 'end' },
 ];
 
@@ -131,15 +146,35 @@ function getAvatarUrl(person: any) {
   return usePocketBase().files.getUrl(person, person.avatar || '');
 }
 
+function calcRemaining(advance: TAdvance) {
+  return Number(advance.amount) - Number(advance.payed);
+}
+
 
 onMounted(() => {
   loadAllAdvances();
   useNuxtApp().$activeModalsBus.$on('advances:created', loadAllAdvances);
-  useNuxtApp().$activeModalsBus.$on('advances:updated', loadAllAdvances);
+  useNuxtApp().$activeModalsBus.$on('advances:updated', async () => {
+    await loadAllAdvances();
+    for (let advance of advancesList.value) {
+      if (advance.id == advanceToShowPayments.value?.id) {
+        advanceToShowPayments.value = Object.assign({}, advance);
+        break;
+      }
+    }
+  });
   useNuxtApp().$activeModalsBus.$on('advances:removed', loadAllAdvances);
 });
 
 const addAdvanceModal = useModal();
+
+const showAdvancePaymentsModal = useModal();
+const advanceToShowPayments = ref<TAdvance | null>(null);
+
+function setAdvanceToShowPayments(advance: TAdvance) {
+  advanceToShowPayments.value = Object.assign({}, advance);
+  showAdvancePaymentsModal.show();
+}
 
 const updateAdvanceModal = useModal();
 const advanceToUpdate = ref<TAdvance | null>(null);

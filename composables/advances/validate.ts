@@ -21,7 +21,16 @@ export function validateAdvance(advance: TAdvance) {
   const errors: { [key: string]: string[] } = {
     amount: validateTotal(advance.amount),
     employee: validateEmployee(advance.employee),
-    statement: []
+    statement: [],
+  };
+
+  return errors;
+}
+
+export function validatePayment(payment: any) {
+  const errors: { [key: string]: string[] } = {
+    amount: validateTotal(payment.amount),
+    statement: [],
   };
 
   return errors;
