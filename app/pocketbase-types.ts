@@ -13,6 +13,7 @@ export enum Collections {
 	Assets = "assets",
 	DeductionOptions = "deduction_options",
 	Employees = "employees",
+	EmployeesAdvances = "employees_advances",
 	Members = "members",
 	ProjectFinance = "project_finance",
 	Projects = "projects",
@@ -131,6 +132,13 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 	starting_date?: IsoDateString
 }
 
+export type EmployeesAdvancesRecord = {
+	amount: number
+	employee: RecordIdString
+	payed?: number
+	statement?: HTMLString
+}
+
 export enum MembersSexOptions {
 	"Male" = "Male",
 	"Female" = "Female",
@@ -229,6 +237,7 @@ export type AllowanceOptionsResponse<Texpand = unknown> = Required<AllowanceOpti
 export type AssetsResponse<Texpand = unknown> = Required<AssetsRecord> & BaseSystemFields<Texpand>
 export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOptionsRecord> & BaseSystemFields<Texpand>
 export type EmployeesResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<EmployeesRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
+export type EmployeesAdvancesResponse<Texpand = unknown> = Required<EmployeesAdvancesRecord> & BaseSystemFields<Texpand>
 export type MembersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<MembersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type ProjectFinanceResponse<Texpand = unknown> = Required<ProjectFinanceRecord> & BaseSystemFields<Texpand>
 export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
@@ -248,6 +257,7 @@ export type CollectionRecords = {
 	assets: AssetsRecord
 	deduction_options: DeductionOptionsRecord
 	employees: EmployeesRecord
+	employees_advances: EmployeesAdvancesRecord
 	members: MembersRecord
 	project_finance: ProjectFinanceRecord
 	projects: ProjectsRecord
@@ -266,6 +276,7 @@ export type CollectionResponses = {
 	assets: AssetsResponse
 	deduction_options: DeductionOptionsResponse
 	employees: EmployeesResponse
+	employees_advances: EmployeesAdvancesResponse
 	members: MembersResponse
 	project_finance: ProjectFinanceResponse
 	projects: ProjectsResponse
@@ -287,6 +298,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'assets'): RecordService<AssetsResponse>
 	collection(idOrName: 'deduction_options'): RecordService<DeductionOptionsResponse>
 	collection(idOrName: 'employees'): RecordService<EmployeesResponse>
+	collection(idOrName: 'employees_advances'): RecordService<EmployeesAdvancesResponse>
 	collection(idOrName: 'members'): RecordService<MembersResponse>
 	collection(idOrName: 'project_finance'): RecordService<ProjectFinanceResponse>
 	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
