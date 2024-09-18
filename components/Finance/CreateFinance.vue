@@ -3,25 +3,23 @@
     <v-card rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
       <v-toolbar :color="toolbarColor">
         <v-toolbar-title class="font-weight-bold">
-          Update {{ finance.type }} -- {{ finance.fund_facility }} [
-          <w-usd :amount="finance.amount" />
-          ]
+          Add {{ type }}
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn color="error" icon="mdi-close" @click="cancel" />
       </v-toolbar>
       <v-divider></v-divider>
       <v-card-text>
-        <v-row>
+        <!-- <v-row>
           <v-col>
             <text-field name="type" :props="{
-              value: finance.type,
+              value: type,
               readonly: true,
               reverse: true,
 
             }" :errors="validationErrors.type" />
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
 
           <v-col>
@@ -63,15 +61,22 @@
 const required = true;
 
 const props = defineProps({
-  show: { required, type: Boolean },
-  finance: { required, type: Object }
+  type: {
+    required,
+    type: String,
+    validator(value: string) {
+      const validTypes = ['donation', 'expense']
+
+      return validTypes.includes(value);
+    },
+  },
+  show: { required, type: Boolean }
 })
 
 const emit = defineEmits(['cancel', 'saved']);
 
 const toolbarColor = computed(() => {
-  console.log(props.finance)
-  switch (props.finance.type) {
+  switch (props.type) {
     case 'donation':
       return 'green-lighten-4'
       break;
@@ -83,8 +88,7 @@ const toolbarColor = computed(() => {
 });
 
 const facilityNickName = computed(() => {
-
-  switch (props.finance.type) {
+  switch (props.type) {
     case 'donation':
       return 'Donor'
       break;
@@ -100,24 +104,20 @@ function cancel() {
 }
 
 
-const financeData = ref({})
+const financeData = ref({
+  fund_facility: '',
+  amount: null,
+  statement: '',
+  type: props.type
+})
 
-watch(() => { props.finance }, () => {
-  financeData.value = {
-    fund_facility: props.finance.fund_facility,
-    amount: props.finance.amount,
-    statement: props.finance.statement,
-    type: props.finance.type
-  }
-}, { deep: true })
-
-const ProjectFinance = useProjectFinance();
+const Finance = useFinance();
 
 const Errors = useErrors();
 const isFirstAttempt = ref(true)
 const validationErrors = computed<{ [key: string]: any }>(() => {
   if (isFirstAttempt.value) return {};
-  return ProjectFinance.validate(props.finance.project, financeData.value)
+  return Finance.validate(financeData.value)
 });
 
 const loading = useLoading();
@@ -129,7 +129,7 @@ async function save() {
     return;
   }
   loading.start();
-  const response = await ProjectFinance.update(Object.assign({ id: props.finance.id }, financeData.value));
+  const response = await Finance.create(financeData.value);
   loading.end();
 
 
@@ -144,7 +144,13 @@ async function save() {
 
   if (response.model) {
     isFirstAttempt.value = true;
-    useNuxtApp().$activeModalsBus.$emit('projects:finance:updated')
+    financeData.value = {
+      fund_facility: '',
+      amount: null,
+      statement: '',
+      type: props.type
+    }
+    useNuxtApp().$activeModalsBus.$emit('finance:created')
     emit('saved')
   }
 }

@@ -12,7 +12,7 @@
       </v-toolbar>
       <v-divider></v-divider>
       <v-card-text>
-        <v-row>
+        <!-- <v-row>
           <v-col>
             <text-field name="type" :props="{
               value: finance.type,
@@ -21,7 +21,7 @@
 
             }" :errors="validationErrors.type" />
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
 
           <v-col>
