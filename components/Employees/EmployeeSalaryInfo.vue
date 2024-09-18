@@ -1,4 +1,7 @@
 <template>
+  <employees-payroll-details
+   :payroll="payrollToShow"
+   :show="payrollDetailsModal.isShown.value" @close="payrollDetailsModal.hide" />
   <div>
     <v-table class="border-xl elevation-2 mx-4 mb-8 border-success rounded-xl font-weight-black text-center">
       <tr>
@@ -77,9 +80,53 @@
     </tbody>
 
   </v-table>
+  <v-divider class="my-4"></v-divider>
+  <div>
+    <p class="font-weight-bold text-h6 my-4">Payment History</p>
+    <v-data-table :headers="headers" :items="payments" item-key="id" :loading="loading.isLoading.value">
+      <template v-slot:item.year="{ item }">
+        <span class="font-weight-bold">{{ item.year }}</span>
+      </template>
+      <template v-slot:item.month="{ item }">
+
+        <span class="font-weight-bold">
+          {{ getMonthNameFromIndex(item.month) }}
+          <span class="mx-2"></span>
+          <v-chip>{{ item.month }}</v-chip>
+        </span>
+
+      </template>
+      <template v-slot:item.total_salary="{ item }">
+        <span class="font-weight-bold">
+          <w-usd color="primary" :amount="item.total_salary" />
+        </span>
+
+      </template>
+      <template v-slot:item.payed="{ item }">
+        <span class="font-weight-bold">
+          <w-usd :amount="item.payed" />
+        </span>
+      </template>
+      <template v-slot:item.remaining="{ item }">
+        <span class="font-weight-bold">
+          <w-usd :amount="item.total_salary - item.payed" :color="item.total_salary - item.payed > 0 ? 'red' : 'black'" />
+        </span>
+
+      </template>
+      <template v-slot:item.created="{ item }">
+        <span class="font-weight-bold">
+          <v-btn color="primary" icon="mdi-file-document" variant="text" @click="showPayrollDetails(item)"></v-btn>
+          <span class="mx-2"></span>
+          <date-view :date="item.created" :show-time="true" />
+        </span>
+      </template>
+    </v-data-table>
+  </div>
 </template>
 
 <script lang="ts" setup>
+import { type TPayroll } from "~/composables/payroll/index";
+
 const props = defineProps(['employee'])
 
 const totalAllowancesAmount = computed(() => {
@@ -101,6 +148,53 @@ const totalDeductionsAmount = computed(() => {
 const totalSalary = computed(() => {
   return Number(props.employee?.basic_salary) + Number(totalAllowancesAmount.value) - Number(totalDeductionsAmount.value)
 })
+
+const headers = [
+  { title: 'Year', key: 'year' },
+  { title: 'Month', key: 'month' },
+  { title: 'Total', key: 'total_salary' },
+  { title: 'Payed', key: 'payed' },
+  { title: 'Remaining', key: 'remaining' },
+  { title: 'Date', key: 'created', align: 'end' },
+]
+
+const payments: Ref<TPayroll[]> = ref([])
+
+const loading = useLoading();
+async function loadPayments() {
+  payments.value = [];
+  loading.start();
+  const { models, error } = await usePayroll().get.employeePayroll(props.employee);
+  loading.end();
+
+  if (error) {
+    return;
+  }
+
+  if (models) {
+    payments.value = models;
+  }
+}
+
+onMounted(loadPayments);
+
+function getMonthNameFromIndex(index: number) {
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  return monthNames[index - 1]
+}
+
+const payrollDetailsModal = useModal();
+const payrollToShow = ref<any>();
+
+function showPayrollDetails(payroll: TPayroll) {
+  payrollToShow.value = payroll;
+  payrollDetailsModal.show();
+}
+
+
 </script>
 
 <style></style>

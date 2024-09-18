@@ -16,7 +16,7 @@ export async function employeePayroll(employee: BaseModel) {
   return await backendRequestMultiple<TPayroll>(async () => {
     return await PayrollCollection.getFullList({
       sort: "-created",
-      filter: `employee=${employee.id} `,
+      filter: `employee="${employee.id}"`,
     });
   });
 }
