@@ -30,7 +30,7 @@
           </v-col>
           <v-col>
             <number-field :props="{ min: 0 }" :errors="validationErrors.broken_total" v-model="asset.broken_total"
-              name="Broken Total" placeholder="Enter the number of broken items" />
+              name="Damaged Total" placeholder="Enter the number of Damaged items" />
           </v-col>
         </v-row>
         <v-row>
