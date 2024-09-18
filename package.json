@@ -22,9 +22,11 @@
     "nuxt-tiptap-editor": "^1.2.1",
     "pocketbase": "^0.21.4",
     "sweetalert2": "^11.12.4",
+    "v-month-picker": "^0.2.9",
     "v8n": "^1.5.1",
     "vue": "latest",
     "vue-animated-counter": "^0.3.0",
+    "vue-month-picker": "^1.7.2",
     "vue-sweetalert2": "^5.0.11"
   },
   "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72",
