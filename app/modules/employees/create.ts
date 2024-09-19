@@ -14,7 +14,7 @@ export async function createEmployee(
 ) {
   const data = new FormData();
   data.append("emailVisibility", "1");
-  data.append("verified", "1");
+  // data.append("verified", "1");
 
   for (let key of Object.keys(employee)) {
     if (key == "allowances" || key == "deductions" || key == "roles") continue;
