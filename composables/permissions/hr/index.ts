@@ -4,8 +4,5 @@ import { usersPermissions } from "./usersPermissions";
 
 export const systemUsersPermissions: PermissionsSet = {
   name: "users",
-  groups: [
-    /*usersPermissions,*/
-    rolesPermissions,
-  ],
+  groups: [usersPermissions, rolesPermissions],
 };

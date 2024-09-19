@@ -1,11 +1,22 @@
 import type { Permission } from "~/app/modules/users/domain/models/Permissions";
-import type {
-  PermissionsGroup,
-  PermissionsSet,
-} from "./permissions/types";
+import type { PermissionsGroup, PermissionsSet } from "./permissions/types";
 import { systemUsersPermissions } from "./permissions/users";
+import { financePermissions } from "./permissions/finance";
+import { salaryPermissions } from "./permissions/salary";
+import { orgMembersPermissions } from "./permissions/members";
+import { orgEmployeesPermissions } from "./permissions/employees";
+import { projectsPermissions } from "./permissions/projects";
+import { activitiesPermissions } from "./permissions/activities";
 
-const systemPermissions: PermissionsSet[] = [systemUsersPermissions];
+const systemPermissions: PermissionsSet[] = [
+  financePermissions,
+  salaryPermissions,
+  orgMembersPermissions,
+  orgEmployeesPermissions,
+  projectsPermissions,
+  activitiesPermissions,
+  systemUsersPermissions,
+];
 
 // permission name making strategy
 const groupPermissionSeparator = ".";
