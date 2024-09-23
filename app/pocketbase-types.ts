@@ -25,6 +25,7 @@ export enum Collections {
 	ProjectsTimelines = "projects_timelines",
 	Roles = "roles",
 	Users = "users",
+	Volunteers = "volunteers",
 }
 
 // Alias types for improved usability
@@ -258,6 +259,27 @@ export type UsersRecord = {
 	status: UsersStatusOptions
 }
 
+export enum VolunteersSexOptions {
+	"Male" = "Male",
+	"Female" = "Female",
+}
+
+export enum VolunteersMembershipStatusOptions {
+	"Active" = "Active",
+	"Suspended" = "Suspended",
+	"Resigned" = "Resigned",
+}
+export type VolunteersRecord<Tphone_numbers = unknown> = {
+	address?: string
+	avatar?: string
+	birth_date?: IsoDateString
+	membership_status?: VolunteersMembershipStatusOptions
+	name: string
+	phone_numbers?: null | Tphone_numbers
+	sex?: VolunteersSexOptions
+	starting_date?: IsoDateString
+}
+
 // Response types include system fields and match responses from the PocketBase API
 export type ActivitiesFinanceResponse<Texpand = unknown> = Required<ActivitiesFinanceRecord> & BaseSystemFields<Texpand>
 export type ActivitiesStaffResponse<Texpand = unknown> = Required<ActivitiesStaffRecord> & BaseSystemFields<Texpand>
@@ -278,6 +300,7 @@ export type ProjectsStaffResponse<Texpand = unknown> = Required<ProjectsStaffRec
 export type ProjectsTimelinesResponse<Texpand = unknown> = Required<ProjectsTimelinesRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
+export type VolunteersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<VolunteersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
@@ -301,6 +324,7 @@ export type CollectionRecords = {
 	projects_timelines: ProjectsTimelinesRecord
 	roles: RolesRecord
 	users: UsersRecord
+	volunteers: VolunteersRecord
 }
 
 export type CollectionResponses = {
@@ -323,6 +347,7 @@ export type CollectionResponses = {
 	projects_timelines: ProjectsTimelinesResponse
 	roles: RolesResponse
 	users: UsersResponse
+	volunteers: VolunteersResponse
 }
 
 // Type for usage with type asserted PocketBase instance
@@ -348,4 +373,5 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'projects_timelines'): RecordService<ProjectsTimelinesResponse>
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
+	collection(idOrName: 'volunteers'): RecordService<VolunteersResponse>
 }
