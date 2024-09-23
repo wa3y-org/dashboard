@@ -5,6 +5,10 @@
   </v-app>
 </template>
 
+<script>
+  
+</script>
+
 <style>
 .swal2-container {
   z-index: 999999999;
