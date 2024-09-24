@@ -1,5 +1,6 @@
 <template>
-  <v-dialog :model-value="show" scrollable persistent :overlay="false" max-width="1080px" transition="dialog-transition">
+  <v-dialog :model-value="show" scrollable persistent :overlay="false" max-width="1080px"
+    transition="dialog-transition">
     <v-card rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
       <v-toolbar color="transparent">
         <v-toolbar-title>
@@ -15,26 +16,28 @@
       <v-card-text class="my-4">
         <v-row>
           <v-col>
-            <w-select-employee :errors="validationErrors.employee"  v-model="advance.employee" />
+            <w-select-employee placeholder="Select Employee from here" :errors="validationErrors.employee" v-model="advance.employee" />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <number-field  :errors="validationErrors.amount" v-model="advance.amount" name="Amount" :props="{
+            <number-field placeholder="Enter Advance Amount" :errors="validationErrors.amount" v-model="advance.amount" name="Amount" :props="{
               min: 1,
+              suffix: 'USD'
             }" />
           </v-col>
         </v-row>
 
         <v-row>
           <v-col>
-            <text-editor  :errors="validationErrors.statement" v-model="advance.statement" name="Details" />
+            <text-editor :errors="validationErrors.statement" v-model="advance.statement" name="Details" />
           </v-col>
         </v-row>
       </v-card-text>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
-        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
+          v-if="backendError.hasError" />
       </div>
       <v-divider></v-divider>
       <v-card-actions class="pa-4">
