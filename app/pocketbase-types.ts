@@ -91,9 +91,15 @@ export type AllowanceOptionsRecord = {
 }
 
 export type AssetsRecord = {
+	bill_details?: HTMLString
+	bill_number?: string
+	book_value?: string
 	broken_total?: number
 	details?: HTMLString
 	functional_total?: number
+	place?: string
+	serial_number?: string
+	status?: string
 	title: string
 	unit?: string
 }
@@ -125,6 +131,7 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 	employment_position?: string
 	employment_section?: string
 	employment_status?: EmployeesEmploymentStatusOptions
+	job_description?: HTMLString
 	marital_status?: string
 	name: string
 	number_of_children?: number

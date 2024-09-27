@@ -1,4 +1,5 @@
 <template>
+  <w-html-view-dialog title="Job Description" :html="employee?.job_description" :show="jobDescriptionModal.isShown.value" @close="jobDescriptionModal.hide" />
   <div class="my-8">
     <v-row>
       <v-col class="px-4">
@@ -31,8 +32,17 @@
         </div>
       </v-col>
       <v-col cols="3">
+        <p class="text-h6">
+          
+          <span class="text-grey">
+            {{ employee.id }}
+          </span>
+        </p>
         <div class="font-weight-bold my-4 border-lg border-primary elevation-2 pa-2 rounded-lg">
-          {{ employee?.employment_position }}
+          <div class="d-flex justify-space-between align-center">
+            {{ employee?.employment_position }}
+            <v-btn color="primary" size="small" variant="text" icon="mdi-file-document-outline" @click="jobDescriptionModal.show" />
+          </div>
           <v-divider class="my-2"></v-divider>
           {{ employee?.employment_section }}
         </div>
@@ -63,7 +73,7 @@
           </span>
         </div>
       </v-col>
-      
+
       <v-col cols="3">
         <div class="my-3 d-flex font-weight-bold">
           Phones:
@@ -120,6 +130,8 @@ function getStatusColor(employee: EmployeesRecord) {
   }
   return color;
 };
+
+const jobDescriptionModal = useModal();
 
 </script>
 

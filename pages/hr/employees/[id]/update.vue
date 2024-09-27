@@ -8,16 +8,19 @@
         </span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      {{ employee.name }}
-      <span class="text-grey mx-2">
-        ({{ employee.email }})
-      </span>
+      <NuxtLink :to="`/hr/employees/${employee.id}`">
+        {{ employee.name }}
+        <span class="text-grey mx-2">
+          ({{ employee.email }})
+        </span>
+      </NuxtLink>
     </v-toolbar>
     <v-divider></v-divider>
     <v-stepper v-model="step" show-actions editable>
       <v-stepper-header>
         <template v-for="(item, index) of items ">
-          <v-stepper-item :complete="item.isComplete" :title="item.title" :subtitle="item.subtitle" :value="index + 1" />
+          <v-stepper-item :complete="item.isComplete" :title="item.title" :subtitle="item.subtitle"
+            :value="index + 1" />
           <v-divider v-if="index < (items.length - 1)"></v-divider>
         </template>
       </v-stepper-header>
@@ -43,7 +46,8 @@
       </v-stepper-window>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
-        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
+          v-if="backendError.hasError" />
       </div>
       <v-divider class="my-4"></v-divider>
       <v-stepper-actions :disabled="false">

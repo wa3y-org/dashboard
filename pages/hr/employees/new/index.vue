@@ -12,7 +12,8 @@
     <v-stepper v-model="step" show-actions editable>
       <v-stepper-header>
         <template v-for="(item, index) of items ">
-          <v-stepper-item :complete="item.isComplete" :title="item.title" :subtitle="item.subtitle" :value="index + 1" />
+          <v-stepper-item :complete="item.isComplete" :title="item.title" :subtitle="item.subtitle"
+            :value="index + 1" />
           <v-divider v-if="index < (items.length - 1)"></v-divider>
         </template>
       </v-stepper-header>
@@ -38,7 +39,8 @@
       </v-stepper-window>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
-        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
+          v-if="backendError.hasError" />
       </div>
       <v-divider class="my-4"></v-divider>
       <v-stepper-actions :disabled="false">
@@ -56,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { EmployeesRecord } from "~/app/pocketbase-types";
+import type { EmployeesRecord, EmployeesResponse } from "~/app/pocketbase-types";
 import { validateEmployee } from "~/app/modules/employees/validateEmployee";
 import { createEmployee } from "~/app/modules/employees/create";
 const step = ref(1);
@@ -79,7 +81,7 @@ function pervious() {
   step.value -= 1;
 }
 
-const employee: Ref<EmployeesRecord> = ref({
+const employee: Ref<EmployeesRecord & EmployeesResponse> = ref({
   basic_salary: 0,
   name: '',
   address: '',
@@ -99,7 +101,8 @@ const employee: Ref<EmployeesRecord> = ref({
   starting_date: null,
   roles: [],
   password: null,
-  passwordConfirm: null
+  passwordConfirm: null,
+  job_description: null,
 })
 
 const isFirstAttempt = ref(true);
