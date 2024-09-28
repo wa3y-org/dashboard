@@ -35,7 +35,7 @@
         <p class="text-h6">
           
           <span class="text-grey">
-            {{ employee.id }}
+            {{ employee?.id }}
           </span>
         </p>
         <div class="font-weight-bold my-4 border-lg border-primary elevation-2 pa-2 rounded-lg">
