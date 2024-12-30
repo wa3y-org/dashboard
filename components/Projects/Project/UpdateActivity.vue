@@ -38,6 +38,32 @@
               placeholder="Write Details Description Here" />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activity.partners" name="Partners" placeholder="Write Details About Partners" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activity.challenges" name="Challenges" placeholder="Write Challenges Here" />
+          </v-col>
+        </v-row>
+        
+        <v-row>
+          <v-col>
+            <text-editor v-model="activity.success_stories" name="Success Stories" placeholder="Write Success Stories Here" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activity.lessons" name="Lessons" placeholder="Write Lessons Here" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activity.recommendations" name="Recommendations" placeholder="Write Recommendations Here" />
+          </v-col>
+        </v-row>
       </v-card-text>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
@@ -103,6 +129,11 @@ async function save() {
 
 const activityData: Ref<ProjectsActivitiesRecord | ProjectsActivitiesResponse> = ref({
   title: '',
+  partners: '',
+  success_stories: '',
+  lessons: '',
+  challenges: '',
+  recommendations: '',
   project: props.activity?.project || '',
   place: '',
   starting_date: '',

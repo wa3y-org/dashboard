@@ -37,6 +37,9 @@ const projectId = useRoute().params.id;
 const project: Ref<ProjectsRecord> = ref({
   title: '',
   place: '',
+  objectives: '',
+  targeted_groups: '',
+  context_dependant_topics: '',
   starting_date: null,
   end_date: null,
   details: '',

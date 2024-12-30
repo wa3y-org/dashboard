@@ -25,13 +25,39 @@
     </v-row>
   </div>
   <div class="my-12 border-lg rounded-lg mx-1 ">
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        About Project
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="project.details" />
+    </div>
 
-    <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
-      <v-icon class="mx-4">mdi-file-document-outline</v-icon>
-      Project Details
-    </p>
-    <v-divider class="mb-8"></v-divider>
-    <WHtmlView :html="project.details" />
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Objectives
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="project.objectives" />
+    </div>
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Targeted Groups
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="project.targeted_groups" />
+    </div>
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Context-Dependant Topics
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="project.context_dependant_topics" />
+    </div>
   </div>
 </template>
 

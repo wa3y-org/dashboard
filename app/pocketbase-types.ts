@@ -243,7 +243,7 @@ export type EmployeesTasksRecord = {
 	complition_date?: IsoDateString
 	created?: IsoDateString
 	details?: HTMLString
-	due_date: IsoDateString
+	due_date?: IsoDateString
 	employee: RecordIdString
 	id: string
 	title: string
@@ -322,26 +322,32 @@ export type ProjectFinanceRecord = {
 }
 
 export type ProjectsRecord = {
+	context_dependant_topics?: HTMLString
 	created?: IsoDateString
 	details?: HTMLString
 	end_date?: IsoDateString
 	id: string
+	objectives?: HTMLString
 	place?: string
 	starting_date?: IsoDateString
+	targeted_groups?: HTMLString
 	title: string
 	updated?: IsoDateString
 }
 
 export type ProjectsActivitiesRecord = {
-	carry_on_details?: HTMLString
+	challenges?: HTMLString
 	created?: IsoDateString
 	description?: HTMLString
 	end_date?: IsoDateString
 	id: string
-	output_details?: HTMLString
+	lessons?: HTMLString
+	partners?: HTMLString
 	place?: string
 	project: RecordIdString
+	recommendations?: HTMLString
 	starting_date?: IsoDateString
+	success_stories?: HTMLString
 	title: string
 	updated?: IsoDateString
 }

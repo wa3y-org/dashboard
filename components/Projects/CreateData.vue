@@ -30,21 +30,21 @@
 
     <v-row>
       <v-col>
-        <text-editor :errors="validationErrors.details" v-model="project.details" name="Objectives"
+        <text-editor :errors="validationErrors.objectives" v-model="project.objectives" name="Objectives"
           placeholder="Enter Project Objectives" />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col>
-        <text-editor :errors="validationErrors.details" v-model="project.details" name="Targeted Group"
+        <text-editor :errors="validationErrors.targeted_groups" v-model="project.targeted_groups" name="Targeted Group"
           placeholder="Enter Project Targeted Group" />
       </v-col>
     </v-row>
 
     <v-row>
       <v-col>
-        <text-editor :errors="validationErrors.details" v-model="project.details" name="Context-Dependant topics"
+        <text-editor :errors="validationErrors.context_dependant_topics" v-model="project.context_dependant_topics" name="Context-Dependant topics"
           placeholder="Enter Project Context-Dependant topics" />
       </v-col>
     </v-row>

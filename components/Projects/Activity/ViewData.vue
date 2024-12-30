@@ -56,13 +56,58 @@
   </div>
   <div class="my-6 border-lg rounded-lg mx-1 ">
 
-    <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
-      <v-icon class="mx-4">mdi-file-document-outline</v-icon>
-      Activity Details
-    </p>
-    <v-divider class="mb-8"></v-divider>
-    <WHtmlView :html="activity?.description" />
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Activity Details
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.description" />
+    </div>
+
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Partners
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.partners" />
+    </div>
+
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Challenges
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.challenges" />
+    </div>
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Success Stories
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.success_stories" />
+    </div>
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Lessons
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.lessons" />
+    </div>
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Recommendations
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.recommendations" />
+    </div>
   </div>
+
 </template>
 
 <script lang="ts" setup>

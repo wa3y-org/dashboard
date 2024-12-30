@@ -1,9 +1,10 @@
 <template>
-  <v-dialog :model-value="show" scrollable persistent :overlay="false" max-width="1080px" transition="dialog-transition">
+  <v-dialog :model-value="show" scrollable persistent :overlay="false" max-width="1080px"
+    transition="dialog-transition">
     <v-card rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
       <v-toolbar color="transparent">
         <v-toolbar-title class="font-weight-black">
-          <v-icon >mdi-folder-table-outline</v-icon>
+          <v-icon>mdi-folder-table-outline</v-icon>
           <span class="mx-1"></span>
           Create new activity
         </v-toolbar-title>
@@ -38,10 +39,16 @@
               placeholder="Write Details Description Here" />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activity.partners" name="Partners" placeholder="Write Details About Partners" />
+          </v-col>
+        </v-row>
       </v-card-text>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
-        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
+          v-if="backendError.hasError" />
       </div>
       <v-divider></v-divider>
       <v-card-actions class="pa-4">
@@ -69,6 +76,7 @@ const Activities = useActivities();
 
 const activity: Ref<ProjectsActivitiesRecord | ProjectsActivitiesResponse> = ref({
   title: '',
+  partners: '',
   project: props.project?.id || '',
   place: '',
   starting_date: '',
