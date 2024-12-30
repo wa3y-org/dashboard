@@ -13,7 +13,7 @@ export async function updateEmployee(
 ) {
   const data = new FormData();
 
-  const keysToPass = ["allowances", "deductions", "roles"];
+  const keysToPass = ["allowances", "deductions", "roles", "project"];
 
   if (!employee.oldPassword) {
     keysToPass.push("password", "passwordConfirm", "oldPassword")
@@ -26,6 +26,12 @@ export async function updateEmployee(
       }
     }
     data.append(key, employee[key] || "");
+  }
+
+  if (employee.project?.id ) {
+    data.set('project', employee.project.id);
+  }else {
+    data.set('project', employee.project || '')
   }
 
   for (let allowance of employee.allowances || [""]) {
@@ -64,6 +70,7 @@ export async function updateEmployee(
   );
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
+ 
   return await backendRequestOne<EmployeesRecord>(async () => {
     return await pb.collection("employees").update(employee.id, data);
   });

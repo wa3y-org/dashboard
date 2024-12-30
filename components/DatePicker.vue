@@ -1,10 +1,15 @@
 <template>
   <v-card variant="outlined" rounded="lg" class="border-md">
+    
     <div class="d-flex align-center">
       <div>
         <span class="mx-2 text-primary text-no-wrap font-weight-black">
           <v-icon v-if="icon">{{ icon }}</v-icon>
           {{ name }} :
+
+          <v-btn icon="mdi-close" size="small" variant="text"
+            @click="calendarPickedDate = new Date('invalid');"></v-btn>
+
         </span>
       </div>
       <v-spacer></v-spacer>
@@ -15,16 +20,16 @@
 
             <div class="d-flex rounded-md elevation-0 my-1 overflow-hidden">
               <div>
-                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" min="1" max="31"
-                  :hide-spin-buttons="true" v-bind="props.props" width="60" menu-icon="" v-model="selectedDay" rounded="0"
-                  variant="solo" hide-details="auto" label="Day"></v-text-field>
+                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" min="1"
+                  max="31" :hide-spin-buttons="true" v-bind="props.props" width="60" menu-icon="" v-model="selectedDay"
+                  rounded="0" variant="solo" hide-details="auto" label="Day"></v-text-field>
               </div>
 
               <div>
 
-                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" min="1" max="12"
-                  :hide-spin-buttons="true" v-bind="props.props" width="70" menu-icon="" v-model="selectedMonth"
-                  rounded="0" variant="solo" hide-details="auto" label="Month"></v-text-field>
+                <v-text-field @keydown.prevent="" density="comfortable" class="elevation-0" type="number" min="1"
+                  max="12" :hide-spin-buttons="true" v-bind="props.props" width="70" menu-icon=""
+                  v-model="selectedMonth" rounded="0" variant="solo" hide-details="auto" label="Month"></v-text-field>
               </div>
 
               <div>
@@ -98,11 +103,11 @@ watch(
 watch(model, () => {
   if (model.value) {
     const date = moment(model.value);
-  
+
     selectedDay.value = date.get('D');
     selectedMonth.value = date.get("M") + 1;
     selectedYear.value = date.get('year');
-  }else {
+  } else {
     selectedDay.value = null;
     selectedMonth.value = null;
     selectedYear.value = null;
@@ -112,11 +117,11 @@ watch(model, () => {
 onMounted(() => {
   if (model.value) {
     const date = moment(model.value);
-  
+
     selectedDay.value = date.get('D');
     selectedMonth.value = date.get("M") + 1;
     selectedYear.value = date.get('year');
-  }else {
+  } else {
     selectedDay.value = null;
     selectedMonth.value = null;
     selectedYear.value = null;

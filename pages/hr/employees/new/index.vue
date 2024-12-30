@@ -103,6 +103,9 @@ const employee: Ref<EmployeesRecord & EmployeesResponse> = ref({
   password: null,
   passwordConfirm: null,
   job_description: null,
+  shift: null,
+  employment_type: null,
+  project: null,
 })
 
 const isFirstAttempt = ref(true);

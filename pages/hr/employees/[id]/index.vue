@@ -16,6 +16,10 @@
             <v-icon size="x-large" class="mx-2">mdi-fingerprint</v-icon>
             Authentication
           </v-tab>
+          <v-tab value="tasks" class="font-weight-black">
+            <v-icon size="x-large" class="mx-2">mdi-checkbox-outline</v-icon>
+            Tasks
+          </v-tab>
           <v-tab value="settings" class="font-weight-black">
             <v-icon size="x-large" class="mx-2">mdi-account-settings-outline</v-icon>
             settings
@@ -45,6 +49,10 @@
               <EmployeesEmployeeAuthInfo  :employee="employee" />
             </div>
 
+          </v-tabs-window-item>
+
+          <v-tabs-window-item value="tasks" transition="fade-transition">
+            <EmployeesEmployeeTasks  :employee="employee" />
           </v-tabs-window-item>
 
           <v-tabs-window-item value="settings" transition="fade-transition">

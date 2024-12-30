@@ -17,7 +17,7 @@ export async function createEmployee(
   // data.append("verified", "1");
 
   for (let key of Object.keys(employee)) {
-    if (key == "allowances" || key == "deductions" || key == "roles") continue;
+    if (key == "allowances" || key == "deductions" || key == "roles" || key == "project") continue;
     if (key.trim().toLocaleLowerCase() == "avatar") {
       if (!(employee.avatar instanceof File)) {
         continue;
@@ -25,6 +25,13 @@ export async function createEmployee(
     }
     data.append(key, employee[key] || "");
   }
+
+  if (employee.project?.id ) {
+    data.set('project', employee.project.id);
+  }else {
+    data.set('project', employee.project || '')
+  }
+
 
   for (let role of employee.roles || []) {
     data.append("roles", role);

@@ -5,7 +5,13 @@
 </template>
 
 <script lang="ts" setup>
-const validQualifications = ["Heigh School", "Diploma", "BSd", "PHD"]
+const validQualifications = [
+  "Less thab Heigh School",
+  "Heigh School",
+  "Diploma",
+  "BSd",
+  "PHD"
+]
 
 </script>
 

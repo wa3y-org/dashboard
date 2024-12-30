@@ -23,8 +23,29 @@
 
     <v-row>
       <v-col>
-        <text-editor :errors="validationErrors.details" v-model="project.details" name="Details"
-          placeholder="Enter Project Details" />
+        <text-editor :errors="validationErrors.details" v-model="project.details" name="About Project"
+          placeholder="Enter Project Summary" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <text-editor :errors="validationErrors.details" v-model="project.details" name="Objectives"
+          placeholder="Enter Project Objectives" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <text-editor :errors="validationErrors.details" v-model="project.details" name="Targeted Group"
+          placeholder="Enter Project Targeted Group" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <text-editor :errors="validationErrors.details" v-model="project.details" name="Context-Dependant topics"
+          placeholder="Enter Project Context-Dependant topics" />
       </v-col>
     </v-row>
 

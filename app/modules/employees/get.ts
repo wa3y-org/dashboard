@@ -11,7 +11,7 @@ export async function getAllEmployees() {
 
 export async function getOneEmployee(id: string) {
   const record : EmployeesRecord = await pb.collection("employees").getOne(id, {
-    expand: "allowances, deductions, roles",
+    expand: "allowances, deductions, roles, project",
   });
 
   console.log(record)

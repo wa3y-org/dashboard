@@ -2,7 +2,7 @@ import type { NavGroup } from "../types";
 
 export const financeRoutes: NavGroup = [
   {
-    name: "Grants",
+    name: "Donations",
     icon: "mdi-cash-fast",
     route: "/finance/grants",
     permissions: [],

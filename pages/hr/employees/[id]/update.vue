@@ -25,6 +25,7 @@
         </template>
       </v-stepper-header>
       <v-stepper-window style="min-height: 24rem;" class="pa-0 ma-0 my-4">
+        
         <v-stepper-window-item :value="1">
           <create-employee-personal-info v-model="employee" />
         </v-stepper-window-item>
@@ -108,6 +109,9 @@ const employee: Ref<EmployeesRecord | any> = ref({
   Sex: null,
   specialization: null,
   starting_date: null,
+  shift: null,
+  employment_type: null,
+  project: null,
   roles: [],
   password: null,
   passwordConfirm: null,

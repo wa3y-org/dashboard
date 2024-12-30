@@ -1,5 +1,6 @@
 <template>
-  <w-html-view-dialog title="Job Description" :html="employee?.job_description" :show="jobDescriptionModal.isShown.value" @close="jobDescriptionModal.hide" />
+  <w-html-view-dialog title="Job Description" :html="employee?.job_description"
+    :show="jobDescriptionModal.isShown.value" @close="jobDescriptionModal.hide" />
   <div class="my-8">
     <v-row>
       <v-col class="px-4">
@@ -14,6 +15,9 @@
           <div class="d-inline-block ma-4">
             <span class="font-weight-black text-nowrap">{{ employee?.name }}</span>
             <p class="text-grey-darken-2"> {{ employee?.email }}</p>
+            <p class="mt-2 text-blue">
+              {{ employee?.id }}
+            </p>
             <p class="mt-2">
               <v-chip density="compact" color="primary" class="px-4" label>
                 {{ employee?.sex }} ({{ calcAge(employee?.birth_date?.toString() || '') }})
@@ -32,20 +36,29 @@
         </div>
       </v-col>
       <v-col cols="3">
-        <p class="text-h6">
-          
-          <span class="text-grey">
-            {{ employee?.id }}
-          </span>
-        </p>
+        <div class="text-center" v-if="employee?.project">
+
+          <v-chip :to="`/projects/${employee?.project}`" size="large" class="px-4 border-lg border-lg" color="primary">
+            <div>
+              Project : {{ employee?.expand.project.title }}
+            </div>
+          </v-chip>
+        </div>
         <div class="font-weight-bold my-4 border-lg border-primary elevation-2 pa-2 rounded-lg">
+          {{ employee?.employment_type }}
+          <v-divider class="my-1"></v-divider>
           <div class="d-flex justify-space-between align-center">
             {{ employee?.employment_position }}
-            <v-btn color="primary" size="small" variant="text" icon="mdi-file-document-outline" @click="jobDescriptionModal.show" />
+            <v-btn color="primary" size="small" variant="text" icon="mdi-file-document-outline"
+              @click="jobDescriptionModal.show" />
           </div>
           <v-divider class="my-2"></v-divider>
           {{ employee?.employment_section }}
+          <v-divider class="my-2"></v-divider>
+          {{ employee?.shift }}
+
         </div>
+
         <div class="my-3 font-weight-bold">
           <p>
             Qualification: {{ employee?.qualification }} - ({{ employee?.specialization }})

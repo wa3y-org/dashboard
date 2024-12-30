@@ -6,6 +6,11 @@ import type PocketBase from 'pocketbase'
 import type { RecordService } from 'pocketbase'
 
 export enum Collections {
+	Authorigins = "_authOrigins",
+	Externalauths = "_externalAuths",
+	Mfas = "_mfas",
+	Otps = "_otps",
+	Superusers = "_superusers",
 	ActivitiesFinance = "activities_finance",
 	ActivitiesStaff = "activities_staff",
 	ActivitiesTimelines = "activities_timelines",
@@ -15,6 +20,7 @@ export enum Collections {
 	Employees = "employees",
 	EmployeesAdvances = "employees_advances",
 	EmployeesAdvancesPayments = "employees_advances_payments",
+	EmployeesTasks = "employees_tasks",
 	Finance = "finance",
 	Members = "members",
 	Payroll = "payroll",
@@ -36,8 +42,6 @@ export type HTMLString = string
 // System fields
 export type BaseSystemFields<T = never> = {
 	id: RecordIdString
-	created: IsoDateString
-	updated: IsoDateString
 	collectionId: string
 	collectionName: Collections
 	expand?: T
@@ -52,6 +56,55 @@ export type AuthSystemFields<T = never> = {
 
 // Record types for each collection
 
+export type AuthoriginsRecord = {
+	collectionRef: string
+	created?: IsoDateString
+	fingerprint: string
+	id: string
+	recordRef: string
+	updated?: IsoDateString
+}
+
+export type ExternalauthsRecord = {
+	collectionRef: string
+	created?: IsoDateString
+	id: string
+	provider: string
+	providerId: string
+	recordRef: string
+	updated?: IsoDateString
+}
+
+export type MfasRecord = {
+	collectionRef: string
+	created?: IsoDateString
+	id: string
+	method: string
+	recordRef: string
+	updated?: IsoDateString
+}
+
+export type OtpsRecord = {
+	collectionRef: string
+	created?: IsoDateString
+	id: string
+	password: string
+	recordRef: string
+	sentTo?: string
+	updated?: IsoDateString
+}
+
+export type SuperusersRecord = {
+	created?: IsoDateString
+	email: string
+	emailVisibility?: boolean
+	id: string
+	password: string
+	tokenKey: string
+	updated?: IsoDateString
+	verified?: boolean
+}
+
 export enum ActivitiesFinanceTypeOptions {
 	"donation" = "donation",
 	"expense" = "expense",
@@ -59,9 +112,12 @@ export enum ActivitiesFinanceTypeOptions {
 export type ActivitiesFinanceRecord = {
 	activity: RecordIdString
 	amount: number
+	created?: IsoDateString
 	fund_facility: string
+	id: string
 	statement?: HTMLString
 	type: ActivitiesFinanceTypeOptions
+	updated?: IsoDateString
 }
 
 export enum ActivitiesStaffTypeOptions {
@@ -70,44 +126,53 @@ export enum ActivitiesStaffTypeOptions {
 }
 export type ActivitiesStaffRecord = {
 	activity: RecordIdString
+	created?: IsoDateString
 	description?: HTMLString
+	id: string
 	person_id: string
 	position: string
 	type: ActivitiesStaffTypeOptions
+	updated?: IsoDateString
 }
 
 export type ActivitiesTimelinesRecord = {
 	activity?: RecordIdString
+	created?: IsoDateString
 	creator?: RecordIdString
+	id: string
 	post?: HTMLString
 	reply_to?: RecordIdString
 	title: string
+	updated?: IsoDateString
 }
 
 export type AllowanceOptionsRecord = {
 	amount: number
+	created?: IsoDateString
 	description?: HTMLString
+	id: string
 	title: string
+	updated?: IsoDateString
 }
 
 export type AssetsRecord = {
-	bill_details?: HTMLString
-	bill_number?: string
-	book_value?: string
 	broken_total?: number
+	created?: IsoDateString
 	details?: HTMLString
 	functional_total?: number
-	place?: string
-	serial_number?: string
-	status?: string
+	id: string
 	title: string
 	unit?: string
+	updated?: IsoDateString
 }
 
 export type DeductionOptionsRecord = {
 	amount: number
+	created?: IsoDateString
 	description?: HTMLString
+	id: string
 	title: string
+	updated?: IsoDateString
 }
 
 export enum EmployeesSexOptions {
@@ -127,33 +192,62 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 	avatar?: string
 	basic_salary: number
 	birth_date?: IsoDateString
+	created?: IsoDateString
 	deductions?: RecordIdString[]
+	email: string
+	emailVisibility?: boolean
 	employment_position?: string
 	employment_section?: string
 	employment_status?: EmployeesEmploymentStatusOptions
+	employment_type?: string
+	id: string
 	job_description?: HTMLString
 	marital_status?: string
 	name: string
 	number_of_children?: number
+	password: string
 	phone_numbers?: null | Tphone_numbers
+	project?: RecordIdString
 	qualification?: string
 	roles?: RecordIdString[]
 	sex?: EmployeesSexOptions
+	shift?: string
 	specialization?: string
 	starting_date?: IsoDateString
+	tokenKey: string
+	updated?: IsoDateString
+	username: string
+	verified?: boolean
 }
 
 export type EmployeesAdvancesRecord = {
 	amount: number
+	created?: IsoDateString
 	employee: RecordIdString
+	id: string
 	payed?: number
 	statement?: HTMLString
+	updated?: IsoDateString
 }
 
 export type EmployeesAdvancesPaymentsRecord = {
 	advance: RecordIdString
 	amount: number
+	created?: IsoDateString
+	id: string
 	statement?: HTMLString
+	updated?: IsoDateString
+}
+
+export type EmployeesTasksRecord = {
+	complition_date?: IsoDateString
+	created?: IsoDateString
+	details?: HTMLString
+	due_date: IsoDateString
+	employee: RecordIdString
+	id: string
+	title: string
+	updated?: IsoDateString
 }
 
 export enum FinanceTypeOptions {
@@ -162,9 +256,12 @@ export enum FinanceTypeOptions {
 }
 export type FinanceRecord = {
 	amount: number
+	created?: IsoDateString
 	fund_facility: string
+	id: string
 	statement?: HTMLString
 	type: FinanceTypeOptions
+	updated?: IsoDateString
 }
 
 export enum MembersSexOptions {
@@ -181,19 +278,31 @@ export type MembersRecord<Tphone_numbers = unknown> = {
 	address?: string
 	avatar?: string
 	birth_date?: IsoDateString
+	created?: IsoDateString
+	email: string
+	emailVisibility?: boolean
+	id: string
 	membership_status?: MembersMembershipStatusOptions
 	name: string
+	password: string
 	phone_numbers?: null | Tphone_numbers
 	sex?: MembersSexOptions
 	starting_date?: IsoDateString
+	tokenKey: string
+	updated?: IsoDateString
+	username: string
+	verified?: boolean
 }
 
 export type PayrollRecord<Tsalary_details = unknown> = {
+	created?: IsoDateString
 	employee: RecordIdString
+	id: string
 	month: number
 	payed: number
 	salary_details: null | Tsalary_details
 	total_salary: number
+	updated?: IsoDateString
 	year: number
 }
 
@@ -203,29 +312,38 @@ export enum ProjectFinanceTypeOptions {
 }
 export type ProjectFinanceRecord = {
 	amount: number
+	created?: IsoDateString
 	fund_facility: string
+	id: string
 	project: RecordIdString
 	statement?: HTMLString
 	type: ProjectFinanceTypeOptions
+	updated?: IsoDateString
 }
 
 export type ProjectsRecord = {
+	created?: IsoDateString
 	details?: HTMLString
 	end_date?: IsoDateString
+	id: string
 	place?: string
 	starting_date?: IsoDateString
 	title: string
+	updated?: IsoDateString
 }
 
 export type ProjectsActivitiesRecord = {
 	carry_on_details?: HTMLString
+	created?: IsoDateString
 	description?: HTMLString
 	end_date?: IsoDateString
+	id: string
 	output_details?: HTMLString
 	place?: string
 	project: RecordIdString
 	starting_date?: IsoDateString
 	title: string
+	updated?: IsoDateString
 }
 
 export enum ProjectsStaffTypeOptions {
@@ -233,25 +351,34 @@ export enum ProjectsStaffTypeOptions {
 	"member" = "member",
 }
 export type ProjectsStaffRecord = {
+	created?: IsoDateString
 	description?: HTMLString
+	id: string
 	person_id: string
 	position: string
 	project: RecordIdString
 	type: ProjectsStaffTypeOptions
+	updated?: IsoDateString
 }
 
 export type ProjectsTimelinesRecord = {
+	created?: IsoDateString
 	creator?: RecordIdString
+	id: string
 	post?: HTMLString
 	project?: RecordIdString
 	reply_to?: RecordIdString
 	title: string
+	updated?: IsoDateString
 }
 
 export type RolesRecord<Tpermissions = unknown> = {
+	created?: IsoDateString
 	description?: HTMLString
+	id: string
 	permissions: null | Tpermissions
 	title: string
+	updated?: IsoDateString
 }
 
 export enum UsersStatusOptions {
@@ -261,9 +388,18 @@ export enum UsersStatusOptions {
 export type UsersRecord = {
 	avatar?: string
 	bio?: HTMLString
+	created?: IsoDateString
+	email: string
+	emailVisibility?: boolean
+	id: string
 	name: string
+	password: string
 	roles?: RecordIdString[]
 	status: UsersStatusOptions
+	tokenKey: string
+	updated?: IsoDateString
+	username: string
+	verified?: boolean
 }
 
 export enum VolunteersSexOptions {
@@ -280,14 +416,28 @@ export type VolunteersRecord<Tphone_numbers = unknown> = {
 	address?: string
 	avatar?: string
 	birth_date?: IsoDateString
+	created?: IsoDateString
+	email: string
+	emailVisibility?: boolean
+	id: string
 	membership_status?: VolunteersMembershipStatusOptions
 	name: string
+	password: string
 	phone_numbers?: null | Tphone_numbers
 	sex?: VolunteersSexOptions
 	starting_date?: IsoDateString
+	tokenKey: string
+	updated?: IsoDateString
+	username: string
+	verified?: boolean
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type AuthoriginsResponse<Texpand = unknown> = Required<AuthoriginsRecord> & BaseSystemFields<Texpand>
+export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRecord> & BaseSystemFields<Texpand>
+export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemFields<Texpand>
+export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
+export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type ActivitiesFinanceResponse<Texpand = unknown> = Required<ActivitiesFinanceRecord> & BaseSystemFields<Texpand>
 export type ActivitiesStaffResponse<Texpand = unknown> = Required<ActivitiesStaffRecord> & BaseSystemFields<Texpand>
 export type ActivitiesTimelinesResponse<Texpand = unknown> = Required<ActivitiesTimelinesRecord> & BaseSystemFields<Texpand>
@@ -297,6 +447,7 @@ export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOpti
 export type EmployeesResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<EmployeesRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type EmployeesAdvancesResponse<Texpand = unknown> = Required<EmployeesAdvancesRecord> & BaseSystemFields<Texpand>
 export type EmployeesAdvancesPaymentsResponse<Texpand = unknown> = Required<EmployeesAdvancesPaymentsRecord> & BaseSystemFields<Texpand>
+export type EmployeesTasksResponse<Texpand = unknown> = Required<EmployeesTasksRecord> & BaseSystemFields<Texpand>
 export type FinanceResponse<Texpand = unknown> = Required<FinanceRecord> & BaseSystemFields<Texpand>
 export type MembersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<MembersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type PayrollResponse<Tsalary_details = unknown, Texpand = unknown> = Required<PayrollRecord<Tsalary_details>> & BaseSystemFields<Texpand>
@@ -312,6 +463,11 @@ export type VolunteersResponse<Tphone_numbers = unknown, Texpand = unknown> = Re
 // Types containing all Records and Responses, useful for creating typing helper functions
 
 export type CollectionRecords = {
+	_authOrigins: AuthoriginsRecord
+	_externalAuths: ExternalauthsRecord
+	_mfas: MfasRecord
+	_otps: OtpsRecord
+	_superusers: SuperusersRecord
 	activities_finance: ActivitiesFinanceRecord
 	activities_staff: ActivitiesStaffRecord
 	activities_timelines: ActivitiesTimelinesRecord
@@ -321,6 +477,7 @@ export type CollectionRecords = {
 	employees: EmployeesRecord
 	employees_advances: EmployeesAdvancesRecord
 	employees_advances_payments: EmployeesAdvancesPaymentsRecord
+	employees_tasks: EmployeesTasksRecord
 	finance: FinanceRecord
 	members: MembersRecord
 	payroll: PayrollRecord
@@ -335,6 +492,11 @@ export type CollectionRecords = {
 }
 
 export type CollectionResponses = {
+	_authOrigins: AuthoriginsResponse
+	_externalAuths: ExternalauthsResponse
+	_mfas: MfasResponse
+	_otps: OtpsResponse
+	_superusers: SuperusersResponse
 	activities_finance: ActivitiesFinanceResponse
 	activities_staff: ActivitiesStaffResponse
 	activities_timelines: ActivitiesTimelinesResponse
@@ -344,6 +506,7 @@ export type CollectionResponses = {
 	employees: EmployeesResponse
 	employees_advances: EmployeesAdvancesResponse
 	employees_advances_payments: EmployeesAdvancesPaymentsResponse
+	employees_tasks: EmployeesTasksResponse
 	finance: FinanceResponse
 	members: MembersResponse
 	payroll: PayrollResponse
@@ -361,6 +524,11 @@ export type CollectionResponses = {
 // https://github.com/pocketbase/js-sdk#specify-typescript-definitions
 
 export type TypedPocketBase = PocketBase & {
+	collection(idOrName: '_authOrigins'): RecordService<AuthoriginsResponse>
+	collection(idOrName: '_externalAuths'): RecordService<ExternalauthsResponse>
+	collection(idOrName: '_mfas'): RecordService<MfasResponse>
+	collection(idOrName: '_otps'): RecordService<OtpsResponse>
+	collection(idOrName: '_superusers'): RecordService<SuperusersResponse>
 	collection(idOrName: 'activities_finance'): RecordService<ActivitiesFinanceResponse>
 	collection(idOrName: 'activities_staff'): RecordService<ActivitiesStaffResponse>
 	collection(idOrName: 'activities_timelines'): RecordService<ActivitiesTimelinesResponse>
@@ -370,6 +538,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'employees'): RecordService<EmployeesResponse>
 	collection(idOrName: 'employees_advances'): RecordService<EmployeesAdvancesResponse>
 	collection(idOrName: 'employees_advances_payments'): RecordService<EmployeesAdvancesPaymentsResponse>
+	collection(idOrName: 'employees_tasks'): RecordService<EmployeesTasksResponse>
 	collection(idOrName: 'finance'): RecordService<FinanceResponse>
 	collection(idOrName: 'members'): RecordService<MembersResponse>
 	collection(idOrName: 'payroll'): RecordService<PayrollResponse>

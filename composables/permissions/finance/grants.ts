@@ -1,6 +1,6 @@
 import type { PermissionsGroup } from "../types";
 
 export const grantsPermissions: PermissionsGroup = {
-  name: "grants",
+  name: "donations",
   permissions: ["create", "update", "read", "remove"],
 };

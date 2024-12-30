@@ -2,6 +2,19 @@
   <div class="px-4 mt-4">
     <v-row>
       <v-col>
+        <w-select-employment-type :errors="validationErrors.employment_type" v-model="employee.employment_type"></w-select-employment-type>
+      </v-col>
+      <v-col>
+        <w-select-shift :errors="validationErrors.shift" v-model="employee.shift"></w-select-shift>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <w-select-project :errors="validationErrors.project" v-model="employee.project"></w-select-project>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
         <w-select-org-section :errors="validationErrors.employmentSection" v-model="employee.employment_section" />
       </v-col>
       <v-col>
@@ -26,6 +39,7 @@
         <w-select-employment-status :errors="validationErrors.employmentStatus" v-model="employee.employment_status" />
       </v-col>
     </v-row>
+    
     <v-row>
       <v-col>
         <text-editor name="Job Description" v-model="employee.job_description" />
