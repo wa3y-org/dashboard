@@ -61,8 +61,9 @@ const addAssetModal = useModal();
 
 const headers = [
   { key: 'title', title: 'Title' },
-  { key: 'functional_total', title: 'Functional' },
-  { key: 'broken_total', title: 'Damaged' },
+  { key: 'status', title: 'status' },
+  { key: 'damage_rate', title: 'Damage Rate' },
+  { key: 'book_value', title: 'Book Value' },
   { key: 'actions', title: 'Actions', align: 'end' },
 ];
 

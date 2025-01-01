@@ -11,25 +11,33 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
-          <v-col>
+          <!-- <v-col>
             <text-field name="type" :props="{
               value: type,
               readonly: true,
               reverse: true,
 
             }" :errors="validationErrors.type" />
-          </v-col>
-        </v-row>
-        <v-row>
-
+          </v-col> -->
           <v-col>
             <text-field :errors="validationErrors.fund_facility" v-model="financeData.fund_facility"
               :name="facilityNickName" placeholder="Enter Facility Name" />
           </v-col>
+        </v-row>
+        <v-row>
+
+
           <v-col>
             <NumberField :errors="validationErrors.amount" v-model="financeData.amount" name="Amount"
-              placeholder="Enter amount - min is 0.01 USD" :props="{
+              placeholder="Enter Recieved amount - min is 0.01 USD" :props="{
                 min: 0.01,
+                suffix: 'USD'
+              }" />
+          </v-col>
+          <v-col>
+            <NumberField :errors="validationErrors.amount" v-model="financeData.transaction_fees"
+              name="Transaction Fees" placeholder="Enter Transaction Fees - min is 0.01 USD" :props="{
+                min: 0,
                 suffix: 'USD'
               }" />
           </v-col>
@@ -43,7 +51,8 @@
       </v-card-text>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
-        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
+          v-if="backendError.hasError" />
       </div>
       <v-divider></v-divider>
       <v-card-actions class="pa-4">
@@ -109,7 +118,8 @@ const financeData = ref({
   fund_facility: '',
   amount: null,
   statement: '',
-  type: props.type
+  type: props.type,
+  transaction_fees: null,
 })
 
 const ProjectFinance = useProjectFinance();
@@ -150,7 +160,8 @@ async function save() {
       fund_facility: '',
       amount: null,
       statement: '',
-      type: props.type
+      type: props.type,
+      transaction_fees: null,
     }
     useNuxtApp().$activeModalsBus.$emit('projects:finance:created')
     emit('saved')

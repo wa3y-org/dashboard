@@ -11,6 +11,7 @@ export async function updateProjectFinance(
       fund_facility: finance.fund_facility,
       amount: finance.amount,
       statement: finance.statement,
+      transaction_fees: finance.transaction_fees,
     });
   }
 

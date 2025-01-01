@@ -1,5 +1,5 @@
 import v8n from "v8n";
-import type { TAsset } from "./index";
+import type { TProjectBudgetLine } from "./index";
 
 function validateTitle(title: any) {
   const errors: string[] = [];
@@ -9,25 +9,19 @@ function validateTitle(title: any) {
   return errors;
 }
 
-function validateUnit(unit: any) {
-  const errors: string[] = [];
-  if (!v8n().string().minLength(1).test(unit?.trim() || '')) {
-    errors.push("Invalid unit, min length must be 1 characters");
-  }
-  return errors;
-}
 
 function validateTotal(n: any) {
   const errors: string[] = [];
   if (!v8n().number().greaterThanOrEqual(0).test(n)) {
-    errors.push("Invalid Total, min must be 0");
+    errors.push("Invalid Total, min must be 0.1");
   }
   return errors;
 }
 
-export function validateAsset(asset: TAsset) {
+export function validateBudgetline(line: TProjectBudgetLine) {
   const errors: { [key: string]: string[] } = {
-    title: validateTitle(asset.title),
+    title: validateTitle(line.title),
+    budget: validateTotal(line.budget)
   };
 
   return errors;

@@ -15,6 +15,7 @@ export async function addProjectFinance(
       amount: finance.amount,
       statement: finance.statement,
       type: finance.type,
+      transaction_fees: finance.transaction_fees || 0,
     });
   }
 

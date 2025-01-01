@@ -22,6 +22,9 @@
       <template v-slot:item.amount="{ item }">
         <w-usd class="font-weight-black text-capitalize" :amount="item.amount" />
       </template>
+      <template v-slot:item.transaction_fees="{ item }">
+        <w-usd color="red" class="font-weight-black text-capitalize" :amount="item.transaction_fees" />
+      </template>
       <template v-slot:item.updated="{ item }">
         <date-view class="font-weight-bold" :show-time="true" :date="item.updated" />
       </template>
@@ -47,7 +50,8 @@ const props = defineProps(['project'])
 
 const headers = [
   { title: 'Donor', key: 'fund_facility' },
-  { title: 'Amount', key: 'amount' },
+  { title: 'Received', key: 'amount' },
+  { title: 'Fees', key: 'transaction_fees' },
   { title: 'Date', key: 'updated' },
   { title: 'Actions', key: 'actions', align: 'end' },
 

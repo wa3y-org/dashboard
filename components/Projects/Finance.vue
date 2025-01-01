@@ -4,7 +4,12 @@
     <v-divider class="my-16">
       <v-icon>mdi-dots-vertical</v-icon>
     </v-divider>
-    <ProjectsFinanceExpenses :project="project" />
+    <ProjectsBudgetLinesList :project="project" />
+    <v-divider class="my-16">
+      <v-icon>mdi-dots-vertical</v-icon>
+    </v-divider>
+    <ProjectsFinanceRequestsList :project="project" />
+    <!-- <ProjectsFinanceExpenses :project="project" /> -->
   </div>
 </template>
 
@@ -12,6 +17,4 @@
 const props = defineProps(['project'])
 </script>
 
-<style>
-
-</style>
+<style></style>

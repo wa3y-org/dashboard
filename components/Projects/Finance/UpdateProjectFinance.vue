@@ -13,25 +13,34 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
-          <v-col>
+          <!-- <v-col>
             <text-field name="type" :props="{
               value: finance.type,
               readonly: true,
               reverse: true,
 
             }" :errors="validationErrors.type" />
-          </v-col>
-        </v-row>
-        <v-row>
-
+          </v-col> -->
           <v-col>
             <text-field :errors="validationErrors.fund_facility" v-model="financeData.fund_facility"
               :name="facilityNickName" placeholder="Enter Facility Name" />
           </v-col>
+        </v-row>
+        <v-row>
+
+
           <v-col>
             <NumberField :errors="validationErrors.amount" v-model="financeData.amount" name="Amount"
               placeholder="Enter amount - min is 0.01 USD" :props="{
                 min: 0.01,
+                suffix: 'USD'
+              }" />
+          </v-col>
+
+          <v-col>
+            <NumberField :errors="validationErrors.amount" v-model="financeData.transaction_fees"
+              name="Transaction Fees" placeholder="Enter Transaction Fees - min is 0.01 USD" :props="{
+                min: 0,
                 suffix: 'USD'
               }" />
           </v-col>
@@ -107,7 +116,8 @@ watch(() => { props.finance }, () => {
     fund_facility: props.finance.fund_facility,
     amount: props.finance.amount,
     statement: props.finance.statement,
-    type: props.finance.type
+    type: props.finance.type,
+    transaction_fees: props.finance.transaction_fees,
   }
 }, { deep: true })
 
