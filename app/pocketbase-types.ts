@@ -22,12 +22,14 @@ export enum Collections {
 	EmployeesAdvancesPayments = "employees_advances_payments",
 	EmployeesTasks = "employees_tasks",
 	Finance = "finance",
+	FinancialReqeuestsCommityComments = "financial_reqeuests_commity_comments",
 	FinancialRequestItems = "financial_request_items",
 	FinancialRequests = "financial_requests",
 	Members = "members",
 	Payroll = "payroll",
 	ProjectBudgitlines = "project_budgitlines",
 	ProjectFinance = "project_finance",
+	ProjectFinancialCommities = "project_financial_commities",
 	Projects = "projects",
 	ProjectsActivities = "projects_activities",
 	ProjectsStaff = "projects_staff",
@@ -271,6 +273,21 @@ export type FinanceRecord = {
 	updated?: IsoDateString
 }
 
+export enum FinancialReqeuestsCommityCommentsStatusOptions {
+	"REVIEW" = "REVIEW",
+	"APPROVAL" = "APPROVAL",
+	"BILL_APPROVAL" = "BILL_APPROVAL",
+}
+export type FinancialReqeuestsCommityCommentsRecord = {
+	comment?: HTMLString
+	created?: IsoDateString
+	employee: RecordIdString
+	financial_request: RecordIdString
+	id: string
+	status: FinancialReqeuestsCommityCommentsStatusOptions
+	updated?: IsoDateString
+}
+
 export type FinancialRequestItemsRecord = {
 	bill_number?: string
 	budget_line: RecordIdString
@@ -377,6 +394,16 @@ export type ProjectFinanceRecord = {
 	updated?: IsoDateString
 }
 
+export type ProjectFinancialCommitiesRecord = {
+	can_create?: boolean
+	can_update_status?: boolean
+	created?: IsoDateString
+	employee: RecordIdString
+	id: string
+	project: RecordIdString
+	updated?: IsoDateString
+}
+
 export type ProjectsRecord = {
 	context_dependant_topics?: HTMLString
 	created?: IsoDateString
@@ -392,12 +419,15 @@ export type ProjectsRecord = {
 }
 
 export type ProjectsActivitiesRecord = {
+	audience_count?: number
 	challenges?: HTMLString
 	created?: IsoDateString
 	description?: HTMLString
 	end_date?: IsoDateString
+	how_challenges_faced?: HTMLString
 	id: string
 	lessons?: HTMLString
+	participants?: HTMLString
 	partners?: HTMLString
 	place?: string
 	project: RecordIdString
@@ -511,12 +541,14 @@ export type EmployeesAdvancesResponse<Texpand = unknown> = Required<EmployeesAdv
 export type EmployeesAdvancesPaymentsResponse<Texpand = unknown> = Required<EmployeesAdvancesPaymentsRecord> & BaseSystemFields<Texpand>
 export type EmployeesTasksResponse<Texpand = unknown> = Required<EmployeesTasksRecord> & BaseSystemFields<Texpand>
 export type FinanceResponse<Texpand = unknown> = Required<FinanceRecord> & BaseSystemFields<Texpand>
+export type FinancialReqeuestsCommityCommentsResponse<Texpand = unknown> = Required<FinancialReqeuestsCommityCommentsRecord> & BaseSystemFields<Texpand>
 export type FinancialRequestItemsResponse<Texpand = unknown> = Required<FinancialRequestItemsRecord> & BaseSystemFields<Texpand>
 export type FinancialRequestsResponse<Texpand = unknown> = Required<FinancialRequestsRecord> & BaseSystemFields<Texpand>
 export type MembersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<MembersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type PayrollResponse<Tsalary_details = unknown, Texpand = unknown> = Required<PayrollRecord<Tsalary_details>> & BaseSystemFields<Texpand>
 export type ProjectBudgitlinesResponse<Texpand = unknown> = Required<ProjectBudgitlinesRecord> & BaseSystemFields<Texpand>
 export type ProjectFinanceResponse<Texpand = unknown> = Required<ProjectFinanceRecord> & BaseSystemFields<Texpand>
+export type ProjectFinancialCommitiesResponse<Texpand = unknown> = Required<ProjectFinancialCommitiesRecord> & BaseSystemFields<Texpand>
 export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
 export type ProjectsActivitiesResponse<Texpand = unknown> = Required<ProjectsActivitiesRecord> & BaseSystemFields<Texpand>
 export type ProjectsStaffResponse<Texpand = unknown> = Required<ProjectsStaffRecord> & BaseSystemFields<Texpand>
@@ -544,12 +576,14 @@ export type CollectionRecords = {
 	employees_advances_payments: EmployeesAdvancesPaymentsRecord
 	employees_tasks: EmployeesTasksRecord
 	finance: FinanceRecord
+	financial_reqeuests_commity_comments: FinancialReqeuestsCommityCommentsRecord
 	financial_request_items: FinancialRequestItemsRecord
 	financial_requests: FinancialRequestsRecord
 	members: MembersRecord
 	payroll: PayrollRecord
 	project_budgitlines: ProjectBudgitlinesRecord
 	project_finance: ProjectFinanceRecord
+	project_financial_commities: ProjectFinancialCommitiesRecord
 	projects: ProjectsRecord
 	projects_activities: ProjectsActivitiesRecord
 	projects_staff: ProjectsStaffRecord
@@ -576,12 +610,14 @@ export type CollectionResponses = {
 	employees_advances_payments: EmployeesAdvancesPaymentsResponse
 	employees_tasks: EmployeesTasksResponse
 	finance: FinanceResponse
+	financial_reqeuests_commity_comments: FinancialReqeuestsCommityCommentsResponse
 	financial_request_items: FinancialRequestItemsResponse
 	financial_requests: FinancialRequestsResponse
 	members: MembersResponse
 	payroll: PayrollResponse
 	project_budgitlines: ProjectBudgitlinesResponse
 	project_finance: ProjectFinanceResponse
+	project_financial_commities: ProjectFinancialCommitiesResponse
 	projects: ProjectsResponse
 	projects_activities: ProjectsActivitiesResponse
 	projects_staff: ProjectsStaffResponse
@@ -611,12 +647,14 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'employees_advances_payments'): RecordService<EmployeesAdvancesPaymentsResponse>
 	collection(idOrName: 'employees_tasks'): RecordService<EmployeesTasksResponse>
 	collection(idOrName: 'finance'): RecordService<FinanceResponse>
+	collection(idOrName: 'financial_reqeuests_commity_comments'): RecordService<FinancialReqeuestsCommityCommentsResponse>
 	collection(idOrName: 'financial_request_items'): RecordService<FinancialRequestItemsResponse>
 	collection(idOrName: 'financial_requests'): RecordService<FinancialRequestsResponse>
 	collection(idOrName: 'members'): RecordService<MembersResponse>
 	collection(idOrName: 'payroll'): RecordService<PayrollResponse>
 	collection(idOrName: 'project_budgitlines'): RecordService<ProjectBudgitlinesResponse>
 	collection(idOrName: 'project_finance'): RecordService<ProjectFinanceResponse>
+	collection(idOrName: 'project_financial_commities'): RecordService<ProjectFinancialCommitiesResponse>
 	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
 	collection(idOrName: 'projects_activities'): RecordService<ProjectsActivitiesResponse>
 	collection(idOrName: 'projects_staff'): RecordService<ProjectsStaffResponse>

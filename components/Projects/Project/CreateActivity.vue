@@ -81,7 +81,8 @@ const activity: Ref<ProjectsActivitiesRecord | ProjectsActivitiesResponse> = ref
   place: '',
   starting_date: '',
   end_date: '',
-  description: ''
+  description: '',
+  
 })
 
 watch(() => props.project, () => { activity.value.project = props.project.id }, { deep: true })

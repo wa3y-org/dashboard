@@ -22,20 +22,27 @@
   </v-toolbar>
   <v-divider class="my-2"></v-divider>
   <div>
-    <div v-for="item of itemsList">
+    <div v-for="item of itemsList" class="border-lg px-2 my-2 rounded-lg">
       <v-row>
         <v-col cols="8 " class="py-8 font-weight-bold">
-          <div class="mb-2">
-            <v-btn color="primary" variant="text" icon="mdi-file-document-outline" @click="showFinancialRequestItemDetails(item)"></v-btn>
+          <div class="mb-2 d-flex">
+            <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
+              @click="showFinancialRequestItemDetails(item)"></v-btn>
 
             <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"
               @click="setFinacialRequestItemToUpdate(item)"></v-btn>
 
             <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
-          </div>
 
+            <v-spacer></v-spacer>
+            <v-chip color="success" variant="flat" prepend-icon="mdi-check"
+              v-if="item.bill_number && item.bill_number.trim() != ''"> With Bill</v-chip>
+            <v-chip color="error" variant="flat" prepend-icon="mdi-close" v-else> Without Bill</v-chip>
+          </div>
+          <v-divider class="mb-4"></v-divider>
           <p>Title: {{ item.title }}</p>
           <p>Store: {{ item.store_name }}</p>
+          
           <v-spacer></v-spacer>
           <p>Address: {{ item.store_address }}</p>
           <div class=" d-flex align-center">
@@ -50,9 +57,12 @@
               <p>Remaining :<w-usd :amount="item.expand?.budget_line.budget"></w-usd></p>
             </div>
           </div>
-          <v-chip color="success" variant="flat" prepend-icon="mdi-check"
-            v-if="item.bill_number && item.bill_number.trim() != ''"> With Bill</v-chip>
-          <v-chip color="error" variant="flat" prepend-icon="mdi-close" v-else> Without Bill</v-chip>
+          <div v-if="item.bill_number && item.bill_number.trim() != ''">
+            <v-divider class="mb-3"></v-divider>
+            <p >
+            Bill Number: {{ item.bill_number }}
+          </p>
+          </div>
         </v-col>
         <v-divider vertical></v-divider>
         <v-col class="py-8">

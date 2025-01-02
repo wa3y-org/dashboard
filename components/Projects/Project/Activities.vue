@@ -54,7 +54,7 @@ const activitiesList: Ref<(ProjectsActivitiesRecord | ProjectsActivitiesResponse
 const loading = useLoading();
 async function loadActivities() {
   loading.start();
-  const response = await useActivities().getAll();
+  const response = await useActivities().getAll(props.project?.id || '');
   loading.end();
 
   if (response.models) {

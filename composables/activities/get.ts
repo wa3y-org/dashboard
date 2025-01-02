@@ -9,12 +9,16 @@ import {
 } from "~/app/core/BackendRequest";
 
 export async function getAllActivities(
+  project_id: string,
   fields: string = "*,description:excerpt(1,true)"
 ): Promise<MultipleModelsResponse<TActivity>> {
   async function activitiesFetcher() {
     return await ActivitiesCollection.getFullList({
       sort: "-created",
       fields: fields,
+      filter: `
+        project="${project_id}"
+      `,
     });
   }
   return await backendRequestMultiple<TActivity>(activitiesFetcher);

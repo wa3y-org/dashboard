@@ -5,6 +5,7 @@
         <v-tab value="project" class="font-weight-black">
           <v-icon class="mx-2" size="24">mdi-folder-open-outline</v-icon>
           Project
+          
         </v-tab>
         <v-tab value="timeline" class="font-weight-black">
           <v-icon class="mx-2" size="24">mdi-clock-outline</v-icon>

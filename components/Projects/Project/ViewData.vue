@@ -5,6 +5,11 @@
       <p class="my-4">
         {{ project.title }}
       </p>
+      <NuxtLink :to="`/projects/${project.id}/report/`">
+        <v-btn color="blue" variant="text">
+          View Full Text Report
+        </v-btn>
+      </NuxtLink>
     </h1>
     <v-row class="align-center text-h6 my-8 mx-2 pa-1 border-lg border-primary rounded-lg bg-indigo-lighten-5">
       <v-col>

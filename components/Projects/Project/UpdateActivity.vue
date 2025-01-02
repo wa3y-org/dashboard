@@ -1,5 +1,6 @@
 <template>
-  <v-dialog :model-value="show" scrollable persistent :overlay="false" max-width="1080px" transition="dialog-transition">
+  <v-dialog :model-value="show" scrollable persistent :overlay="false" max-width="1080px"
+    transition="dialog-transition">
     <v-card rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
       <v-toolbar color="transparent">
         <v-toolbar-title class="font-weight-black">
@@ -23,6 +24,10 @@
             <text-field :errors="validationErrors.place" v-model="activityData.place" name="place"
               placeholder="Enter Activity Place" />
           </v-col>
+          <v-col>
+            <NumberField :errors="validationErrors.audience_count" v-model="activityData.audience_count" name="Audience"
+              placeholder="Enter Number of Participants" />
+          </v-col>
         </v-row>
         <v-row>
           <v-col>
@@ -40,34 +45,48 @@
         </v-row>
         <v-row>
           <v-col>
-            <text-editor v-model="activity.partners" name="Partners" placeholder="Write Details About Partners" />
+            <text-editor v-model="activityData.participants" name="Participants"
+              placeholder="Write about participants" />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <text-editor v-model="activity.challenges" name="Challenges" placeholder="Write Challenges Here" />
-          </v-col>
-        </v-row>
-        
-        <v-row>
-          <v-col>
-            <text-editor v-model="activity.success_stories" name="Success Stories" placeholder="Write Success Stories Here" />
+            <text-editor v-model="activityData.partners" name="Partners" placeholder="Write Details About Partners" />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <text-editor v-model="activity.lessons" name="Lessons" placeholder="Write Lessons Here" />
+            <text-editor v-model="activityData.challenges" name="Challenges" placeholder="Write Challenges Here" />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <text-editor v-model="activity.recommendations" name="Recommendations" placeholder="Write Recommendations Here" />
+            <text-editor v-model="activityData.how_challenges_faced" name="Challenges Overstep"
+              placeholder="How did you face issues and challenges" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activityData.success_stories" name="Success Stories"
+              placeholder="Write Success Stories Here" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activityData.lessons" name="Lessons" placeholder="Write Lessons Here" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor v-model="activityData.recommendations" name="Recommendations"
+              placeholder="Write Recommendations Here" />
           </v-col>
         </v-row>
       </v-card-text>
       <div v-if="backendError.error && backendError.hasError" class="my-4">
         <v-divider class="my-4"></v-divider>
-        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error" v-if="backendError.hasError" />
+        <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
+          v-if="backendError.hasError" />
       </div>
       <v-divider></v-divider>
       <v-card-actions class="pa-4">
@@ -138,7 +157,10 @@ const activityData: Ref<ProjectsActivitiesRecord | ProjectsActivitiesResponse> =
   place: '',
   starting_date: '',
   end_date: '',
-  description: ''
+  description: '',
+  audience_count: null,
+  how_challenges_faced: null,
+  participants: null,
 })
 
 const activityId = computed(() => {

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <QuillEditor style="min-height: 25px;" read-only class="w-100" theme="bubble" contentType="html" :content="html" />
+  <div v-html="html" class="ma-2 my-4">
   </div>
+  <!-- <QuillEditor style="min-height: 25px;" read-only class="w-100" theme="bubble" contentType="html" :content="html" /> -->
 </template>
 
 <script lang="ts" setup>

@@ -1,4 +1,5 @@
 <template>
+  <projects-project-financial-commity :project="project" />
   <v-divider color="error" class="my-4"></v-divider>
   <div class="pa-4">
 

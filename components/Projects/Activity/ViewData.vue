@@ -55,7 +55,6 @@
     </v-row>
   </div>
   <div class="my-6 border-lg rounded-lg mx-1 ">
-
     <div>
       <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
         <v-icon class="mx-4">mdi-file-document-outline</v-icon>
@@ -77,10 +76,31 @@
     <div>
       <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
         <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Participants
+      </p>
+      <div class="font-weight-bold ma-4">
+        Number Of Participants: {{ activity?.audience_count }}
+      </div>
+      <v-divider class="mb-4"></v-divider>
+      <WHtmlView :html="activity?.participants" />
+    </div>
+
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
         Challenges
       </p>
       <v-divider class="mb-8"></v-divider>
       <WHtmlView :html="activity?.challenges" />
+    </div>
+    
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Challenges Overstep
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="activity?.how_challenges_faced" />
     </div>
     <div>
       <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">

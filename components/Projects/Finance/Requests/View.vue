@@ -98,8 +98,12 @@
             <ProjectsFinanceRequestsItemsList :request="request" />
           </v-col>
         </v-row>
+        <v-row>
+          <v-col>
+            <ProjectsFinanceRequestsCommityComments :request="request"/>
+          </v-col>
+        </v-row>
       </v-card-text>
-
     </v-card>
   </v-dialog>
 </template>
