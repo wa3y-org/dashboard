@@ -17,10 +17,25 @@ function validateEmployee(employee: any) {
   return errors;
 }
 
+function validateDeduction(advance: TAdvance) {
+  const errors: string[] = [];
+  if (
+    !v8n()
+      .number()
+      .greaterThanOrEqual(0.9999999)
+      .lessThanOrEqual(advance.amount)
+      .test(advance.deduction)
+  ) {
+    errors.push(`Invalid Deduction, min must be 1 and max must be ${advance.amount}`);
+  }
+  return errors;
+}
+
 export function validateAdvance(advance: TAdvance) {
   const errors: { [key: string]: string[] } = {
     amount: validateTotal(advance.amount),
     employee: validateEmployee(advance.employee),
+    deduction: validateDeduction(advance),
     statement: [],
   };
 

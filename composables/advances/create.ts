@@ -23,6 +23,7 @@ export async function addEmployeeAdvance(
       employee: employee.id,
       amount: advance.amount,
       payed: 0,
+      deduction: advance.deduction,
       statement: advance.statement,
     });
   });

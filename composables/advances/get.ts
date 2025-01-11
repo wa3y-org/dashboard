@@ -33,7 +33,7 @@ export async function getEmployeeOneAdvance(id: string) {
 type TEmployee = EmployeesRecord & EmployeesResponse & AuthModel;
 
 export async function getOneEmployeeAdvances(employee: TEmployee) {
-  return await backendRequestOne<TAdvance>(async () => {
+  return await backendRequestMultiple<TAdvance>(async () => {
     return await EmployeesAdvancesCollection.getFullList({
       filter: `employee="${employee.id}"`,
       expand: "employee",

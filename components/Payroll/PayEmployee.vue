@@ -14,7 +14,7 @@
       <v-card-text class="py-2 my-2">
         <PayrollEmployeeCard :employee="employee" v-model="payroll" />
 
-        <v-expansion-panels class="rounded-lg ">
+        <v-expansion-panels class="rounded-lg">
           <PayrollAllowances v-model="salaryDetails" />
           <PayrollDeductions v-model="salaryDetails" />
         </v-expansion-panels>
@@ -68,6 +68,7 @@
 import { type EmployeesRecord, type EmployeesResponse } from "~/app/pocketbase-types";
 import type { AuthModel, BaseModel } from "pocketbase";
 import { useDate } from 'vuetify'
+import type { TAdvance } from "~/composables/advances";
 
 
 type TEmployee = EmployeesRecord & EmployeesResponse & BaseModel & AuthModel
@@ -105,7 +106,34 @@ const payroll = ref({
   payed: null,
 });
 
+const advances = ref<TAdvance[]>([])
 
+async function loadAdvances() {
+  loading.start();
+  const response = await useEmployeesAdvances().get.employeeAdvances(employeeData.value);
+  loading.end();
+
+  if (response.error) backendError.set(response.error);
+
+  advances.value = response.models || [];
+
+  let amount = 0;
+  for (let advance of advances.value) {
+    amount = Number(advance.amount) - Number(advance.payed);
+    if (amount > Number(advance.deduction)) amount = advance.deduction;
+    salaryDetails.value.deductions.push({
+      amount: amount,
+      statement: `Advance Payment -- id:${advance.id}`,
+    })
+  }
+
+}
+
+
+watch(() => props.show, () => {
+
+  if (props.show) loadAdvances();
+});
 
 const salaryDetails = ref<{
   basic_salary: number;
@@ -123,23 +151,25 @@ function resetSalaryDetails() {
     allowances: [],
     deductions: [],
   }
-
 }
 function extractSalaryDetails() {
   resetSalaryDetails();
   for (let allowance of employeeData.value?.expand?.allowances || []) {
     salaryDetails.value.allowances.push({
       amount: allowance.amount,
-      statement: allowance.description,
+      statement: allowance.title,
     })
   }
 
   for (let deduction of employeeData.value?.expand?.deductions || []) {
     salaryDetails.value.deductions.push({
       amount: deduction.amount,
-      statement: deduction.description,
+      statement: deduction.title,
     })
   }
+
+
+
 }
 
 watch(() => props.show, () => {
@@ -207,6 +237,17 @@ async function save() {
   if (Errors.hasError(validationErrors.value)) return;
   loading.start();
   const { error } = await Payroll.create(payrollObject.value);
+  let id = null;
+  for (let deduction of salaryDetails.value.deductions) {
+    id = deduction.statement.split("Advance Payment -- id:")[1];
+    if (id) {
+      useEmployeesAdvances().addPayment({ id }, {
+        amount: deduction.amount,
+        statement: `Payroll Deduction ${payrollObject.value.year}/${payrollObject.value.month.toString().padStart(2,"0")}`,
+      })
+    }
+  }
+
   loading.end();
 
   if (error) {

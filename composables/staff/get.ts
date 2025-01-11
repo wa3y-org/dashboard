@@ -6,6 +6,7 @@ import {
   type TStaff,
 } from "./index";
 import type { TActivity } from "../activities";
+import { EmployeesCollection } from "../employees/index";
 
 export async function getProjectStaff(project: TProject) {
   return await backendRequestMultiple<TStaff>(async () => {
@@ -19,6 +20,14 @@ export async function getActivityStaff(activity: TActivity) {
   return await backendRequestMultiple<TStaff>(async () => {
     return await ActivitiesStaffCollection.getFullList({
       filter: `activity="${activity.id}"`,
+    });
+  });
+}
+
+export async function getProjectEmployees(project: TProject) {
+  return await backendRequestMultiple<TStaff>(async () => {
+    return await EmployeesCollection.getFullList({
+      filter: `project="${project.id}"`,
     });
   });
 }

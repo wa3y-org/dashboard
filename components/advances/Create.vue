@@ -16,15 +16,25 @@
       <v-card-text class="my-4">
         <v-row>
           <v-col>
-            <w-select-employee placeholder="Select Employee from here" :errors="validationErrors.employee" v-model="advance.employee" />
+            <w-select-employee placeholder="Select Employee from here" :errors="validationErrors.employee"
+              v-model="advance.employee" />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <number-field placeholder="Enter Advance Amount" :errors="validationErrors.amount" v-model="advance.amount" name="Amount" :props="{
-              min: 1,
-              suffix: 'USD'
-            }" />
+            <number-field placeholder="Enter Advance Amount" :errors="validationErrors.amount" v-model="advance.amount"
+              name="Amount" :props="{
+                min: 1,
+                suffix: 'USD'
+              }" />
+          </v-col>
+          <v-col>
+            <number-field placeholder="Per Month" :errors="validationErrors.deduction" v-model="advance.deduction"
+              name="Deduction" :props="{
+                min: 1,
+                max: advance.amount || 1,
+                suffix: 'USD/mo'
+              }" />
           </v-col>
         </v-row>
 
@@ -67,6 +77,7 @@ const Errors = useErrors();
 const advance = ref({
   employee: null,
   amount: null,
+  deduction: null,
   statement: null
 })
 
@@ -88,7 +99,8 @@ async function save() {
   loading.start();
   const { error } = await Advances.create(advance.value.employee, {
     amount: advance.value.amount,
-    statement: advance.value.statement
+    statement: advance.value.statement,
+    deduction: advance.value.deduction,
   });
   loading.end();
 
@@ -101,6 +113,7 @@ async function save() {
   advance.value = {
     employee: null,
     amount: null,
+    deduction: null,
     statement: null
   }
   useNuxtApp().$activeModalsBus.$emit('advances:created');

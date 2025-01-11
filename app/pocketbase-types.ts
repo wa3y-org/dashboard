@@ -30,10 +30,13 @@ export enum Collections {
 	ProjectBudgitlines = "project_budgitlines",
 	ProjectFinance = "project_finance",
 	ProjectFinancialCommities = "project_financial_commities",
+	ProjectPurchasesCommities = "project_purchases_commities",
 	Projects = "projects",
 	ProjectsActivities = "projects_activities",
 	ProjectsStaff = "projects_staff",
 	ProjectsTimelines = "projects_timelines",
+	Purchases = "purchases",
+	PurchasesCommityComments = "purchases_commity_comments",
 	Roles = "roles",
 	Users = "users",
 	Volunteers = "volunteers",
@@ -232,6 +235,7 @@ export type EmployeesRecord<Tphone_numbers = unknown> = {
 export type EmployeesAdvancesRecord = {
 	amount: number
 	created?: IsoDateString
+	deduction?: number
 	employee: RecordIdString
 	id: string
 	payed?: number
@@ -404,6 +408,16 @@ export type ProjectFinancialCommitiesRecord = {
 	updated?: IsoDateString
 }
 
+export type ProjectPurchasesCommitiesRecord = {
+	can_create?: boolean
+	can_update_status?: boolean
+	created?: IsoDateString
+	employee: RecordIdString
+	id: string
+	project: RecordIdString
+	updated?: IsoDateString
+}
+
 export type ProjectsRecord = {
 	context_dependant_topics?: HTMLString
 	created?: IsoDateString
@@ -461,6 +475,40 @@ export type ProjectsTimelinesRecord = {
 	project?: RecordIdString
 	reply_to?: RecordIdString
 	title: string
+	updated?: IsoDateString
+}
+
+export enum PurchasesStatusOptions {
+	"PENDING" = "PENDING",
+	"DECLINED" = "DECLINED",
+	"APPROVED" = "APPROVED",
+	"BILL_APPROVED" = "BILL_APPROVED",
+}
+export type PurchasesRecord = {
+	bills?: string[]
+	created?: IsoDateString
+	creator: RecordIdString
+	details?: HTMLString
+	id: string
+	porject: RecordIdString
+	price: number
+	status?: PurchasesStatusOptions
+	title?: string
+	updated?: IsoDateString
+}
+
+export enum PurchasesCommityCommentsStatusOptions {
+	"REVIEW" = "REVIEW",
+	"APPROVAL" = "APPROVAL",
+	"BILL_APPROVAL" = "BILL_APPROVAL",
+}
+export type PurchasesCommityCommentsRecord = {
+	comment?: HTMLString
+	created?: IsoDateString
+	employee: RecordIdString
+	id: string
+	purchase: RecordIdString
+	status: PurchasesCommityCommentsStatusOptions
 	updated?: IsoDateString
 }
 
@@ -549,10 +597,13 @@ export type PayrollResponse<Tsalary_details = unknown, Texpand = unknown> = Requ
 export type ProjectBudgitlinesResponse<Texpand = unknown> = Required<ProjectBudgitlinesRecord> & BaseSystemFields<Texpand>
 export type ProjectFinanceResponse<Texpand = unknown> = Required<ProjectFinanceRecord> & BaseSystemFields<Texpand>
 export type ProjectFinancialCommitiesResponse<Texpand = unknown> = Required<ProjectFinancialCommitiesRecord> & BaseSystemFields<Texpand>
+export type ProjectPurchasesCommitiesResponse<Texpand = unknown> = Required<ProjectPurchasesCommitiesRecord> & BaseSystemFields<Texpand>
 export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
 export type ProjectsActivitiesResponse<Texpand = unknown> = Required<ProjectsActivitiesRecord> & BaseSystemFields<Texpand>
 export type ProjectsStaffResponse<Texpand = unknown> = Required<ProjectsStaffRecord> & BaseSystemFields<Texpand>
 export type ProjectsTimelinesResponse<Texpand = unknown> = Required<ProjectsTimelinesRecord> & BaseSystemFields<Texpand>
+export type PurchasesResponse<Texpand = unknown> = Required<PurchasesRecord> & BaseSystemFields<Texpand>
+export type PurchasesCommityCommentsResponse<Texpand = unknown> = Required<PurchasesCommityCommentsRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type VolunteersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<VolunteersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
@@ -584,10 +635,13 @@ export type CollectionRecords = {
 	project_budgitlines: ProjectBudgitlinesRecord
 	project_finance: ProjectFinanceRecord
 	project_financial_commities: ProjectFinancialCommitiesRecord
+	project_purchases_commities: ProjectPurchasesCommitiesRecord
 	projects: ProjectsRecord
 	projects_activities: ProjectsActivitiesRecord
 	projects_staff: ProjectsStaffRecord
 	projects_timelines: ProjectsTimelinesRecord
+	purchases: PurchasesRecord
+	purchases_commity_comments: PurchasesCommityCommentsRecord
 	roles: RolesRecord
 	users: UsersRecord
 	volunteers: VolunteersRecord
@@ -618,10 +672,13 @@ export type CollectionResponses = {
 	project_budgitlines: ProjectBudgitlinesResponse
 	project_finance: ProjectFinanceResponse
 	project_financial_commities: ProjectFinancialCommitiesResponse
+	project_purchases_commities: ProjectPurchasesCommitiesResponse
 	projects: ProjectsResponse
 	projects_activities: ProjectsActivitiesResponse
 	projects_staff: ProjectsStaffResponse
 	projects_timelines: ProjectsTimelinesResponse
+	purchases: PurchasesResponse
+	purchases_commity_comments: PurchasesCommityCommentsResponse
 	roles: RolesResponse
 	users: UsersResponse
 	volunteers: VolunteersResponse
@@ -655,10 +712,13 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'project_budgitlines'): RecordService<ProjectBudgitlinesResponse>
 	collection(idOrName: 'project_finance'): RecordService<ProjectFinanceResponse>
 	collection(idOrName: 'project_financial_commities'): RecordService<ProjectFinancialCommitiesResponse>
+	collection(idOrName: 'project_purchases_commities'): RecordService<ProjectPurchasesCommitiesResponse>
 	collection(idOrName: 'projects'): RecordService<ProjectsResponse>
 	collection(idOrName: 'projects_activities'): RecordService<ProjectsActivitiesResponse>
 	collection(idOrName: 'projects_staff'): RecordService<ProjectsStaffResponse>
 	collection(idOrName: 'projects_timelines'): RecordService<ProjectsTimelinesResponse>
+	collection(idOrName: 'purchases'): RecordService<PurchasesResponse>
+	collection(idOrName: 'purchases_commity_comments'): RecordService<PurchasesCommityCommentsResponse>
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 	collection(idOrName: 'volunteers'): RecordService<VolunteersResponse>

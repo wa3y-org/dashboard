@@ -1,31 +1,37 @@
 <template>
   <div class="pa-2">
-    <div class="d-flex flex-direction-column align-start">
-      <div class="pa-0 font-weight-bold text-primary">
-        <v-tabs direction="vertical" bg-color="" grow size="large" center-active class="pa-0 ma-0 w-100" v-model="tab">
-          <v-tab color="blue-accent-4" size="large" value="budget" :variant="tab == 'budget' ? 'tonal' : 'text'">
+    <div class="">
+      <div class="pa-0 font-weight-bold text-primary border-lg border-info rounded-pill overflow-hidden">
+        <v-tabs hide-slider bg-color="" grow size="large" center-active class="pa-0 ma-0 w-100" v-model="tab">
+          <v-tab color="blue" size="large" value="budget" rounded="pill" :variant="tab == 'budget' ? 'flat' : 'text'">
             Budget Lines
           </v-tab>
-          <v-tab color="blue-accent-4" size="large" value="donations" :variant="tab == 'donations' ? 'tonal' : 'text'">
+          <v-tab color="blue" size="large" value="donations" rounded="pill" :variant="tab == 'donations' ? 'flat' : 'text'">
             Donations
           </v-tab>
-          <v-tab color="blue-accent-4" size="large" value="requests" :variant="tab == 'requests' ? 'tonal' : 'text'">
+          <v-tab color="blue" size="large" value="requests" rounded="pill" :variant="tab == 'requests' ? 'flat' : 'text'">
             Financial Requests
+          </v-tab>
+          <v-tab color="blue" size="large" value="purchases" rounded="pill" :variant="tab == 'purchases' ? 'flat' : 'text'">
+            Purchases
           </v-tab>
         </v-tabs>
       </div>
 
       <v-divider color=" primary" vertical class=""></v-divider>
       <div class="w-100 pl-4">
-        <v-window v-model="tab" class="pa-0 h-100">
-          <v-window-item transition="fade-transition" value="budget">
+        <v-window v-model="tab" class="pa-0 h-100" style="min-height: 500px;">
+          <v-window-item transition="" value="budget">
             <ProjectsBudgetLinesList :project="project" />
           </v-window-item>
-          <v-window-item transition="fade-transition" value="donations">
+          <v-window-item transition="" value="donations">
             <ProjectsFinanceDonations :project="project" />
           </v-window-item>
-          <v-window-item transition="fade-transition" value="requests">
+          <v-window-item transition="" value="requests">
             <ProjectsFinanceRequestsList :project="project" />
+          </v-window-item>
+          <v-window-item value="purchases">
+            <ProjectsFinancePurchasesList :project="project" />
           </v-window-item>
         </v-window>
       </div>

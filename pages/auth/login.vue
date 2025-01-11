@@ -5,8 +5,7 @@
       <v-img class="mx-auto mb-8" max-width="150" src="@/assets/images/wa3y-logo.png" rounded="xl"></v-img>
       <v-form @submit.prevent="login" @keyup.enter="login">
 
-        <v-card :loading="loading" class="mx-auto pa-12 pb-8" elevation="8"
-          width="480" rounded="xl">
+        <v-card :loading="loading" class="mx-auto pa-12 pb-8" elevation="8" width="480" rounded="xl">
           <div class="text-subtitle-1 text-medium-emphasis">Account</div>
 
           <v-text-field :tabindex="1" v-model="identity" color="primary" placeholder="Email Address"
@@ -42,7 +41,9 @@
 </template>
 
 <script lang="ts" setup>
+import { pb } from "~/app/modules/users/infrastructure/adapters/pocketbase/Connection";
 import { AuthService } from "~/app/modules/users/services";
+import { EmployeesEmploymentStatusOptions } from "~/app/pocketbase-types";
 
 definePageMeta({
   layout: 'blank'
@@ -83,6 +84,12 @@ async function login() {
 
   if (user == null) {
     showError("Something wrong happened, please try again")
+    return
+  }
+
+  if (pb.authStore.model?.employment_status != EmployeesEmploymentStatusOptions.Active) {
+    await AuthService.logout();
+    showError("Inactive User")
     return
   }
 

@@ -7,8 +7,8 @@
   <AdvancesPaymentsList :advance="advanceToShowPayments" :show="showAdvancePaymentsModal.isShown.value"
     @close="showAdvancePaymentsModal.hide" />
 
-  <w-html-view-dialog :title="advanceDetailsTitle" :show="advanceDetailsModal.isShown.value" :html="advanceDetailsToShow"
-    @close="advanceDetailsModal.hide" />
+  <w-html-view-dialog :title="advanceDetailsTitle" :show="advanceDetailsModal.isShown.value"
+    :html="advanceDetailsToShow" @close="advanceDetailsModal.hide" />
 
   <div>
     <v-card-actions>
@@ -52,6 +52,10 @@
         <w-usd color="indigo" :amount="item.amount" />
       </template>
 
+      <template v-slot:item.deduction="{ item }">
+        <w-usd color="black" :amount="item.deduction" />/Mo
+      </template>
+
       <template v-slot:item.payed="{ item }">
         <w-usd :amount="item.payed" />
       </template>
@@ -92,6 +96,7 @@ import { type TAdvance } from "~/composables/advances/index";
 const headers = [
   { key: 'employee', title: 'Employee' },
   { key: 'amount', title: 'Amount' },
+  { key: 'deduction', title: 'Deduction' },
   { key: 'payed', title: 'Payed' },
   { key: 'remaining', title: 'Remaining' },
   { key: 'status', title: 'Status', align: 'end' },

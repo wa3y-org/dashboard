@@ -3,13 +3,18 @@
     <v-menu v-model="menuModal.isShown.value" :close-on-content-click="false" location="top">
       <template v-slot:activator="{ props }">
         <v-avatar size="large" color="indigo" v-bind="props" class="cursor-pointer">
+
           <v-img cover :aspect-ratio="1 / 1" :src="user?.avatar?.toString()"></v-img>
+
         </v-avatar>
       </template>
 
       <v-card min-width="300" class="pa-4 my-2" rounded="xl">
         <v-list>
-          <v-list-item :prepend-avatar="user?.avatar?.toString()" :title="user?.name" :subtitle="user?.email" />
+          <nuxt-link :to="`/hr/employees/${user?.id}`">
+
+            <v-list-item :prepend-avatar="user?.avatar?.toString()" :title="user?.name" :subtitle="user?.email" />
+          </nuxt-link>
         </v-list>
 
         <!-- <v-divider></v-divider>
@@ -42,7 +47,14 @@ function doLogout() {
 
 const menuModal = useModal();
 
-const user = AuthService.AuthenticatedUser;
+const user = computed(() => {
+  const user = AuthService.AuthenticatedUser || usePocketBase().authStore.model;
+
+  if (user && !user.id) user.id = usePocketBase().authStore.model?.id;
+  if (user && !user.name) user.name = usePocketBase().authStore.model?.name;
+  return user;
+});
+
 </script>
 
 <style></style>

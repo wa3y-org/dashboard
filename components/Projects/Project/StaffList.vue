@@ -1,55 +1,95 @@
 <template>
-  <ProjectsProjectUpdateStaff @saved="handleUpdate" :staff="staffToUpdate" :show="updateStaffModal.isShown.value"
-    @cancel="cancelUpdate" />
+  <v-data-table :loading="loading.isLoading.value" :headers="headers"
+    :items="staffList">
+    <template v-slot:item.avatar="{ item }">
+      <NuxtLink :to="`/hr/employees/${item.id}`">
+        <div class="d-flex align-center">
+          <v-avatar cover size="84" rounded="lg" class="my-2 elevation-1">
 
-  <w-html-view-dialog :title="jobDescriptionTitle" :show="jobDescriptionModal.isShown.value" :html="jobDescriptionToShow"
-    @close="jobDescriptionModal.hide" />
-  <div>
-    <v-data-table :headers="headers" :items="staffList" :loading="loading.isLoading.value">
-      <template v-slot:item.person="{ item }">
-        <ProjectsProjectStaffCard :staffMember="item" />
-      </template>
+            <v-img :src="getAvatarUrl(item)" alt="employee avatar image" />
 
-      <template v-slot:item.position="{ item }">
-        <span class="font-weight-black text-h6 text-capitalize">
-          {{ item.position }}
-        </span>
-      </template>
-      <template v-slot:item.actions="{ item }">
-        <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
-          @click="showStaffJobDescription(item)"></v-btn>
+          </v-avatar>
+          <div class="d-inline-block mx-4">
+            <span class="font-weight-bold text-nowrap">{{ item.name }}</span>
+            <p class="text-grey-darken-2"> {{ item.email }}</p>
+            <p class="mt-2">
+              <v-chip density="compact" color="primary" class="px-4" label>
+                {{ item.sex }} ({{ calcAge(item.birth_date?.toString() || '') }})
+              </v-chip>
+            </p>
+          </div>
+        </div>
+      </NuxtLink>
+    </template>
 
-        <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"
-          @click="setStaffToUpdate(item)"></v-btn>
+    <template v-slot:item.position="{ item }">
+      <span class="font-weight-bold">
+        {{ item.employment_position }} in ({{ item.employment_section }})
+      </span>
+    </template>
 
-        <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
-      </template>
-    </v-data-table>
-  </div>
+    <template v-slot:item.status="{ item }">
+      <v-chip size="large" class="font-weight-bold" :color="getStatusColor(item)">{{ item.employment_status }}</v-chip>
+    </template>
+  </v-data-table>
 </template>
 
 <script lang="ts" setup>
+import type { EmployeesRecord } from "~/app/pocketbase-types";
+import moment from "moment";
+
 import { type StaffPerson, type TStaff } from "~/composables/staff/index";
+import type { TEmployee } from "~/composables/employees/index";
 
 const props = defineProps(['project'])
 
 const loading = useLoading();
 
-const staffList = ref<TStaff[]>([])
+const staffList = ref<TEmployee[]>([])
 
 const headers = [
-  { title: 'Position', key: 'position' },
-  { title: 'Person', key: 'person' },
-  { title: 'Actions', key: 'actions', align: 'end' },
-]
+  { title: 'employee', key: 'avatar', },
+  // { title: 'sex', key: 'sex', },
+  { title: 'position', key: 'position', },
+  { title: 'status', key: 'status', align: 'end' },
+];
+
+function calcAge(birthDate: string) {
+  return moment(birthDate).fromNow(true)
+}
+
+function getStatusColor(employee: EmployeesRecord) {
+  let color = '';
+  switch (employee.employment_status) {
+    case "Active":
+      color = 'success'
+      break;
+    case "Suspended":
+      color = 'error'
+      break;
+    case "Resigned":
+      color = 'black';
+      break;
+    case "In_Vacation":
+      color = "warning";
+      break;
+  }
+  return color;
+};
+
+
+function getAvatarUrl(employee: EmployeesRecord) {
+  return usePocketBase().files.getUrl(employee, employee.avatar || '');
+}
 
 const Staff = useStaff();
 
 async function loadStaff() {
   staffList.value = []
   loading.start();
-  const response = await Staff.getProjectStaff(props.project)
+  const response = await Staff.getProjectEmployees(props.project)
   loading.end();
+
 
   staffList.value = response.models || [];
 }
