@@ -25,24 +25,14 @@
     <div v-for="item of itemsList" class="border-lg px-2 my-2 rounded-lg">
       <v-row>
         <v-col cols="8 " class="py-8 font-weight-bold">
-          <div class="mb-2 d-flex">
-            <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
-              @click="showFinancialRequestItemDetails(item)"></v-btn>
 
-            <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"
-              @click="setFinacialRequestItemToUpdate(item)"></v-btn>
-
-            <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
-
-            <v-spacer></v-spacer>
-            <v-chip color="success" variant="flat" prepend-icon="mdi-check"
-              v-if="item.bill_number && item.bill_number.trim() != ''"> With Bill</v-chip>
+          <p>
+            Title: {{ item.title }} <span class="mx-2"></span>
+            <v-chip color="success" variant="flat" prepend-icon="mdi-check" v-if="item.bills.length"> With Bill</v-chip>
             <v-chip color="error" variant="flat" prepend-icon="mdi-close" v-else> Without Bill</v-chip>
-          </div>
-          <v-divider class="mb-4"></v-divider>
-          <p>Title: {{ item.title }}</p>
+          </p>
           <p>Store: {{ item.store_name }}</p>
-          
+
           <v-spacer></v-spacer>
           <p>Address: {{ item.store_address }}</p>
           <div class=" d-flex align-center">
@@ -59,23 +49,38 @@
           </div>
           <div v-if="item.bill_number && item.bill_number.trim() != ''">
             <v-divider class="mb-3"></v-divider>
-            <p >
-            Bill Number: {{ item.bill_number }}
-          </p>
+            <p>
+              Bill Number: {{ item.bill_number }}
+            </p>
           </div>
+          <v-divider class="my-4"></v-divider>
+
+          <ProjectsFinanceRequestsItemBills :item="item" />
+
         </v-col>
         <v-divider vertical></v-divider>
         <v-col class="py-8">
-          <p>{{ `Quantity :`.padEnd(40, '.') }} {{ item.quantity }} Unit</p>
+          <p>{{ `Quantity :`.padEnd(25, '.') }} {{ item.quantity }} Unit</p>
           <div class="my-2"></div>
-          <p>{{ `Unit Price :`.padEnd(40, '.') }} {{ item.unit_price + ' ' + item.currency }}</p>
+          <p>{{ `Unit Price :`.padEnd(25, '.') }} {{ item.unit_price + ' ' + item.currency }}</p>
           <div class="my-2"></div>
-          <p>{{ `Total Price :`.padEnd(40, '.') }} {{ item.total_price + ' ' + item.currency }}</p>
+          <p>{{ `Total Price :`.padEnd(25, '.') }} {{ item.total_price + ' ' + item.currency }}</p>
           <div class="my-2"></div>
-          <p>{{ `Exchange Rate :`.padEnd(35, '.') }} 1 USD = {{ item.exchange_rate + ' ' + item.currency }}</p>
+          <p>{{ `Exchange Rate :`.padEnd(10, '.') }} 1 USD = {{ item.exchange_rate + ' ' + item.currency }}</p>
           <div class="my-2"></div>
-          <p class="font-weight-bold">{{ `USD Price :`.padEnd(40, '.') }} <w-usd color=""
-              :amount="item.total_price_in_usd"></w-usd></p>
+          <p class="font-weight-bold">{{ `USD Price :`.padEnd(25, '.') }} <w-usd color=""
+              :amount="item.total_price_in_usd"></w-usd>
+          </p>
+          <div class="mb-2 mt-8 d-flex">
+            <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
+              @click="showFinancialRequestItemDetails(item)"></v-btn>
+
+            <v-btn class="mx-2" color="info" variant="tonal" icon="mdi-pencil" rounded="lg"
+              @click="setFinacialRequestItemToUpdate(item)"></v-btn>
+
+            <v-btn color="error" variant="text" icon="mdi-delete" @click="confirmRemove(item)"></v-btn>
+
+          </div>
         </v-col>
       </v-row>
       <v-divider></v-divider>

@@ -294,6 +294,7 @@ export type FinancialReqeuestsCommityCommentsRecord = {
 
 export type FinancialRequestItemsRecord = {
 	bill_number?: string
+	bills?: string[]
 	budget_line: RecordIdString
 	created?: IsoDateString
 	currency?: string
@@ -490,8 +491,8 @@ export type PurchasesRecord = {
 	creator: RecordIdString
 	details?: HTMLString
 	id: string
-	porject: RecordIdString
 	price: number
+	project: RecordIdString
 	status?: PurchasesStatusOptions
 	title?: string
 	updated?: IsoDateString

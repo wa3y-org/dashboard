@@ -23,8 +23,8 @@
                 </span>
 
             </v-card-actions>
-            <v-divider></v-divider>
-            <v-card-text>
+            <v-divider v-if="reply?.comment"></v-divider>
+            <v-card-text v-if="reply?.comment">
                 <div>
                     <w-html-view :html="reply?.comment" />
                 </div>

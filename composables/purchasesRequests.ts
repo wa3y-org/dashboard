@@ -3,7 +3,10 @@ import {
   getAllPurchasesRequests,
   getOnePurchaseRequest,
 } from "./purchases/get";
-import { removePurchaseRequest } from "./purchases/remove";
+import {
+  removePurchaseRequest,
+  removePurchaseRequestBill,
+} from "./purchases/remove";
 import { updatePurchaseRequest } from "./purchases/update";
 import { validatePurchaseRequest } from "./purchases/validate";
 
@@ -17,5 +20,8 @@ export function usePurchasesRequests() {
     },
     update: updatePurchaseRequest,
     remove: removePurchaseRequest,
+    bills: {
+      remove: removePurchaseRequestBill,
+    },
   };
 }

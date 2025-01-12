@@ -1,6 +1,6 @@
 <template>
 
-  <v-dialog :model-value="show" fullscreen scrollable persistent transition="dialog-transition">
+  <v-dialog :model-value="show" scrollable persistent transition="dialog-transition">
     <ProjectsFinancePurchasesUpdateRequestStatus @cancel="cancelUpdate" @saved="handleUpdate"
       :show="updateFinancilaRequestModal.isShown.value" :request="finacialRequestToUpdate" />
 
@@ -15,12 +15,15 @@
         <v-btn color="error" icon="mdi-close" @click="cancel" />
       </v-toolbar>
       <v-divider></v-divider>
-      <v-card-text>
+      <v-card-text class="pa-0 ma-0 overflow-hidden">
         <v-row>
-          <v-col cols="5">
-            <div class="border-lg pa-4 rounded-lg py-8">
+          <v-col cols="8" xl="8" lg="7" md="7" sm="6" style="height: calc(100vh - 130px); overflow: auto;"
+            class="elevation-12">
+
+            <div class="border-lg ma-4 rounded-lg py-8">
+
               <NuxtLink :to="`/hr/employees/${request.expand?.creator.id}`">
-                <div class="d-flex align-center">
+                <div class="d-flex align-center px-4">
                   <v-avatar cover size="94" rounded="lg" class="my-2 elevation-1">
 
                     <v-img :src="getAvatarUrl(request.expand?.creator)" alt="employee avatar image" />
@@ -44,14 +47,11 @@
                   </div>
                 </div>
               </NuxtLink>
-            </div>
-          </v-col>
-          <v-col>
-            <div class="border-lg pa-4 rounded-lg">
-              <div class="d-flex justify-space-between">
-                Title : {{ request.title }}
+              <v-divider class="my-4"></v-divider>
+              <div class="pa-4 pb-0">
                 <p>
-
+                  Title : {{ request.title }}
+                  <span class="mx-2"></span>
                   <v-chip v-if="request.status == FinancialRequestsStatusOptions.PENDING" color="black">
                     {{
                       request.status
@@ -76,29 +76,26 @@
                   </v-chip>
                   <v-btn icon="mdi-pencil" variant="text" @click="updateStatus"></v-btn>
                 </p>
+                <p>
+                  Last Update : <date-view :date="request.updated" :show-time="true" />
+                </p>
+                <v-divider class="my-2"></v-divider>
+                <p>
+                  Details :
+                  <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
+                    @click="showFinancialRequestDetails()"></v-btn>
+                </p>
               </div>
-              <v-divider class="my-2"></v-divider>
-              <p>
-                Last Update : <date-view :date="request.updated" :show-time="true" />
-              </p>
-              <v-divider class="my-2"></v-divider>
-              <p>
-                Details :
-                <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
-                  @click="showFinancialRequestDetails()"></v-btn>
-              </p>
+
 
             </div>
-          </v-col>
+            <ProjectsFinancePurchasesBills :request="request" />
 
-        </v-row>
-        <v-divider class="my-6"></v-divider>
-        <v-row>
-          Bills
-        </v-row>
-        <v-row>
-          <v-col>
-            <ProjectsFinancePurchasesCommityComments :request="request"/>
+
+          </v-col>
+          <v-divider vertical></v-divider>
+          <v-col style="height: calc(100vh - 130px); overflow: auto;" class="elevation-12">
+            <ProjectsFinancePurchasesCommityComments :request="request" />
           </v-col>
         </v-row>
       </v-card-text>

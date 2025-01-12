@@ -1,7 +1,7 @@
 <template>
 
 
-    <h1>Comity Comments For Purchase</h1>
+    <h1>Comity Comments</h1>
     <ProjectsFinancePurchasesCreateComment :request="request" />
     <div class="my-6" v-for="reply of repliesList" :key="reply.id">
         <v-card class="ma-2 pa-2 border-lg rounded-xl">
@@ -23,8 +23,8 @@
                 </span>
 
             </v-card-actions>
-            <v-divider></v-divider>
-            <v-card-text>
+            <v-divider v-if="reply?.comment"></v-divider>
+            <v-card-text v-if="reply?.comment">
                 <div>
                     <w-html-view :html="reply?.comment" />
                 </div>
