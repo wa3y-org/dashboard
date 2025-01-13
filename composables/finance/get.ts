@@ -21,3 +21,10 @@ export async function getFinance(
     });
   });
 }
+
+export async function getAllFinance() {
+  return await backendRequestMultiple<TFinance>(async () => {
+    return await FinanceCollection.getFullList();
+  });
+}
+

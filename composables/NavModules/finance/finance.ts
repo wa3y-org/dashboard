@@ -13,4 +13,10 @@ export const financeRoutes: NavGroup = [
     route: "/finance/expenses",
     permissions: [],
   },
+  {
+    name: "Vaults",
+    icon: "mdi-safe-square-outline",
+    route: "/finance/vaults",
+    permissions: [],
+  },
 ];

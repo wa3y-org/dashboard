@@ -1,7 +1,7 @@
 <template>
 
 
-    <h1>Commity Comments</h1>
+    <h1>Comity Comments</h1>
     <ProjectsFinanceRequestsCreateComment :request="request" />
     <div class="my-6" v-for="reply of repliesList" :key="reply.id">
         <v-card class="ma-2 pa-2 border-lg rounded-xl">

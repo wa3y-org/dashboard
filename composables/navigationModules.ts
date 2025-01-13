@@ -12,7 +12,8 @@ const MainNavModules: NavModule[] = [
   HRModule,
   ProjectsModule,
   FinanceModule,
-  /*ReportsModule, WebsiteModule , UsersModule, */
+  WebsiteModule,
+  /*ReportsModule, UsersModule, */
 ];
 
 export function useNavModules() {

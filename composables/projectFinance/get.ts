@@ -25,3 +25,15 @@ export async function getProjectFinance(
     });
   });
 }
+
+export async function getAllProjectFinance(
+  project: TProject,
+) {
+  return await backendRequestMultiple<TProjectFinance>(async () => {
+    return await ProjectFinanceCollection.getFullList({
+      filter: `
+        project="${project.id}"
+      `,
+    });
+  });
+}

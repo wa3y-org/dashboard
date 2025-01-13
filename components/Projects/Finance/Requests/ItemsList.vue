@@ -24,7 +24,7 @@
   <div>
     <div v-for="item of itemsList" class="border-lg px-2 my-2 rounded-lg">
       <v-row>
-        <v-col cols="8 " class="py-8 font-weight-bold">
+        <v-col cols="6" class="py-8 font-weight-bold">
 
           <p>
             Title: {{ item.title }} <span class="mx-2"></span>
@@ -60,17 +60,13 @@
         </v-col>
         <v-divider vertical></v-divider>
         <v-col class="py-8">
-          <p>{{ `Quantity :`.padEnd(25, '.') }} {{ item.quantity }} Unit</p>
-          <div class="my-2"></div>
-          <p>{{ `Unit Price :`.padEnd(25, '.') }} {{ item.unit_price + ' ' + item.currency }}</p>
-          <div class="my-2"></div>
-          <p>{{ `Total Price :`.padEnd(25, '.') }} {{ item.total_price + ' ' + item.currency }}</p>
-          <div class="my-2"></div>
-          <p>{{ `Exchange Rate :`.padEnd(10, '.') }} 1 USD = {{ item.exchange_rate + ' ' + item.currency }}</p>
-          <div class="my-2"></div>
-          <p class="font-weight-bold">{{ `USD Price :`.padEnd(25, '.') }} <w-usd color=""
-              :amount="item.total_price_in_usd"></w-usd>
-          </p>
+          <pre>
+<span>{{ `Quantity :`.padEnd(20, '.') }} {{ item.quantity }} Unit</span>
+<span>{{ `Unit Price :`.padEnd(20, '.') }} {{ item.unit_price + ' ' + item.currency }}</span>
+<span>{{ `Total Price :`.padEnd(20, '.') }} {{ item.total_price + ' ' + item.currency }}</span>
+<span>{{ `1 USD = :`.padEnd(20, '.') }} {{ item.exchange_rate + ' ' + item.currency }}</span>
+<span class="font-weight-bold">{{ `USD Price :`.padEnd(20, '.') }} <w-usd color="" :amount="item.total_price_in_usd"></w-usd></span>
+        </pre>
           <div class="mb-2 mt-8 d-flex">
             <v-btn color="primary" variant="text" icon="mdi-file-document-outline"
               @click="showFinancialRequestItemDetails(item)"></v-btn>

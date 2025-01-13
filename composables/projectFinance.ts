@@ -1,5 +1,5 @@
 import { addProjectFinance } from "./projectFinance/create";
-import { getProjectDonations, getProjectExpenses } from "./projectFinance/get";
+import { getAllProjectFinance, getProjectDonations, getProjectExpenses } from "./projectFinance/get";
 import { removeFinance } from "./projectFinance/remove";
 import { updateProjectFinance } from "./projectFinance/update";
 import { validateFinance } from "./projectFinance/validateFinance";
@@ -10,6 +10,7 @@ export function useProjectFinance() {
     create: addProjectFinance,
     getDonations: getProjectDonations,
     getExpenses: getProjectExpenses,
+    getAll: getAllProjectFinance,
     remove: removeFinance,
     update: updateProjectFinance,
   };
