@@ -191,7 +191,7 @@ onMounted(() => {
 
 <template>
   <loading-from-backend v-if="loading.isLoading.value" />
-  <v-card border="lg" rounded="xl" class="my-4 py-0" v-else>
+  <v-card border="lg" rounded="xl" class="my-8 py-0" v-else>
     <v-card-text class="pa-0 ma-0">
       <v-row>
         <v-col>

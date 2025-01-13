@@ -66,7 +66,7 @@ onMounted(() => {
   <v-card border="lg" rounded="lg" v-else>
     <v-card-text>
       <v-row>
-        <v-col cols="2">
+        <v-col cols="3">
           <v-icon size="84">mdi-safe-square-outline</v-icon>
           <span class="font-weight-bold text-h6 ma-2">Main Vault</span>
         </v-col>
