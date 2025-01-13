@@ -53,9 +53,12 @@
       <v-divider class="my-4"></v-divider>
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
-          <v-btn v-f v-if="step < items.length" @click="next">Next</v-btn>
-          <v-btn v-else rounded="pill" color="primary" variant="elevated" size="large" prepend-icon="mdi-check"
-            @click="save" :loading="loading.isLoading.value">Save</v-btn>
+          <div>
+            <v-btn @click="next">Next</v-btn>
+            <span class="mx-1"></span>
+            <v-btn  rounded="pill" color="primary" variant="elevated" size="large" prepend-icon="mdi-check"
+              @click="save" :loading="loading.isLoading.value">Save</v-btn>
+          </div>
         </template>
         <template v-slot:prev>
           <v-btn :disabled="step <= 1" @click="pervious">Previous</v-btn>

@@ -24,7 +24,11 @@
               </v-chip>
             </p>
 
-            <div class="mt-6">
+            <p class="font-weight-black mt-4">
+              Next Birth Date: {{ nextBirthDateInWords }}
+            </p>
+
+            <div class="mt-2">
               <v-chip density="compact" variant="outlined" size="large" class="font-weight-bold"
                 :color="employee ? getStatusColor(employee) : ''">{{
                   employee?.employment_status
@@ -146,6 +150,27 @@ function getStatusColor(employee: EmployeesRecord) {
 
 const jobDescriptionModal = useModal();
 
+function calcNextBirthData(birthDate: string) {
+  const date = moment(birthDate);
+  const day = date.get('D');
+  const month = date.get("M") + 1;
+  const year = date.get('year');
+  const currentYear = moment().get('year');
+  const currentMonth = moment().get('M') + 1;
+  const currentDay = moment().get('D');
+  const currentDate = moment(`${currentYear}-${currentMonth}-${currentDay}`)
+  const daysLeft = moment(`${currentYear}-${month}-${day}`).diff(currentDate, 'days')
+
+  return daysLeft;
+}
+
+const nextBirthDateInWords = computed(() => {
+  const daysLeft = calcNextBirthData(props.employee?.birth_date);
+  if (daysLeft == 0) return 'Today';
+  if (daysLeft == 1) return "Tomorrow";
+  if (daysLeft < 0) return `${Math.abs(daysLeft)} day${Math.abs(daysLeft) > 1 ? 's' : ''} ago`;
+  return `After ${daysLeft} days`;
+});
 </script>
 
 <style></style>
