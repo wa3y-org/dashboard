@@ -4,9 +4,9 @@
     <div class="pa-4">
         <h1>Bills ({{ bills.length || 0 }})</h1>
         <div v-for="(bill, index) in bills" :key="index + bill">
-            <v-btn variant="text" color="blue" class="capitalized-text" link @click="showBillPreview(bill)">
+            <p variant="text" color="blue" class="font-weight-thin text-caption text-blue cursor-pointer" link @click="showBillPreview(bill)">
                 {{ index + 1 }}. {{ bill }}
-            </v-btn>
+            </p>
             <v-btn icon="mdi-close" color="red" variant="text" @click="confirmRemove(bill)"></v-btn>
         </div>
         <v-card rounded="xl" min-width="200px" :loading="loading.isLoading.value" class="py-4 px-2 ma-2 border-lg rounded-lg">

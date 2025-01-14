@@ -4,15 +4,18 @@
     <div class="pa-4">
         <p>Bills ({{ bills.length || 0 }})</p>
         <div v-for="(bill, index) in bills" :key="index + bill">
-            <v-btn variant="text" color="blue" class="capitalized-text" link @click="showBillPreview(bill)">
+            <p variant="text" color="blue"
+                class="font-weight-thin text-caption text-blue cursor-pointer" link
+                @click="showBillPreview(bill)">
                 {{ index + 1 }}. {{ bill }}
-            </v-btn>
+            </p>
             <v-btn icon="mdi-close" color="red" variant="text" @click="confirmRemove(bill)"></v-btn>
         </div>
-        <v-card  :loading="loading.isLoading.value" class="pa-1" variant="flat">
-            <v-file-input @change="uploadBills" v-show="false" ref="billFilePicker" v-model="billsToUpload" label="Select Bills" multiple min-width="500px" />
+        <v-card :loading="loading.isLoading.value" class="pa-1" variant="flat">
+            <v-file-input @change="uploadBills" v-show="false" ref="billFilePicker" v-model="billsToUpload"
+                label="Select Bills" multiple min-width="500px" />
             <div v-if="backendError.error && backendError.hasError" class="my-4">
-                
+
                 <BackendErrorWrapper class="ma-4" type="error" :backend-error="backendError.error"
                     v-if="backendError.hasError" />
             </div>
@@ -64,9 +67,9 @@ async function confirmRemove(bill: string) {
 
 const billFilePicker: Ref<HTMLElement | null> = ref(null);
 function openBillFilePicker() {
-  if (billFilePicker.value) {
-    billFilePicker.value.click();
-  }
+    if (billFilePicker.value) {
+        billFilePicker.value.click();
+    }
 }
 
 const loading = useLoading();

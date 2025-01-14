@@ -17,9 +17,11 @@
                     v-if="reply.status == FinancialReqeuestsCommityCommentsStatusOptions.BILL_APPROVAL" label
                     variant="flat" prepend-icon="mdi-check-all">Bill Approval</v-chip>
                 <v-spacer></v-spacer>
-                <span class="text-grey text-body-2">
-                    {{ calcAge(reply?.created) }} -
-                    <date-view :date="reply?.created" :show-time="true" />
+                <span class="text-grey text-body-2 text-end">
+                    {{ calcAge(reply?.created) }} 
+                    <p>
+                        <date-view :date="reply?.created" :show-time="true" />
+                    </p>
                 </span>
 
             </v-card-actions>
