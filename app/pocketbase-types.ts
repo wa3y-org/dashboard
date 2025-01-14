@@ -42,6 +42,7 @@ export enum Collections {
 	Roles = "roles",
 	Users = "users",
 	Volunteers = "volunteers",
+	WebsiteResources = "website_resources",
 }
 
 // Alias types for improved usability
@@ -594,6 +595,24 @@ export type VolunteersRecord<Tphone_numbers = unknown> = {
 	verified?: boolean
 }
 
+export enum WebsiteResourcesTagsOptions {
+	"videos" = "videos",
+	"podcasts" = "podcasts",
+	"books" = "books",
+	"reports" = "reports",
+	"others" = "others",
+}
+export type WebsiteResourcesRecord = {
+	attachments?: string[]
+	created?: IsoDateString
+	embed_script?: HTMLString
+	full_text?: HTMLString
+	id: string
+	tags?: WebsiteResourcesTagsOptions[]
+	title?: string
+	updated?: IsoDateString
+}
+
 // Response types include system fields and match responses from the PocketBase API
 export type AuthoriginsResponse<Texpand = unknown> = Required<AuthoriginsRecord> & BaseSystemFields<Texpand>
 export type ExternalauthsResponse<Texpand = unknown> = Required<ExternalauthsRecord> & BaseSystemFields<Texpand>
@@ -631,6 +650,7 @@ export type PurchasesCommityCommentsResponse<Texpand = unknown> = Required<Purch
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type VolunteersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<VolunteersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
+export type WebsiteResourcesResponse<Texpand = unknown> = Required<WebsiteResourcesRecord> & BaseSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
 
@@ -671,6 +691,7 @@ export type CollectionRecords = {
 	roles: RolesRecord
 	users: UsersRecord
 	volunteers: VolunteersRecord
+	website_resources: WebsiteResourcesRecord
 }
 
 export type CollectionResponses = {
@@ -710,6 +731,7 @@ export type CollectionResponses = {
 	roles: RolesResponse
 	users: UsersResponse
 	volunteers: VolunteersResponse
+	website_resources: WebsiteResourcesResponse
 }
 
 // Type for usage with type asserted PocketBase instance
@@ -752,4 +774,5 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 	collection(idOrName: 'volunteers'): RecordService<VolunteersResponse>
+	collection(idOrName: 'website_resources'): RecordService<WebsiteResourcesResponse>
 }

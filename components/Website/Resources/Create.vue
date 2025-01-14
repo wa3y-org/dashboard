@@ -1,9 +1,9 @@
 <template>
   <v-dialog :model-value="show" scrollable persistent transition="dialog-transition">
-    <v-card rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
+    <v-card rounded="xl" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
       <v-toolbar>
         <v-toolbar-title class="font-weight-bold">
-          Add Article
+          Add Resource
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn color="error" icon="mdi-close" @click="cancel" />
@@ -11,22 +11,33 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
-          <v-col cols="4" lg="3" xl="3">
-            <cover-picker v-model:image="article.cover_image" />
-          </v-col>
           <v-col>
-            <div class="my-2"></div>
-            <text-field :errors="validationErrors.title" v-model="article.title" name="Title"
+            <text-field :errors="validationErrors.title" v-model="resource.title" name="Title"
               placeholder="Enter Article Title" />
-            <div class="my-2"></div>
-            <textarea-field rows="11" :errors="validationErrors.short_description" v-model="article.short_description"
-              name="Description" placeholder="Enter Article Short Description" />
           </v-col>
         </v-row>
         <v-row>
           <v-col>
-            <text-editor :errors="validationErrors.full_text" v-model="article.full_text" name="Article"
-              placeholder="Enter Article Full Text" />
+            <textarea-field rows="3" :errors="validationErrors.embed_script" v-model="resource.embed_script"
+              name="Embed" placeholder="<embed script />" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <text-editor :errors="validationErrors.full_text" v-model="resource.full_text" name="Post"
+              placeholder="Enter Post Full Text" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <select-field :multiple="true" :items="['videos', 'podcasts', 'books', 'reports', 'others']"
+              :errors="validationErrors.tags" v-model="resource.tags" name="Tags" placeholder="Select Tags" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-file-input clearable ref="billFilePicker" v-model="resource.attachments" label="Select Attachments"
+              multiple min-width="500px" />
           </v-col>
         </v-row>
       </v-card-text>
@@ -48,12 +59,8 @@
 </template>
 
 <script setup lang="ts">
-import { type TTopic } from '~/composables/website/index';
-
-
 const required = true;
 const props = defineProps({
-  topic: { type: Object, required },
   show: { required, type: Boolean }
 })
 
@@ -62,20 +69,21 @@ function cancel() {
   emit('cancel')
 }
 
-const article = ref<TTopic>({
+const resource = ref({
   title: '',
-  short_description: '',
+  embed_script: '',
   full_text: '',
-  cover_image: null
+  attachments: [],
+  tags: [],
 })
 
-const ArticlesController = useBlog().articles;
+const WebsiteResourcesController = useWebResources();
 
 const Errors = useErrors();
 const isFirstAttempt = ref(true)
 const validationErrors = computed<{ [key: string | number | symbol]: any }>(() => {
   if (isFirstAttempt.value) return {};
-  return ArticlesController.validate(article.value)
+  return WebsiteResourcesController.validate(resource.value)
 });
 
 const loading = useLoading();
@@ -89,7 +97,7 @@ async function save() {
   }
 
   loading.start();
-  const response = await ArticlesController.create(props.topic, article.value)
+  const response = await WebsiteResourcesController.create(resource.value)
   loading.end();
 
 
@@ -102,13 +110,14 @@ async function save() {
 
   if (response.model) {
     isFirstAttempt.value = true;
-    article.value = {
+    resource.value = {
       title: '',
-      short_description: '',
+      embed_script: '',
       full_text: '',
-      cover_image: null
+      attachments: [],
+      tags: [],
     }
-    useNuxtApp().$activeModalsBus.$emit('website:blog:articles:created')
+    useNuxtApp().$activeModalsBus.$emit('website:resources:created')
     emit('saved')
   }
 }
