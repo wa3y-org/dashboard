@@ -16,6 +16,7 @@ export enum Collections {
 	ActivitiesTimelines = "activities_timelines",
 	AllowanceOptions = "allowance_options",
 	Assets = "assets",
+	BlogTopics = "blog_topics",
 	DeductionOptions = "deduction_options",
 	Employees = "employees",
 	EmployeesAdvances = "employees_advances",
@@ -175,6 +176,14 @@ export type AssetsRecord = {
 	price?: number
 	status?: string
 	title: string
+	updated?: IsoDateString
+}
+
+export type BlogTopicsRecord = {
+	created?: IsoDateString
+	description?: HTMLString
+	id: string
+	title?: string
 	updated?: IsoDateString
 }
 
@@ -584,6 +593,7 @@ export type ActivitiesStaffResponse<Texpand = unknown> = Required<ActivitiesStaf
 export type ActivitiesTimelinesResponse<Texpand = unknown> = Required<ActivitiesTimelinesRecord> & BaseSystemFields<Texpand>
 export type AllowanceOptionsResponse<Texpand = unknown> = Required<AllowanceOptionsRecord> & BaseSystemFields<Texpand>
 export type AssetsResponse<Texpand = unknown> = Required<AssetsRecord> & BaseSystemFields<Texpand>
+export type BlogTopicsResponse<Texpand = unknown> = Required<BlogTopicsRecord> & BaseSystemFields<Texpand>
 export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOptionsRecord> & BaseSystemFields<Texpand>
 export type EmployeesResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<EmployeesRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type EmployeesAdvancesResponse<Texpand = unknown> = Required<EmployeesAdvancesRecord> & BaseSystemFields<Texpand>
@@ -622,6 +632,7 @@ export type CollectionRecords = {
 	activities_timelines: ActivitiesTimelinesRecord
 	allowance_options: AllowanceOptionsRecord
 	assets: AssetsRecord
+	blog_topics: BlogTopicsRecord
 	deduction_options: DeductionOptionsRecord
 	employees: EmployeesRecord
 	employees_advances: EmployeesAdvancesRecord
@@ -659,6 +670,7 @@ export type CollectionResponses = {
 	activities_timelines: ActivitiesTimelinesResponse
 	allowance_options: AllowanceOptionsResponse
 	assets: AssetsResponse
+	blog_topics: BlogTopicsResponse
 	deduction_options: DeductionOptionsResponse
 	employees: EmployeesResponse
 	employees_advances: EmployeesAdvancesResponse
@@ -699,6 +711,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'activities_timelines'): RecordService<ActivitiesTimelinesResponse>
 	collection(idOrName: 'allowance_options'): RecordService<AllowanceOptionsResponse>
 	collection(idOrName: 'assets'): RecordService<AssetsResponse>
+	collection(idOrName: 'blog_topics'): RecordService<BlogTopicsResponse>
 	collection(idOrName: 'deduction_options'): RecordService<DeductionOptionsResponse>
 	collection(idOrName: 'employees'): RecordService<EmployeesResponse>
 	collection(idOrName: 'employees_advances'): RecordService<EmployeesAdvancesResponse>

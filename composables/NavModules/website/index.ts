@@ -1,6 +1,7 @@
 import type { NavGroup, NavModule } from "../types";
+import { websiteRoutes } from "./website";
 
-const WebsiteModuleChildren: NavGroup[] = [];
+const WebsiteModuleChildren: NavGroup[] = [websiteRoutes];
 
 export const WebsiteModule: NavModule = {
   name: "Website",
