@@ -1,9 +1,9 @@
 <template>
-  <v-dialog :model-value="show" scrollable persistent max-width="1080px" transition="dialog-transition">
+  <v-dialog :model-value="show" scrollable persistent transition="dialog-transition">
     <v-card rounded="lg" :loading="loading.isLoading.value" :disabled="loading.isLoading.value">
       <v-toolbar>
         <v-toolbar-title class="font-weight-bold">
-          Update Topic
+          Add Article
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn color="error" icon="mdi-close" @click="cancel" />
@@ -11,16 +11,22 @@
       <v-divider></v-divider>
       <v-card-text>
         <v-row>
+          <v-col cols="4" lg="3" xl="3">
+            <cover-picker v-model:image="article.cover_image" />
+          </v-col>
           <v-col>
-            <text-field :errors="validationErrors.title" v-model="topicData.title" name="Title"
-              placeholder="Enter Topic Title" />
+            <div class="my-2"></div>
+            <text-field :errors="validationErrors.title" v-model="article.title" name="Title"
+              placeholder="Enter Article Title" />
+            <div class="my-2"></div>
+            <textarea-field rows="11" :errors="validationErrors.short_description" v-model="article.short_description"
+              name="Description" placeholder="Enter Article Short Description" />
           </v-col>
         </v-row>
-
         <v-row>
           <v-col>
-            <textarea-field :errors="validationErrors.description" v-model="topicData.description" name="Description"
-              placeholder="Enter Topic description" />
+            <text-editor :errors="validationErrors.full_text" v-model="article.full_text" name="Description"
+              placeholder="Enter Article Full Text" />
           </v-col>
         </v-row>
       </v-card-text>
@@ -47,7 +53,7 @@ import { type TTopic } from '~/composables/website/index';
 
 const required = true;
 const props = defineProps({
-  topic: { required, type: Object },
+  topic: { type: Object, required },
   show: { required, type: Boolean }
 })
 
@@ -56,25 +62,20 @@ function cancel() {
   emit('cancel')
 }
 
-const topicData = ref<TTopic>({
+const article = ref<TTopic>({
   title: '',
-  description: '',
+  short_description: '',
+  full_text: '',
+  cover_image: null
 })
 
-watch(() => props.show, () => {
-  topicData.value = {
-    title: props.topic?.title || '',
-    description: props.topic?.description || '',
-  }
-}, { deep: true });
-
-const TopicsController = useBlog().topics;
+const ArticlesController = useBlog().articles;
 
 const Errors = useErrors();
 const isFirstAttempt = ref(true)
 const validationErrors = computed<{ [key: string | number | symbol]: any }>(() => {
   if (isFirstAttempt.value) return {};
-  return TopicsController.validate(topicData.value)
+  return ArticlesController.validate(article.value)
 });
 
 const loading = useLoading();
@@ -86,8 +87,9 @@ async function save() {
   if (Errors.hasError(validationErrors.value)) {
     return;
   }
+
   loading.start();
-  const response = await TopicsController.update(Object.assign({ id: props.topic?.id || '' }, topicData.value));
+  const response = await ArticlesController.create(props.topic, article.value)
   loading.end();
 
 
@@ -100,7 +102,13 @@ async function save() {
 
   if (response.model) {
     isFirstAttempt.value = true;
-    useNuxtApp().$activeModalsBus.$emit('website:blog:topics:updated')
+    article.value = {
+      title: '',
+      short_description: '',
+      full_text: '',
+      cover_image: null
+    }
+    useNuxtApp().$activeModalsBus.$emit('website:blog:articles:created')
     emit('saved')
   }
 }

@@ -1,5 +1,5 @@
 import v8n from "v8n";
-import type { TTopic } from "./index";
+import type { TArticle, TTopic } from "./index";
 
 function validateTitle(title: any) {
   const errors: string[] = [];
@@ -14,9 +14,31 @@ function validateTitle(title: any) {
   return errors;
 }
 
-export function validateTopic(request: TTopic) {
+function validateContent(title: any) {
+  const errors: string[] = [];
+  if (
+    !v8n()
+      .string()
+      .minLength(100)
+      .test(title?.trim() || "")
+  ) {
+    errors.push("Invalid text, min length must be 100 characters");
+  }
+  return errors;
+}
+
+export function validateTopic(topic: TTopic) {
   const errors: { [key: string]: string[] } = {
-    title: validateTitle(request.title),
+    title: validateTitle(topic.title),
+  };
+
+  return errors;
+}
+
+export function validateArticle(article: TArticle) {
+  const errors: { [key: string]: string[] } = {
+    title: validateTitle(article.title),
+    full_text: validateContent(article.full_text),
   };
 
   return errors;
