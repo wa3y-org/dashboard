@@ -42,9 +42,9 @@
               {{ item.expand?.budget_line.title }}
               <!-- <span class="mx-3">|</span>
               <p>Budget :<w-usd :amount="item.expand?.budget_line.budget"></w-usd></p>
-              <span class="mx-3">|</span> -->
+              <span class="mx-3">|</span>
 
-              <p>Remaining :<w-usd :amount="item.expand?.budget_line.budget"></w-usd></p>
+              <p>Remaining :<w-usd :amount="item.expand?.budget_line.budget"></w-usd></p> -->
             </div>
           </div>
           <div v-if="item.bill_number && item.bill_number.trim() != ''">
