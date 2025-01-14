@@ -54,7 +54,7 @@
       <v-stepper-actions :disabled="false">
         <template v-slot:next>
           <div>
-            <v-btn @click="next">Next</v-btn>
+            <v-btn @click="next" v-if="step < items.length">Next</v-btn>
             <span class="mx-1"></span>
             <v-btn  rounded="pill" color="primary" variant="elevated" size="large" prepend-icon="mdi-check"
               @click="save" :loading="loading.isLoading.value">Save</v-btn>
