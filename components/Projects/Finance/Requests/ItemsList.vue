@@ -40,9 +40,9 @@
             <span class="mx-2"></span>
             <div class="my-4 pa-2 border rounded-lg d-flex ">
               {{ item.expand?.budget_line.title }}
-              <span class="mx-3">|</span>
+              <!-- <span class="mx-3">|</span>
               <p>Budget :<w-usd :amount="item.expand?.budget_line.budget"></w-usd></p>
-              <span class="mx-3">|</span>
+              <span class="mx-3">|</span> -->
 
               <p>Remaining :<w-usd :amount="item.expand?.budget_line.budget"></w-usd></p>
             </div>
