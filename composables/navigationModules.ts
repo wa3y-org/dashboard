@@ -7,12 +7,14 @@ import { ProjectsModule } from "./NavModules/projects";
 import { ReportsModule } from "./NavModules/reports";
 import { UsersModule } from "./NavModules/users";
 import { WebsiteModule } from "./NavModules/website";
+import { activityMonitorModule } from "./NavModules/monitor";
 
 const MainNavModules: NavModule[] = [
   HRModule,
   ProjectsModule,
   FinanceModule,
   WebsiteModule,
+  activityMonitorModule,
   /*ReportsModule, UsersModule, */
 ];
 

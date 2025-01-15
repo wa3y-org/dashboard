@@ -40,6 +40,7 @@ export enum Collections {
 	Purchases = "purchases",
 	PurchasesCommityComments = "purchases_commity_comments",
 	Roles = "roles",
+	UserActivities = "user_activities",
 	Users = "users",
 	Volunteers = "volunteers",
 	WebsiteResources = "website_resources",
@@ -544,6 +545,45 @@ export type RolesRecord<Tpermissions = unknown> = {
 	updated?: IsoDateString
 }
 
+export enum UserActivitiesActionOptions {
+	"CREATE" = "CREATE",
+	"UPDATE" = "UPDATE",
+	"DELETE" = "DELETE",
+}
+
+export enum UserActivitiesCategoriesOptions {
+	"hr" = "hr",
+	"projects" = "projects",
+	"finance" = "finance",
+	"website" = "website",
+	"employees" = "employees",
+	"members" = "members",
+	"volunteers" = "volunteers",
+	"roles" = "roles",
+	"project_activities" = "project_activities",
+	"assets" = "assets",
+	"donations" = "donations",
+	"expenses" = "expenses",
+	"payroll" = "payroll",
+	"advances" = "advances",
+	"allowances" = "allowances",
+	"deductions" = "deductions",
+	"web_topics" = "web_topics",
+	"web_articles" = "web_articles",
+	"web_resources" = "web_resources",
+}
+export type UserActivitiesRecord<Tobj_after = unknown, Tobj_before = unknown> = {
+	action: UserActivitiesActionOptions
+	categories?: UserActivitiesCategoriesOptions[]
+	comment?: HTMLString
+	created?: IsoDateString
+	employee: RecordIdString
+	id: string
+	obj_after?: null | Tobj_after
+	obj_before?: null | Tobj_before
+	updated?: IsoDateString
+}
+
 export enum UsersStatusOptions {
 	"ACTIVE" = "ACTIVE",
 	"SUSPENDED" = "SUSPENDED",
@@ -648,6 +688,7 @@ export type ProjectsTimelinesResponse<Texpand = unknown> = Required<ProjectsTime
 export type PurchasesResponse<Texpand = unknown> = Required<PurchasesRecord> & BaseSystemFields<Texpand>
 export type PurchasesCommityCommentsResponse<Texpand = unknown> = Required<PurchasesCommityCommentsRecord> & BaseSystemFields<Texpand>
 export type RolesResponse<Tpermissions = unknown, Texpand = unknown> = Required<RolesRecord<Tpermissions>> & BaseSystemFields<Texpand>
+export type UserActivitiesResponse<Tobj_after = unknown, Tobj_before = unknown, Texpand = unknown> = Required<UserActivitiesRecord<Tobj_after, Tobj_before>> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 export type VolunteersResponse<Tphone_numbers = unknown, Texpand = unknown> = Required<VolunteersRecord<Tphone_numbers>> & AuthSystemFields<Texpand>
 export type WebsiteResourcesResponse<Texpand = unknown> = Required<WebsiteResourcesRecord> & BaseSystemFields<Texpand>
@@ -689,6 +730,7 @@ export type CollectionRecords = {
 	purchases: PurchasesRecord
 	purchases_commity_comments: PurchasesCommityCommentsRecord
 	roles: RolesRecord
+	user_activities: UserActivitiesRecord
 	users: UsersRecord
 	volunteers: VolunteersRecord
 	website_resources: WebsiteResourcesRecord
@@ -729,6 +771,7 @@ export type CollectionResponses = {
 	purchases: PurchasesResponse
 	purchases_commity_comments: PurchasesCommityCommentsResponse
 	roles: RolesResponse
+	user_activities: UserActivitiesResponse
 	users: UsersResponse
 	volunteers: VolunteersResponse
 	website_resources: WebsiteResourcesResponse
@@ -772,6 +815,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'purchases'): RecordService<PurchasesResponse>
 	collection(idOrName: 'purchases_commity_comments'): RecordService<PurchasesCommityCommentsResponse>
 	collection(idOrName: 'roles'): RecordService<RolesResponse>
+	collection(idOrName: 'user_activities'): RecordService<UserActivitiesResponse>
 	collection(idOrName: 'users'): RecordService<UsersResponse>
 	collection(idOrName: 'volunteers'): RecordService<VolunteersResponse>
 	collection(idOrName: 'website_resources'): RecordService<WebsiteResourcesResponse>
