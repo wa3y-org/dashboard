@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- <v-text-field prepend-inner-icon="mdi-magnify" placeholder="Search | Filter" v-model="search" /> -->
-     <div class="rounded-xl overflow-hidden border-md">
-       <ActivitiesMonitorCard class="my-2" :activity="activity" v-for="activity of usersActions" :key="activity.id" />
-     </div>
+    <div class="rounded-xl overflow-hidden border-md">
+      <ActivitiesMonitorCard class="my-2" :activity="activity" v-for="activity of usersActions" :key="activity.id" />
+    </div>
 
     <div class="my-6 text-center">
       <v-btn v-if="!isAllItemsLoaded" prepend-icon="mdi-download" :loading="loading.isLoading.value" size="large"
@@ -19,6 +19,14 @@
 <script setup lang="ts">
 import { UserActivitiesActionOptions } from '~/app/pocketbase-types';
 import { type TUserActivity } from '~/composables/activityMonitor/index';
+
+
+const props = defineProps({
+  categories: {
+    type: Array<string>,
+    default: () => []
+  }
+});
 
 const headers = [
   { key: 'employee', title: 'Employee' },
@@ -40,7 +48,7 @@ const pagination = ref({
 })
 
 const isAllItemsLoaded = computed(() => {
-    return pagination.value.page >= pagination.value.totalPages
+  return pagination.value.page >= pagination.value.totalPages
 });
 
 
@@ -48,7 +56,7 @@ const loading = useLoading();
 const backendError = useBackendError();
 async function loadUsersActivities() {
   loading.start();
-  const response = await useActivityMonitor().get.paginated(pagination.value.page + 1);
+  const response = await useActivityMonitor().get.paginated.byCategories(pagination.value.page + 1, props.categories);
   loading.end();
 
   if (response.error) {

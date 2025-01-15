@@ -22,3 +22,27 @@ export async function getPaginatedActions(page: number = 1) {
     });
   });
 }
+
+export async function getPaginatedActionsByCategories(
+  page: number = 1,
+  categories: string[] = []
+) {
+  let filter = ``;
+
+  if (categories.length) {
+    filter = 'categories ~ "NotExistingCategory" ';
+    for (let category of categories) {
+      filter += `
+        || categories ~ "${category}"
+      `;
+    }
+  }
+
+  return await backendRequestMultiple<TUserActivity>(async () => {
+    return await UserActivitiesCollection.getList(page, activitiesPerPage, {
+      expand: "employee",
+      sort: "-created",
+      filter: filter,
+    });
+  });
+}

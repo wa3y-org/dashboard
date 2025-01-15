@@ -1,10 +1,17 @@
-import { getAllActions, getPaginatedActions } from "./activityMonitor/get";
+import {
+  getAllActions,
+  getPaginatedActions,
+  getPaginatedActionsByCategories,
+} from "./activityMonitor/get";
 
 export function useActivityMonitor() {
   return {
     get: {
       all: getAllActions,
-      paginated: getPaginatedActions,
+      paginated: {
+        getPaginatedActions,
+        byCategories: getPaginatedActionsByCategories,
+      },
     },
   };
 }
