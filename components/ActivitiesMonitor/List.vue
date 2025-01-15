@@ -1,7 +1,9 @@
 <template>
   <div>
     <!-- <v-text-field prepend-inner-icon="mdi-magnify" placeholder="Search | Filter" v-model="search" /> -->
-    <ActivitiesMonitorCard class="my-2" :activity="activity" v-for="activity of usersActions" :key="activity.id" />
+     <div class="rounded-xl overflow-hidden border-md">
+       <ActivitiesMonitorCard class="my-2" :activity="activity" v-for="activity of usersActions" :key="activity.id" />
+     </div>
 
     <div class="my-6 text-center">
       <v-btn v-if="!isAllItemsLoaded" prepend-icon="mdi-download" :loading="loading.isLoading.value" size="large"

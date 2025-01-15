@@ -1,10 +1,8 @@
 <template>
   <NuxtLink :to="`/hr/employees/${employee?.id}`">
     <div class="d-flex align-center">
-      <v-avatar cover size="94" rounded="lg" class="my-2 elevation-1">
-
+      <v-avatar cover size="94" rounded="xl" class="my-2 elevation-1">
         <v-img :src="getAvatarUrl(employee)" alt="employee avatar image" />
-
       </v-avatar>
       <div class="d-inline-block mx-4 mt-2">
         <span class="font-weight-bold text-nowrap">{{ employee?.name }}</span>

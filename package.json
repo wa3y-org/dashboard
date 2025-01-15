@@ -26,6 +26,7 @@
     "v8n": "^1.5.1",
     "vue": "latest",
     "vue-animated-counter": "^0.3.0",
+    "vue-json-pretty": "^2.4.0",
     "vue-month-picker": "^1.7.2",
     "vue-sweetalert2": "^5.0.11"
   },
