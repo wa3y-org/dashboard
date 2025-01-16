@@ -10,12 +10,49 @@
       </v-toolbar>
       <v-divider></v-divider>
       <v-card-text>
+        <v-row v-if="showBefore && showAfter">
+          <v-col>
+            <div>
+              <v-table class="rounded-lg">
+                <tbody>
+                  <tr v-for="key of diffKeys" class="pa-1">
+                    <td width="10" class="bg-grey-lighten-2">
+                      <span class="font-weight-bold">{{ key }}</span>
+                    </td>
+                    <td class="bg-red-lighten-4 pa-2" width="50%">
+                      <div v-if="Array.isArray(activity.obj_before[key])">
+
+                        <div v-for="(item, index) of activity.obj_before[key]"> {{ index + 1 }} - {{ item }}</div>
+
+                      </div>
+                      <div v-else>
+                        {{ activity.obj_before[key] }}
+                      </div>
+                    </td>
+
+                    <td class="bg-green-lighten-4 pa-2" width="50%">
+                      <div v-if="Array.isArray(activity.obj_after[key])">
+                        <div v-for="(item, index) of activity.obj_after[key]"> {{ index + 1 }} - {{ item }}</div>
+
+                      </div>
+                      <div v-else>
+                        {{ activity.obj_after[key] }}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </v-table>
+
+            </div>
+          </v-col>
+
+        </v-row>
         <v-row>
           <v-col v-if="showBefore">
             <div class="font-weight-bold">Old Value</div>
             <vue-json-pretty :data="activity?.obj_before" class="border-md pa-2 rounded-lg my-2" />
           </v-col>
-          <v-divider v-if="showBefore && showAfter" vertical></v-divider>
+
           <v-col v-if="showAfter">
             <div class="font-weight-bold">New Value</div>
             <vue-json-pretty :data="activity?.obj_after" class="border-md pa-2 rounded-lg my-2" />
@@ -25,6 +62,7 @@
     </v-card>
   </v-dialog>
   <v-card color="" flat :border="`sm ${activityColor}`" rounded="0" class="pl-2" @click="showDataModal.show">
+
     <v-row>
       <v-col cols="4" md="5" sm="6" xs="12" xl="3" lg="4">
         <w-employee-card :employee="activity?.expand?.employee" />
@@ -127,4 +165,25 @@ const collectionName = computed(() => {
 
   return '--unknown--'
 });
+
+function findDifference(obj1, obj2) {
+  const diffKeys = [];
+  for (const key in obj1) {
+    if (!(key in obj2) ||
+      obj1[key] !== obj2[key]) {
+      diffKeys.push(key);
+    }
+  }
+  for (const key in obj2) {
+    if (!(key in obj1) ||
+      obj1[key] !== obj2[key]) {
+      if (!diffKeys.includes(key)) {
+        diffKeys.push(key);
+      }
+    }
+  }
+  return diffKeys;
+}
+
+const diffKeys = computed(() => findDifference(props.activity.obj_before, props.activity.obj_after));
 </script>
