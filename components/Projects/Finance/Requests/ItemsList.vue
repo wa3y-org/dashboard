@@ -100,7 +100,6 @@ async function loadFinancialRequestItems() {
   const response = await useFinancialRequestsItems().get.all(props.request.id)
   loading.end();
 
-  console.log(response)
   if (response.models) {
     itemsList.value = response.models;
   }

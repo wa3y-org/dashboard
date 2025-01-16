@@ -93,9 +93,6 @@ onMounted(() => {
         updatedAt: new Date(role.updated),
       }))
     }
-
-    console.log('roles', selectedRoles.value)
-
   }
 });
 

@@ -70,7 +70,6 @@ const props = defineProps({
 const emit = defineEmits(['cancel', 'saved']);
 
 const toolbarColor = computed(() => {
-  console.log(props.finance)
   switch (props.finance.type) {
     case 'donation':
       return 'green-lighten-4'
@@ -111,13 +110,13 @@ watch(() => { props.finance }, () => {
   }
 }, { deep: true })
 
-const ProjectFinance = useProjectFinance();
+const Finance = useFinance();
 
 const Errors = useErrors();
 const isFirstAttempt = ref(true)
 const validationErrors = computed<{ [key: string]: any }>(() => {
   if (isFirstAttempt.value) return {};
-  return ProjectFinance.validate(props.finance.project, financeData.value)
+  return Finance.validate(financeData.value)
 });
 
 const loading = useLoading();
@@ -129,12 +128,11 @@ async function save() {
     return;
   }
   loading.start();
-  const response = await ProjectFinance.update(Object.assign({ id: props.finance.id }, financeData.value));
+  const response = await Finance.update(Object.assign({ id: props.finance.id }, financeData.value));
   loading.end();
 
 
 
-  console.log(response)
 
   if (response.error) {
 
@@ -144,7 +142,7 @@ async function save() {
 
   if (response.model) {
     isFirstAttempt.value = true;
-    useNuxtApp().$activeModalsBus.$emit('projects:finance:updated')
+    useNuxtApp().$activeModalsBus.$emit('finance:updated')
     emit('saved')
   }
 }

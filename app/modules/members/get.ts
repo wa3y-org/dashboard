@@ -11,7 +11,5 @@ export async function getAllMembers() {
 export async function getOneMember(id: string) {
   const record: MembersRecord = await pb.collection("members").getOne(id);
 
-  console.log(record);
-
   return record;
 }

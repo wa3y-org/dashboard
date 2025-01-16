@@ -26,6 +26,7 @@
 
             <p class="font-weight-black mt-4">
               Next Birth Date: {{ nextBirthDateInWords }}
+              <p><date-view :date="employee?.birth_date" /></p>
             </p>
 
             <div class="mt-2">
@@ -168,7 +169,7 @@ const nextBirthDateInWords = computed(() => {
   const daysLeft = calcNextBirthData(props.employee?.birth_date);
   if (daysLeft == 0) return 'Today';
   if (daysLeft == 1) return "Tomorrow";
-  if (daysLeft < 0) return `${Math.abs(daysLeft)} day${Math.abs(daysLeft) > 1 ? 's' : ''} ago`;
+  if (daysLeft < 0) return `${Math.abs(daysLeft)} day${Math.abs(daysLeft) > 1 ? 's' : ''} ago => again after ${365 + daysLeft} days`;
   return `After ${daysLeft} days`;
 });
 </script>

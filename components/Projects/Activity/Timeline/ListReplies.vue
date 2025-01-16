@@ -36,7 +36,6 @@ async function loadMoreReplies() {
   loading.start();
   const response = await useProjectTimeline().activity.getReplies(props.post, pagination.value.page + 1);
   loading.end();
-  console.log(response)
 
   if (response.models) {
     pagination.value = {

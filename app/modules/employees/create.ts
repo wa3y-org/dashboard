@@ -1,7 +1,9 @@
-import type {
-  EmployeesRecord,
-  EmployeesResponse,
-  RolesResponse,
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+  type EmployeesRecord,
+  type EmployeesResponse,
+  type RolesResponse,
 } from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
 import type { AuthModel, BaseModel } from "pocketbase";
@@ -17,7 +19,13 @@ export async function createEmployee(
   // data.append("verified", "1");
 
   for (let key of Object.keys(employee)) {
-    if (key == "allowances" || key == "deductions" || key == "roles" || key == "project") continue;
+    if (
+      key == "allowances" ||
+      key == "deductions" ||
+      key == "roles" ||
+      key == "project"
+    )
+      continue;
     if (key.trim().toLocaleLowerCase() == "avatar") {
       if (!(employee.avatar instanceof File)) {
         continue;
@@ -26,12 +34,11 @@ export async function createEmployee(
     data.append(key, employee[key] || "");
   }
 
-  if (employee.project?.id ) {
-    data.set('project', employee.project.id);
-  }else {
-    data.set('project', employee.project || '')
+  if (employee.project?.id) {
+    data.set("project", employee.project.id);
+  } else {
+    data.set("project", employee.project || "");
   }
-
 
   for (let role of employee.roles || []) {
     data.append("roles", role);
@@ -57,9 +64,30 @@ export async function createEmployee(
   );
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
-  return await backendRequestOne<EmployeesRecord>(async () => {
+  const response = await backendRequestOne<EmployeesRecord>(async () => {
     const response = await pb.collection("employees").create(data);
-    await pb.collection("employees").requestVerification(response.email);
     return response;
   });
+
+  if (response.model && !response.error) {
+    await pb.collection("employees").requestVerification(response.model.email);
+    const action = UserActivitiesActionOptions.CREATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.employees,
+      UserActivitiesCategoriesOptions.hr,
+    ];
+    const obj_before = null;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }

@@ -31,7 +31,14 @@
       </v-col>
       <v-divider vertical></v-divider>
       <v-col>
-        <div class="d-flex align-center h-100">
+
+        <div class="d-flex flex-column h-100">
+          <p class="text-black text-start my-2">
+            {{ calcAge(activity.created.toString()) }}
+            [
+            <DateView :show-time="true" :date="activity.created" /> ]
+          <pre>--------------------------</pre>
+          </p>
           <div>
             <v-chip class="ma-1 px-3" size="small" v-for="category of activity?.categories"
               :key="activity?.id + category">
@@ -40,24 +47,20 @@
           </div>
         </div>
       </v-col>
-      <v-divider vertical></v-divider>
       <v-col class="text-end">
+
         <div>
           <v-chip class="rounded-xl pt-10 pb-6 pr-8 pl-6" size="x-large"
             style="position: absolute; top: -20px; right: -20px;" :prepend-icon="getActionIcon(activity.action)" label
             :color="activityColor">
             {{
               activity.action.toLocaleLowerCase()
-            }}</v-chip>
+            }} - {{ collectionName }}
+          </v-chip>
 
         </div>
         <div class="text-start">
-          <p class="text-black text-start my-2">
-            {{ calcAge(activity.created.toString()) }}
-            [
-            <DateView :show-time="true" :date="activity.created" /> ]
-          <pre>--------------------------</pre>
-          </p>
+
           <div class="text-start" v-html="activity.comment" />
         </div>
       </v-col>
@@ -116,5 +119,12 @@ const showBefore = computed(() => {
 const showAfter = computed(() => {
   if (props.activity?.action == UserActivitiesActionOptions.DELETE) return false;
   return true;
+});
+
+const collectionName = computed(() => {
+  if (props.activity?.obj_after?.collectionName) return props.activity.obj_after.collectionName;
+  if (props.activity?.obj_before?.collectionName) return props.activity.obj_before.collectionName;
+
+  return '--unknown--'
 });
 </script>

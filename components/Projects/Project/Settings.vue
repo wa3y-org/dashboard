@@ -71,7 +71,6 @@ async function confirmRemove() {
   const isConfirmed = (await remove.confirm()).isConfirmed;
   if (isConfirmed) {
     remove.doRemove(async () => {
-      console.log(props.project)
       const response = await useProjects().remove(props.project?.id || '');
       if (response.error) {
         return

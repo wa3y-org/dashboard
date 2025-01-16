@@ -69,7 +69,6 @@ async function loadExpenses() {
   const response = await useProjectFinance().getExpenses(props.project)
   loading.end();
 
-  console.log(response)
   if (response.models) {
     expensesList.value = response.models;
   }

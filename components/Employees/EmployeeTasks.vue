@@ -68,7 +68,6 @@ async function loadMoretasks() {
     pagination.value.perPage + 1
     const response = await EmployeesTasks.getTasks(props.employee?.id, pagination.value.page + 1);
     loading.end();
-    console.log(response)
 
     if (response.models) {
         pagination.value = {

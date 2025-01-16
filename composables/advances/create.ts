@@ -5,9 +5,11 @@ import {
   type TAdvance,
   type TAdvancePayment,
 } from "./index";
-import type {
-  EmployeesRecord,
-  EmployeesResponse,
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+  type EmployeesRecord,
+  type EmployeesResponse,
 } from "~/app/pocketbase-types";
 import type { AuthModel } from "pocketbase";
 import { updateEmployeeAdvance } from "./update";
@@ -18,7 +20,7 @@ export async function addEmployeeAdvance(
   employee: TEmployee,
   advance: TAdvance
 ) {
-  return await backendRequestOne<TAdvance>(async () => {
+  const response = await backendRequestOne<TAdvance>(async () => {
     return await EmployeesAdvancesCollection.create({
       employee: employee.id,
       amount: advance.amount,
@@ -27,13 +29,36 @@ export async function addEmployeeAdvance(
       statement: advance.statement,
     });
   });
+
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.CREATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.finance,
+      UserActivitiesCategoriesOptions.expenses,
+      UserActivitiesCategoriesOptions.advances,
+      UserActivitiesCategoriesOptions.employees,
+    ];
+    const obj_before = null;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }
 
 export async function addEmployeeAdvancePayment(
   advance: TAdvance,
   payment: TAdvancePayment
 ) {
-  return await backendRequestOne<TAdvancePayment>(async () => {
+  const response = await backendRequestOne<TAdvancePayment>(async () => {
     const response = await EmployeesAdvancesPaymentsCollection.create({
       advance: advance.id,
       amount: payment.amount,
@@ -46,4 +71,28 @@ export async function addEmployeeAdvancePayment(
 
     return response;
   });
+
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.CREATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.finance,
+      UserActivitiesCategoriesOptions.advances,
+      UserActivitiesCategoriesOptions.employees,
+      UserActivitiesCategoriesOptions.deductions,
+      UserActivitiesCategoriesOptions.payroll,
+    ];
+    const obj_before = null;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }

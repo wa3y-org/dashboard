@@ -222,7 +222,6 @@ const Payroll = usePayroll();
 const isFirstAttempt = ref(true);
 
 const validationErrors = computed(() => {
-  console.log(payrollObject.value)
   if (isFirstAttempt.value) return {};
   return Payroll.validate(payrollObject.value);
 });

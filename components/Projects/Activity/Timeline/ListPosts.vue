@@ -38,7 +38,6 @@ async function loadMorePosts() {
   pagination.value.perPage + 1
   const response = await useProjectTimeline().activity.getPosts(props.activity, pagination.value.page + 1);
   loading.end();
-  console.log(response)
 
   if (response.models) {
     pagination.value = {

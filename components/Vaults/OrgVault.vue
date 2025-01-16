@@ -44,7 +44,6 @@ async function loadFinanceData() {
   const response = await useFinance().getAll()
   loading.end();
 
-  console.log(response)
   if (response.models) {
     financeList.value = response.models;
   }

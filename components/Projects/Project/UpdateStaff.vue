@@ -55,7 +55,6 @@ const hasValidationErrors = computed(() => {
 async function save() {
   isFirstAttempt.value = false;
   backendError.clear();
-  console.log('staff to validate', props.staff)
   if (hasValidationErrors.value) {
     return
   }

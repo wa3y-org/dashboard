@@ -134,7 +134,6 @@ async function save() {
   loading.start();
   const response = await Activities.update(activityData.value)
   loading.end();
-  console.log(response)
 
   if (response.error) {
     backendError.set(response.error)

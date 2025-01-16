@@ -1,9 +1,17 @@
-import type { VolunteersRecord, VolunteersResponse } from "~/app/pocketbase-types";
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+  type VolunteersRecord,
+  type VolunteersResponse,
+} from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
+import { backendRequestOne } from "~/app/core/BackendRequest";
 
 const pb = usePocketBase();
 
-export async function createVolunteer(volunteer: VolunteersRecord & VolunteersResponse) {
+export async function createVolunteer(
+  volunteer: VolunteersRecord & VolunteersResponse
+) {
   const data = new FormData();
   data.append("password", NewUserDefaultPassword);
   data.append("passwordConfirm", NewUserDefaultPassword);
@@ -21,7 +29,9 @@ export async function createVolunteer(volunteer: VolunteersRecord & VolunteersRe
 
   data.set(
     "birth_date",
-    volunteer.birth_date ? new Date(volunteer.birth_date || "").toISOString() : ""
+    volunteer.birth_date
+      ? new Date(volunteer.birth_date || "").toISOString()
+      : ""
   );
   data.set(
     "starting_date",
@@ -31,8 +41,29 @@ export async function createVolunteer(volunteer: VolunteersRecord & VolunteersRe
   );
   data.set("phone_numbers", JSON.stringify(volunteer.phone_numbers));
 
-  const record = await pb.collection("volunteers").create(data);
-  await pb.collection("volunteers").requestVerification(record.email);
+  const response = await backendRequestOne<VolunteersRecord>(async () => {
+    return await pb.collection("volunteers").create(data);
+  });
 
-  return record;
+  if (response.model && !response.error) {
+    pb.collection("volunteers").requestVerification(response.model.email);
+    const action = UserActivitiesActionOptions.CREATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.volunteers,
+      UserActivitiesCategoriesOptions.hr,
+    ];
+    const obj_before = null;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response.model;
 }

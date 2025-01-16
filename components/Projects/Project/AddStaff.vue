@@ -66,7 +66,6 @@ async function save() {
   isFirstAttempt.value = false;
   backendError.clear();
   if (hasValidationErrors.value) {
-    alert('here')
     return
   }
 

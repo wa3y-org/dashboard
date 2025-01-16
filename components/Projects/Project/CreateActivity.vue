@@ -108,7 +108,6 @@ async function save() {
   loading.start();
   const response = await Activities.create(activity.value)
   loading.end();
-  console.log(response)
 
   if (response.error) {
     backendError.set(response.error)

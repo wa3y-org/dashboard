@@ -1,8 +1,11 @@
-import type {
-  VolunteersRecord,
-  VolunteersResponse,
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+  type VolunteersRecord,
+  type VolunteersResponse,
 } from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
+import { backendRequestOne } from "~/app/core/BackendRequest";
 
 const pb = usePocketBase();
 
@@ -20,10 +23,11 @@ export async function updateVolunteer(
     data.append(key, volunteer[key] || "");
   }
 
- 
   data.set(
     "birth_date",
-    volunteer.birth_date ? new Date(volunteer.birth_date || "").toISOString() : ""
+    volunteer.birth_date
+      ? new Date(volunteer.birth_date || "").toISOString()
+      : ""
   );
   data.set(
     "starting_date",
@@ -33,7 +37,29 @@ export async function updateVolunteer(
   );
   data.set("phone_numbers", JSON.stringify(volunteer.phone_numbers));
 
-  const record = await pb.collection("volunteers").update(volunteer.id, data);
+  const volunteerData = await pb.collection("volunteers").getOne(volunteer.id);
+  const response = await backendRequestOne<VolunteersRecord>(async () => {
+    return await pb.collection("volunteers").update(volunteer.id, data);
+  });
 
-  return record;
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.UPDATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.volunteers,
+      UserActivitiesCategoriesOptions.hr,
+    ];
+    const obj_before = volunteerData;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response.model;
 }

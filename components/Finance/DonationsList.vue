@@ -70,7 +70,6 @@ async function loadDonations() {
   const response = await useFinance().getDonations()
   loading.end();
 
-  console.log(response)
   if (response.models) {
     donationsList.value = response.models;
   }

@@ -126,7 +126,6 @@ function computeTotalSalary(employee: EmployeesRecord) {
 }
 
 function setPayrollDate(datePickerData: any) {
-  console.log(datePickerData)
   if (!datePickerData.month || !datePickerData.month || !datePickerData.from) return
   payroll.value.month = Number(datePickerData.monthIndex)
   payroll.value.year = Number(datePickerData.year)

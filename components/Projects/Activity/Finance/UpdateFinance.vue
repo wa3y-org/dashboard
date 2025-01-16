@@ -70,7 +70,6 @@ const props = defineProps({
 const emit = defineEmits(['cancel', 'saved']);
 
 const toolbarColor = computed(() => {
-  console.log(props.finance)
   switch (props.finance.type) {
     case 'donation':
       return 'green-lighten-4'
@@ -133,8 +132,6 @@ async function save() {
   loading.end();
 
 
-
-  console.log(response)
 
   if (response.error) {
 

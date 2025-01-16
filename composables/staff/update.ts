@@ -1,8 +1,16 @@
 import type { CollectionModel } from "pocketbase";
-import { ActivitiesStaffCollection, ProjectsStaffCollection, type TStaff } from "./index";
+import {
+  ActivitiesStaffCollection,
+  ProjectsStaffCollection,
+  type TStaff,
+} from "./index";
 import type { TProject } from "../projects/index";
 import type { OneModelResponse } from "~/app/core/CRUDRepository";
 import { backendRequestOne } from "~/app/core/BackendRequest";
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+} from "~/app/pocketbase-types";
 
 export async function updateStaff(
   staff: TStaff
@@ -31,6 +39,28 @@ export async function updateActivityStaff(
     });
   }
 
-  return await backendRequestOne<TStaff>(staffUpdater);
-}
+  const Data = await ActivitiesStaffCollection.getOne(staff.id);
+  const response = await backendRequestOne<TStaff>(staffUpdater);
 
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.UPDATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.projects,
+      UserActivitiesCategoriesOptions.project_activities,
+      UserActivitiesCategoriesOptions.hr,
+    ];
+    const obj_before = Data;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
+}

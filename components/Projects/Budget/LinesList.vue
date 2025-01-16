@@ -94,7 +94,6 @@ async function loadBudgetlines() {
   const response = await useProjectBudgetlines().get.all(props.project.id)
   loading.end();
 
-  console.log(response)
   if (response.models) {
     budgetlinesList.value = response.models;
   }

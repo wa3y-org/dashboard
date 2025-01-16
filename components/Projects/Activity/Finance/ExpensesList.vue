@@ -71,7 +71,6 @@ async function loadExpenses() {
   const response = await useActivityFinance().getExpenses(props.activity)
   loading.end();
 
-  console.log(response)
   if (response.models) {
     donationsList.value = response.models;
   }

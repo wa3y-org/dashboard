@@ -1,20 +1,74 @@
 import { backendRequestOne } from "~/app/core/BackendRequest";
-import { BlogArticlesCollection, BlogTopicsCollection, type TArticle, type TTopic } from "./index";
+import {
+  BlogArticlesCollection,
+  BlogTopicsCollection,
+  type TArticle,
+  type TTopic,
+} from "./index";
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+} from "~/app/pocketbase-types";
 
 export async function updateBlogTopic(topic: TTopic) {
-  return await backendRequestOne<TTopic>(async () => {
+  const Data = await BlogTopicsCollection.getOne(topic.id);
+  const response = await backendRequestOne<TTopic>(async () => {
     return await BlogTopicsCollection.update(
       topic.id,
       Object.assign({}, topic)
     );
   });
+
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.UPDATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.website,
+      UserActivitiesCategoriesOptions.web_topics,
+    ];
+    const obj_before = Data;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }
 
 export async function updateBlogArticle(article: TArticle) {
-  return await backendRequestOne<TArticle>(async () => {
+  const Data = await BlogArticlesCollection.getOne(article.id);
+  const response = await backendRequestOne<TArticle>(async () => {
     return await BlogArticlesCollection.update(
       article.id,
       Object.assign({}, article)
     );
   });
+
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.UPDATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.website,
+      UserActivitiesCategoriesOptions.web_topics,
+      UserActivitiesCategoriesOptions.web_articles,
+    ];
+    const obj_before = Data;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }

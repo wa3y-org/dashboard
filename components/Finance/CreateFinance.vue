@@ -134,7 +134,6 @@ async function save() {
 
 
 
-  console.log(response)
 
   if (response.error) {
 

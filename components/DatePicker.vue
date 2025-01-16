@@ -85,7 +85,7 @@ const calendarPickedDate = ref(new Date());
 watch(
   calendarPickedDate,
   () => {
-    // console.log(calendarPickedDate.value.get)
+    
     const date = moment(calendarPickedDate.value);
 
     selectedDay.value = date.get('D');

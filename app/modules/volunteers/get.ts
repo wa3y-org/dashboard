@@ -11,7 +11,5 @@ export async function getAllVolunteers() {
 export async function getOneVolunteer(id: string) {
   const record: VolunteersRecord = await pb.collection("volunteers").getOne(id);
 
-  console.log(record);
-
   return record;
 }

@@ -131,7 +131,6 @@ async function loadFinancialRequests() {
   const response = await usePurchasesRequests().get.all(props.project.id)
   loading.end();
 
-  console.log(response)
   if (response.models) {
     requestsList.value = response.models;
   }

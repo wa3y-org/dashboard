@@ -1,3 +1,4 @@
+import { setUserActivity } from "./activityMonitor/create";
 import {
   getAllActions,
   getPaginatedActions,
@@ -13,5 +14,6 @@ export function useActivityMonitor() {
         byCategories: getPaginatedActionsByCategories,
       },
     },
+    create: setUserActivity
   };
 }

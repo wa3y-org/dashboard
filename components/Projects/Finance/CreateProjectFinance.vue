@@ -140,13 +140,10 @@ async function save() {
     return;
   }
   loading.start();
-  console.log(props.project)
   const response = await ProjectFinance.create(props.project, financeData.value);
   loading.end();
 
 
-
-  console.log(response)
 
   if (response.error) {
 

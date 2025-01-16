@@ -1,6 +1,8 @@
-import type {
-  EmployeesRecord,
-  EmployeesResponse,
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+  type EmployeesRecord,
+  type EmployeesResponse,
 } from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
 import { employeeConfig } from ".";
@@ -16,7 +18,7 @@ export async function updateEmployee(
   const keysToPass = ["allowances", "deductions", "roles", "project"];
 
   if (!employee.oldPassword) {
-    keysToPass.push("password", "passwordConfirm", "oldPassword")
+    keysToPass.push("password", "passwordConfirm", "oldPassword");
   }
   for (let key of Object.keys(employee)) {
     if (keysToPass.includes(key)) continue;
@@ -28,10 +30,10 @@ export async function updateEmployee(
     data.append(key, employee[key] || "");
   }
 
-  if (employee.project?.id ) {
-    data.set('project', employee.project.id);
-  }else {
-    data.set('project', employee.project || '')
+  if (employee.project?.id) {
+    data.set("project", employee.project.id);
+  } else {
+    data.set("project", employee.project || "");
   }
 
   for (let allowance of employee.allowances || [""]) {
@@ -70,8 +72,28 @@ export async function updateEmployee(
   );
   data.set("phone_numbers", JSON.stringify(employee.phone_numbers));
 
- 
-  return await backendRequestOne<EmployeesRecord>(async () => {
+  const employeeData = await pb.collection("employees").getOne(employee.id);
+  const response = await backendRequestOne<EmployeesRecord>(async () => {
     return await pb.collection("employees").update(employee.id, data);
   });
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.UPDATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.employees,
+      UserActivitiesCategoriesOptions.hr,
+    ];
+    const obj_before = employeeData;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }

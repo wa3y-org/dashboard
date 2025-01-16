@@ -75,7 +75,6 @@ async function loadMoreReplies() {
     loading.start();
     const response = await useProjectFinancailCommityComments().get.paginated(props.request?.id, pagination.value.page + 1);
     loading.end();
-    console.log(response)
 
     if (response.models) {
         pagination.value = {

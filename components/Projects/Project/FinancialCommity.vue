@@ -120,7 +120,6 @@ async function confirmRemove(member: TProjectFinancialCommity) {
   const isConfirmed = (await remove.confirm()).isConfirmed;
   if (isConfirmed) {
     remove.doRemove(async () => {
-      console.log(props.project)
       const response = await FinancialCommities.remove(member);
       if (response.error) {
         return

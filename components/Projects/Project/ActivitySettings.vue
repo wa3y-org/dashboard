@@ -35,7 +35,6 @@ async function confirmRemove() {
   if (isConfirmed) {
     remove.doRemove(async () => {
       const response = await useActivities().remove(props.activity.id);
-      console.log('Deleted: ', response);
       useRouter().replace(`/projects/${props.activity.project}`)
     });
   }

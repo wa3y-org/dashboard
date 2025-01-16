@@ -35,7 +35,6 @@ async function confirmRemove() {
   if (isConfirmed) {
     remove.doRemove(async () => {
       const response = await deleteMember(props.member?.id || '')
-      console.log('Deleted: ', response);
       useRouter().replace('/hr/members')
     });
   }

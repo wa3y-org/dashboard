@@ -1,5 +1,11 @@
-import type { MembersRecord, MembersResponse } from "~/app/pocketbase-types";
+import {
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+  type MembersRecord,
+  type MembersResponse,
+} from "~/app/pocketbase-types";
 import { NewUserDefaultPassword } from "../users/domain/models/User";
+import { backendRequestOne } from "~/app/core/BackendRequest";
 
 const pb = usePocketBase();
 
@@ -31,8 +37,32 @@ export async function createMember(member: MembersRecord | MembersResponse) {
   );
   data.set("phone_numbers", JSON.stringify(member.phone_numbers));
 
-  const record = await pb.collection("members").create(data);
-  await pb.collection("members").requestVerification(record.email);
+  // const record = await pb.collection("members").create(data);
 
-  return record;
+  const response = await backendRequestOne<MembersRecord>(async () => {
+    const response = await pb.collection("members").create(data);
+    return response;
+  });
+
+  if (response.model && !response.error) {
+    pb.collection("members").requestVerification(response.model.email);
+    const action = UserActivitiesActionOptions.CREATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.members,
+      UserActivitiesCategoriesOptions.hr,
+    ];
+    const obj_before = null;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response.model;
 }

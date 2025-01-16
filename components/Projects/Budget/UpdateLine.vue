@@ -95,13 +95,10 @@ async function save() {
     return;
   }
   loading.start();
-  console.log(props.project)
   const response = await ProjectBudgetlines.update(Object.assign({ id: props.line.id }, budgetlineData.value));
   loading.end();
 
 
-
-  console.log(response)
 
   if (response.error) {
 

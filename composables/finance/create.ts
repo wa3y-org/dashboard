@@ -1,6 +1,11 @@
 import { FinanceCollection, type TFinance } from "./index";
 import type { OneModelResponse } from "~/app/core/CRUDRepository";
 import { backendRequestOne } from "~/app/core/BackendRequest";
+import {
+  FinanceTypeOptions,
+  UserActivitiesActionOptions,
+  UserActivitiesCategoriesOptions,
+} from "~/app/pocketbase-types";
 
 export async function addFinance(
   finance: TFinance
@@ -14,5 +19,28 @@ export async function addFinance(
     });
   }
 
-  return await backendRequestOne<TFinance>(financeCreator);
+  const response = await backendRequestOne<TFinance>(financeCreator);
+
+  if (response.model && !response.error) {
+    const action = UserActivitiesActionOptions.CREATE;
+    const categories: UserActivitiesCategoriesOptions[] = [
+      UserActivitiesCategoriesOptions.finance,
+      finance.type == FinanceTypeOptions.donation
+        ? UserActivitiesCategoriesOptions.donations
+        : UserActivitiesCategoriesOptions.expenses,
+    ];
+    const obj_before = null;
+    const obj_after = response.model;
+    const comment = null;
+
+    useActivityMonitor().create(
+      action,
+      categories,
+      obj_before,
+      obj_after,
+      comment
+    );
+  }
+
+  return response;
 }

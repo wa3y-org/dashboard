@@ -87,13 +87,11 @@ async function save() {
     return;
   }
   loading.start();
-  console.log(props.project)
   const response = await ProjectBudgetlines.create(budgetlineData.value, props.project.id);
   loading.end();
 
 
 
-  console.log(response)
 
   if (response.error) {
 
