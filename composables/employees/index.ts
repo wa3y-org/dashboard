@@ -5,4 +5,4 @@ import type {
 } from "~/app/pocketbase-types";
 
 export const EmployeesCollection = usePocketBase().collection("employees");
-export type TEmployee = EmployeesRecord | (EmployeesResponse & AuthModel);
+export type TEmployee = EmployeesRecord & (EmployeesResponse & AuthModel);

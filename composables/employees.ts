@@ -1,8 +1,9 @@
 import { getAllEmployees, getOneEmployee } from "~/app/modules/employees/get";
 import type { EmployeesRecord } from "~/app/pocketbase-types";
+import type { TEmployee } from "./employees/index";
 
 export function useEmployees() {
-  const employeesList: Ref<EmployeesRecord[]> = ref([]);
+  const employeesList: Ref<TEmployee[]> = ref([]);
 
   const loading = useLoading();
   async function loadEmployees() {

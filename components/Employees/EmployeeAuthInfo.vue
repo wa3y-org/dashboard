@@ -73,6 +73,8 @@ const allPermissions = computed<Set<string>>(() => {
 });
 
 
+const user = useCurrentUser();
+
 </script>
 
 <style></style>

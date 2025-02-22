@@ -2,7 +2,12 @@
   <div>
     <!-- <v-text-field prepend-inner-icon="mdi-magnify" placeholder="Search | Filter" v-model="search" /> -->
     <div class="rounded-xl overflow-hidden border-md">
-      <ActivitiesMonitorCard class="my-2" :activity="activity" v-for="activity of usersActions" :key="activity.id" />
+      <v-virtual-scroll style="height: calc(100vh - 250px);"
+        :items="usersActions">
+        <template v-slot:default="{ item }">
+          <ActivitiesMonitorCard class="my-2" :activity="item" :key="item.id" />
+        </template>
+      </v-virtual-scroll>
     </div>
 
     <div class="my-6 text-center">
