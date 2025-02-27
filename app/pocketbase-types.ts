@@ -16,6 +16,7 @@ export enum Collections {
 	ActivitiesTimelines = "activities_timelines",
 	AllowanceOptions = "allowance_options",
 	Assets = "assets",
+	BankChecks = "bank_checks",
 	BlogArticles = "blog_articles",
 	BlogTopics = "blog_topics",
 	DeductionOptions = "deduction_options",
@@ -182,6 +183,20 @@ export type AssetsRecord = {
 	updated?: IsoDateString
 }
 
+export type BankChecksRecord = {
+	amount?: number
+	attachments?: string[]
+	beneficiary_name?: string
+	branch?: string
+	created?: IsoDateString
+	date?: IsoDateString
+	details?: HTMLString
+	id: string
+	project: RecordIdString
+	serial_number?: string
+	updated?: IsoDateString
+}
+
 export type BlogArticlesRecord = {
 	cover_image?: string
 	created?: IsoDateString
@@ -343,6 +358,7 @@ export enum FinancialRequestsStatusOptions {
 	"BILL_APPROVED" = "BILL_APPROVED",
 }
 export type FinancialRequestsRecord = {
+	bills?: string[]
 	created?: IsoDateString
 	creator: RecordIdString
 	details?: HTMLString
@@ -664,6 +680,7 @@ export type ActivitiesStaffResponse<Texpand = unknown> = Required<ActivitiesStaf
 export type ActivitiesTimelinesResponse<Texpand = unknown> = Required<ActivitiesTimelinesRecord> & BaseSystemFields<Texpand>
 export type AllowanceOptionsResponse<Texpand = unknown> = Required<AllowanceOptionsRecord> & BaseSystemFields<Texpand>
 export type AssetsResponse<Texpand = unknown> = Required<AssetsRecord> & BaseSystemFields<Texpand>
+export type BankChecksResponse<Texpand = unknown> = Required<BankChecksRecord> & BaseSystemFields<Texpand>
 export type BlogArticlesResponse<Texpand = unknown> = Required<BlogArticlesRecord> & BaseSystemFields<Texpand>
 export type BlogTopicsResponse<Texpand = unknown> = Required<BlogTopicsRecord> & BaseSystemFields<Texpand>
 export type DeductionOptionsResponse<Texpand = unknown> = Required<DeductionOptionsRecord> & BaseSystemFields<Texpand>
@@ -706,6 +723,7 @@ export type CollectionRecords = {
 	activities_timelines: ActivitiesTimelinesRecord
 	allowance_options: AllowanceOptionsRecord
 	assets: AssetsRecord
+	bank_checks: BankChecksRecord
 	blog_articles: BlogArticlesRecord
 	blog_topics: BlogTopicsRecord
 	deduction_options: DeductionOptionsRecord
@@ -747,6 +765,7 @@ export type CollectionResponses = {
 	activities_timelines: ActivitiesTimelinesResponse
 	allowance_options: AllowanceOptionsResponse
 	assets: AssetsResponse
+	bank_checks: BankChecksResponse
 	blog_articles: BlogArticlesResponse
 	blog_topics: BlogTopicsResponse
 	deduction_options: DeductionOptionsResponse
@@ -791,6 +810,7 @@ export type TypedPocketBase = PocketBase & {
 	collection(idOrName: 'activities_timelines'): RecordService<ActivitiesTimelinesResponse>
 	collection(idOrName: 'allowance_options'): RecordService<AllowanceOptionsResponse>
 	collection(idOrName: 'assets'): RecordService<AssetsResponse>
+	collection(idOrName: 'bank_checks'): RecordService<BankChecksResponse>
 	collection(idOrName: 'blog_articles'): RecordService<BlogArticlesResponse>
 	collection(idOrName: 'blog_topics'): RecordService<BlogTopicsResponse>
 	collection(idOrName: 'deduction_options'): RecordService<DeductionOptionsResponse>

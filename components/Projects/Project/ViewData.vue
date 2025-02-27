@@ -63,6 +63,14 @@
       <v-divider class="mb-8"></v-divider>
       <WHtmlView :html="project.context_dependant_topics" />
     </div>
+    <div>
+      <p class="py-4 font-weight-bold text-h6  bg-grey-lighten-4">
+        <v-icon class="mx-4">mdi-file-document-outline</v-icon>
+        Narrative Report
+      </p>
+      <v-divider class="mb-8"></v-divider>
+      <WHtmlView :html="project.narrative_report" />
+    </div>
   </div>
 </template>
 

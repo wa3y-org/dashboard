@@ -44,8 +44,15 @@
 
     <v-row>
       <v-col>
-        <text-editor :errors="validationErrors.context_dependant_topics" v-model="project.context_dependant_topics" name="Context-Dependant topics"
-          placeholder="Enter Project Context-Dependant topics" />
+        <text-editor :errors="validationErrors.context_dependant_topics" v-model="project.context_dependant_topics"
+          name="Context-Dependant topics" placeholder="Enter Project Context-Dependant topics" />
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col>
+        <text-editor :errors="validationErrors.narrative_report" v-model="project.narrative_report"
+          name="Narrative Report" placeholder="Enter Project Narrative Report" />
       </v-col>
     </v-row>
 

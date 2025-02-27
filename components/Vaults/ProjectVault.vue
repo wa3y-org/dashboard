@@ -10,6 +10,11 @@ const props = defineProps({
   project: {
     required: true,
     type: Object
+  },
+  hideHeader: {
+    required: false,
+    type: Boolean,
+    default: false,
   }
 })
 
@@ -196,31 +201,34 @@ onMounted(() => {
       <v-row>
         <v-col>
           <div class="pa-4 pb-0 d-flex flex-row justify-space-between w-100">
-            <div>
-              <v-icon size="36">mdi-safe</v-icon>
-              <span class="font-weight-bold ">
-                <nuxt-link class="py-2 px-2 text-h6" :to="`/projects/${project?.id}`">
-                  Project :
-
-                  <span class="text-blue mx-2">
-                    {{ project?.title }}
+            <div >
+              <div v-if="!hideHeader">
+                <v-icon size="36">mdi-safe</v-icon>
+                <span class="font-weight-bold ">
+                  <nuxt-link class="py-2 px-2 text-h6" :to="`/projects/${project?.id}`">
+                    Project :
+  
+                    <span class="text-blue mx-2">
+                      {{ project?.title }}
+                    </span>
+                  </nuxt-link>
+                  |
+                  <span class="py-2 px-4">
+                    <v-icon>mdi-map-marker</v-icon>
+                    {{ project?.place || 'N/A' }}
                   </span>
-                </nuxt-link>
-                |
-                <span class="py-2 px-4">
-                  <v-icon>mdi-map-marker</v-icon>
-                  {{ project?.place || 'N/A' }}
+                  |
+                  <span class="py-2 px-6">
+                    <DateView :date="project?.starting_date" />
+                    --
+                    <DateView :date="project?.end_date" />
+                  </span>
                 </span>
-                |
-                <span class="py-2 px-6">
-                  <DateView :date="project?.starting_date" />
-                  --
-                  <DateView :date="project?.end_date" />
-                </span>
-              </span>
+              </div>
             </div>
             
             <div class=" font-weight-bold text-h6">
+              Balance :
               <w-usd :amount="totalDonations - totalBillApprovedExpenses" :color="totalInVaultColor"></w-usd>
             </div>
           </div>

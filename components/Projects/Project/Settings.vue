@@ -4,11 +4,11 @@
       <div class="pa-0 font-weight-bold text-primary border-lg border-info rounded-pill overflow-hidden">
         <v-tabs hide-slider bg-color="" grow size="large" center-active class="pa-0 ma-0 w-100" v-model="tab">
           <v-tab color="blue" size="large" value="financial_comity" rounded="pill" :variant="tab == 'financial_comity' ? 'flat' : 'text'">
-            Financial Comity
+            Financial Committee
           </v-tab>
           <v-tab color="indigo" size="large" value="purchases_comity" rounded="pill"
             :variant="tab == 'purchases_comity' ? 'flat' : 'text'">
-            Purchases Comity
+            Purchases Committee
           </v-tab>
           <v-tab color="error" size="large" value="danger_zone" rounded="pill"
             :variant="tab == 'danger_zone' ? 'flat' : 'text'">

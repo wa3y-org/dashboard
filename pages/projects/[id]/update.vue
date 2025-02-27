@@ -40,6 +40,7 @@ const project: Ref<ProjectsRecord> = ref({
   objectives: '',
   targeted_groups: '',
   context_dependant_topics: '',
+  narrative_report: '',
   starting_date: null,
   end_date: null,
   details: '',

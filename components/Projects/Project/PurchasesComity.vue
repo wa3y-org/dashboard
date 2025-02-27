@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <p class="text-h6 font-weight-bold">
-      Purchases Comity
+      Purchases Committee
     </p>
     <ProjectsProjectCreatePurchasesComityMemeber :project="project" />
     <v-data-table :headers="headers" :items="commityMembers" item-key="id">

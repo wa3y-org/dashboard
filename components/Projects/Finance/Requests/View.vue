@@ -85,6 +85,10 @@
                     @click="showFinancialRequestDetails()"></v-btn>
                 </p>
               </div>
+              <v-divider class="my-4"></v-divider>
+              <div>
+                <ProjectsFinanceRequestsRequestBills :request="request" />
+              </div>
             </div>
             <ProjectsFinanceRequestsItemsList :request="request" />
 
