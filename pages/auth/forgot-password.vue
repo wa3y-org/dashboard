@@ -3,7 +3,7 @@
 
     <div>
       <v-img class="mx-auto mb-8" max-width="150" src="@/assets/images/wa3y-logo.png" rounded="xl"></v-img>
-      <v-form @submit.prevent="login" @keyup.enter="login">
+      <v-form @submit.prevent="resetPassword" @keyup.enter="resetPassword">
 
         <v-card :loading="loading" class="mx-auto pa-12 pb-8" elevation="8" width="480" rounded="xl">
           <div class="text-subtitle-1 text-medium-emphasis">Email</div>
@@ -11,25 +11,12 @@
           <v-text-field :tabindex="1" v-model="identity" color="primary" placeholder="Email Address"
             prepend-inner-icon="mdi-email-outline" variant="outlined"></v-text-field>
 
-          <div class="text-subtitle-1 text-medium-emphasis d-flex align-center justify-space-between">
-            Password
-
-            <nuxt-link to="/auth/forgot-password" :tabindex="4" class="text-caption text-decoration-none text-blue">
-              Forgot login password?</nuxt-link>
-          </div>
-
-          <v-text-field :tabindex="2" v-model="password" color="primary"
-            :append-inner-icon="isPasswordVisible ? 'mdi-eye-off' : 'mdi-eye'"
-            :type="isPasswordVisible ? 'text' : 'password'" placeholder="Enter your password"
-            prepend-inner-icon="mdi-lock-outline" variant="outlined"
-            @click:append-inner="togglePasswordVisible"></v-text-field>
-
           <v-alert v-if="hasError" class="mb-6" variant="tonal" type="error" :text="errorMessage" />
-          <v-alert v-if="isLoginSuccess" class="mb-6" variant="tonal" type="success">
-            Login Success : Redirecting ...
+          <v-alert v-if="isSuccess" class="mb-6" variant="tonal" type="success">
+            {{ successMessage }}
           </v-alert>
-          <v-btn :tabindex="3" :loading="loading" block class="mb-8" color="primary" size="x-large" @click="login">
-            Log In
+          <v-btn :tabindex="3" :loading="loading" block class="mb-8 text-capitalize" color="primary" size="x-large" @click="resetPassword">
+            Reset Password
           </v-btn>
 
 
@@ -43,57 +30,42 @@
 <script lang="ts" setup>
 import { pb } from "~/app/modules/users/infrastructure/adapters/pocketbase/Connection";
 import { AuthService } from "~/app/modules/users/services";
-import { EmployeesEmploymentStatusOptions } from "~/app/pocketbase-types";
 
 definePageMeta({
   layout: 'blank'
 })
 
-const isPasswordVisible = ref(false);
-function togglePasswordVisible() {
-  isPasswordVisible.value = !isPasswordVisible.value
-}
-
-const isLoginSuccess: Ref<boolean> = ref(false);
-function setLoginSuccess() {
-  loading.value = true;
-  isLoginSuccess.value = true;
-  router.replace('/')
-}
-
 const identity: Ref<string> = ref('');
-const password: Ref<string> = ref('');
 const loading: Ref<boolean> = ref(false);
 const hasError: Ref<boolean> = ref(false);
 const errorMessage: Ref<string> = ref('');
-
+const isSuccess: Ref<boolean> = ref(false);
+const successMessage: Ref<string> = ref('');
 
 const router = useRouter();
 
-async function login() {
+async function resetPassword() {
   resetError();
-
   loading.value = true;
-  const { user, error } = await AuthService.login(identity.value, password.value);
-  loading.value = false;
 
-  if (error !== null) {
-    showError(error.message)
-    return
+  try {
+    await pb.collection('employees').requestPasswordReset(identity.value);
+    // Password reset request sent successfully
+    // You might want to show a success message to the user here
+    showSuccess("Password reset email sent. Please check your inbox.");
+  } catch (error: any) {
+    // Handle errors, such as invalid email or network issues
+    console.error("Password reset error:", error);
+    if (error.status === 400) {
+      showError("Invalid email address.");
+    } else if (error.status === 404) {
+      showError("User not found.");
+    } else {
+      showError("An error occurred while sending the password reset email.");
+    }
+  } finally {
+    loading.value = false;
   }
-
-  if (user == null) {
-    showError("Something wrong happened, please try again")
-    return
-  }
-
-  if (pb.authStore.model?.employment_status != EmployeesEmploymentStatusOptions.Active) {
-    await AuthService.logout();
-    showError("Inactive User")
-    return
-  }
-
-  setLoginSuccess();
 }
 
 function resetError() {
@@ -104,6 +76,15 @@ function resetError() {
 function showError(message: string) {
   errorMessage.value = message;
   hasError.value = true;
+}
+
+function showSuccess(message: string) {
+  successMessage.value = message;
+  isSuccess.value = true;
+  setTimeout(() => {
+    isSuccess.value = false;
+    successMessage.value = '';
+  }, 5000); // Hide the success message after 5 seconds
 }
 </script>
 
